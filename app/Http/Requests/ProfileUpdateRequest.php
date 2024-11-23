@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Services\ProvinceService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -15,6 +16,8 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $provincias = ProvinceService::getAll();
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -25,6 +28,10 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'province' => ['required', 'string', Rule::in($provincias)],
+            'address' => ['required', 'string'],
+            'postal_code' => ['required', 'numeric', 'digits_between:5,8'],
+            'phone_number' => ['required', 'numeric', 'digits_between:7,11'],
         ];
     }
 }
