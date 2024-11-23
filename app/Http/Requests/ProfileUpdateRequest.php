@@ -28,6 +28,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'province' => ['required', 'string', Rule::in($provincias)],
             'address' => ['required', 'string'],
             'postal_code' => ['required', 'numeric', 'digits_between:5,8'],
