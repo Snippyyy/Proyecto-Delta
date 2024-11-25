@@ -11,8 +11,14 @@
     <form action="{{route('category.store')}}" method="POST">
         @csrf
         <div>
-        <x-text-input name="name"></x-text-input>
-        <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+            <x-input-label for="name" :value="__('Title')"/>
+            <x-text-input name="name"></x-text-input>
+            <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+            <br>
+            <x-input-label for="description" :value="__('Description')"/>
+            <br>
+            <textarea name="description"></textarea>
+            <x-input-error :messages="$errors->get('description')" class="mt-2"/>
         </div>
         <br>
         <x-primary-button>{{ __('Create') }}</x-primary-button>

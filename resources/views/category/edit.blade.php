@@ -12,8 +12,14 @@
     @csrf
     @method('PATCH')
     <div>
-        <x-text-input name="name" :value="old('name', $category->name)"></x-text-input>
+        <x-input-label for="name" :value="__('Title')"/>
+        <x-text-input name="name"></x-text-input>
         <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+        <br>
+        <x-input-label for="description" :value="__('Description')"/>
+        <br>
+        <textarea name="description"></textarea>
+        <x-input-error :messages="$errors->get('description')" class="mt-2"/>
     </div>
     <br>
     <x-primary-button>{{ __('Save') }}</x-primary-button>

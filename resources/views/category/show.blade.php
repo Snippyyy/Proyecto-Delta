@@ -9,6 +9,7 @@
 </head>
 <body>
     <h2 class="font-bold size-12">{{$category->name}}</h2>
+    <h4>{{$category->description}}</h4>
     <a href="{{route('category.edit', $category)}}" class="hover:text-yellow-400">Editar</a>
     <br>
     <br>
