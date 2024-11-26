@@ -8,17 +8,24 @@
     <title>Creacion categorias</title>
 </head>
 <body>
-    <form action="{{route('category.store')}}" method="POST">
+    <form action="{{route('category.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <x-input-label for="name" :value="__('Title')"/>
             <x-text-input name="name"></x-text-input>
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+        </div>
             <br>
+        <div>
             <x-input-label for="description" :value="__('Description')"/>
             <br>
             <textarea name="description"></textarea>
             <x-input-error :messages="$errors->get('description')" class="mt-2"/>
+        </div>
+        <br>
+        <div>
+            <input type="file" name="icon">
+            <x-input-error :messages="$errors->get('icon')" class="mt-2"/>
         </div>
         <br>
         <x-primary-button>{{ __('Create') }}</x-primary-button>

@@ -30,7 +30,7 @@
             @if($user->avatar === null)
                 <span class="text-yellow-300"> ¡Aun no tienes una foto de perfil!</span>
             @else
-                <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" class="rounded-full w-32 h-32 mt-4 mb-4">
+                <img src="{{ Str::startsWith($user->avatar, 'http') ? $user->avatar : asset('storage/' . $user->avatar) }}" alt="Avatar" class="rounded-full w-32 h-32 mt-4 mb-4">
             @endif
             <input type="file" name="avatar">
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />

@@ -14,6 +14,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-            User::factory()->count(10)->create();
+        User::create([
+            'name' => 'snippy',
+            'email' => $email ='snippy@mail.com',
+            'password' => bcrypt('1234'),
+            'province' => 'Madrid',
+            'address' => 'Calle Ejemplo, 123',
+            'postal_code' => '28001',
+            'phone_number' => '123456789',
+            'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
+        ]);
+
+        User::factory()->count(10)->create();
     }
 }

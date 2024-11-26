@@ -18,9 +18,18 @@ class CategoryController extends Controller
     }
 
     public function store(CategoryRequest $request){
-        Category::create($request->validated());
 
-        return redirect()->route('category.index')->with('status', 'Categoria creada');
+        if ($request->hasFile('icon')) {
+            $path = $request->file('icon')->store('icons', 'public');
+            $validated = $request->validated();
+            $validated['icon'] = $path;
+            Category::create($validated);
+            return redirect()->route('category.index')->with('status', 'Categoria creada');
+        }else{
+            Category::create($request->validated());
+            return redirect()->route('category.index')->with('status', 'Categoria creada');
+        }
+
     }
 
     public function show(Category $category){
@@ -35,7 +44,16 @@ class CategoryController extends Controller
         return view('category.edit', compact('category'));
     }
     public function update(CategoryRequest $request, Category $category){
+
+        if ($request->hasFile('icon')) {
+            $path = $request->file('icon')->store('icons', 'public');
+            $validated = $request->validated();
+            $validated['icon'] = $path;
+            $category->update($validated);
+            return redirect()->route('category.show',$category)->with('status', 'Categoria Actualizada');
+        }else{
         $category->update($request->validated());
         return redirect()->route('category.show',$category)->with('status', 'Categoria Actualizada');
+        }
     }
 }

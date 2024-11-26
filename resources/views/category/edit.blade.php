@@ -8,18 +8,26 @@
     <title>Editar Categoria</title>
 </head>
 <body>
-<form action="{{route('category.update', $category)}}" method="POST">
+<form action="{{route('category.update', $category)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <div>
-        <x-input-label for="name" :value="__('Title')"/>
-        <x-text-input name="name"></x-text-input>
-        <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+        <div>
+            <x-input-label for="name" :value="__('Title')"/>
+            <x-text-input name="name"></x-text-input>
+            <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+        </div>
         <br>
-        <x-input-label for="description" :value="__('Description')"/>
-        <br>
-        <textarea name="description"></textarea>
-        <x-input-error :messages="$errors->get('description')" class="mt-2"/>
+        <div>
+            <x-input-label for="description" :value="__('Description')"/>
+            <br>
+            <textarea name="description"></textarea>
+        </div>
+            <x-input-error :messages="$errors->get('description')" class="mt-2"/>
+        <div>
+            <input type="file" name="icon">
+            <x-input-error :messages="$errors->get('icon')" class="mt-2"/>
+        </div>
     </div>
     <br>
     <x-primary-button>{{ __('Save') }}</x-primary-button>

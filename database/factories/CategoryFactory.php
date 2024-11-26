@@ -20,8 +20,9 @@ class CategoryFactory extends Factory
     {
         $categories = ['Consolas','Televisiones','Peliculas','Varios'];
         return [
-            'name' => $categories[array_rand($categories)],
+            'name' => $name = $categories[array_rand($categories)],
             'description' => $this->faker->text(),
+            'icon' => 'https://api.dicebear.com/6.x/icons/svg?seed='. md5($name),
         ];
     }
 }
