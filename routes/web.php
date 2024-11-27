@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,10 +13,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Ruta principal
+//Ruta Principal
 Route::get('index', function () {
     return view('index');
 })->middleware(['auth', 'verified'])->name('index');
+
+//Ruta Productos
+Route::get('/product',[ProductController::class,'index'])->name('product.index');
 
 //Rutas Categorias
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');

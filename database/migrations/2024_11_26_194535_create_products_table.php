@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('price');
             $table->boolean('shipment');
+            $table->string('status');
             $table->timestamps();
         });
     }
