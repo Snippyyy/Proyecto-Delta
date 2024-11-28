@@ -12,6 +12,6 @@
         <li><a href="{{route('category.index')}}">Categorias</a></li>
         <li><a href="{{route('product.index')}}">Productos</a></li>
     </ul>
-    <h2><a href="{{url()->previous()}}">Volver</a></h2>
+    <h2><a href="{{route('dashboard')}}">Volver</a></h2>
 </body>
 </html>

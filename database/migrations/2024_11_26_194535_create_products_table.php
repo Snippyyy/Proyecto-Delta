@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->decimal('price');
-            $table->boolean('shipment');
-            $table->string('status');
+            $table->boolean('shipment')->default(false);
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

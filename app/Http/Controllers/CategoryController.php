@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -33,7 +34,8 @@ class CategoryController extends Controller
     }
 
     public function show(Category $category){
-        return view('category.show', compact('category'));
+        $products = Product::with('category')->where('category_id', $category->id)->get();
+        return view('category.show', compact('category','products'));
     }
     public function destroy(Category $category){
         $category->delete();
@@ -44,7 +46,6 @@ class CategoryController extends Controller
         return view('category.edit', compact('category'));
     }
     public function update(CategoryRequest $request, Category $category){
-
         if ($request->hasFile('icon')) {
             $path = $request->file('icon')->store('icons', 'public');
             $validated = $request->validated();

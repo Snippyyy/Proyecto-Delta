@@ -28,5 +28,7 @@
             </form>
         </div>
     @endforeach
+    <br>
+    <a href="{{route('index')}}" class="hover:text-blue-500 transition">Volver</a>
 </body>
 </html>
