@@ -22,6 +22,9 @@
         @else
             <h3>No acepta envios</h3>
         @endif
+        @foreach($product->productImages as $img)
+            <img src="{{asset('storage/' . $img['img_path'])}}" alt="imagenprueba">
+        @endforeach
     </div>
     <a href="{{route('product.edit', $product)}}" class="hover:text-yellow-400">Editar</a>
     <br>

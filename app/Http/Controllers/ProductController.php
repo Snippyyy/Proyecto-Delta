@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\Services\ProductImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,10 +21,15 @@ class ProductController extends Controller
         return view('product.product-create', compact('categories'));
     }
     public function store(ProductRequest $request) {
-        $product = new Product($request->validated());
+        $request = $request->validated();
+        $product = new Product($request);
         $product->seller_id = Auth::id();
         $product->status = 'published';
         $product->save();
+
+        $files = $request['img_path'];
+        ProductImageService::store($files, $product);
+
         return redirect()->route('product.index')->with('status', 'Product created!');
     }
     public function show(Product $product) {
