@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Illuminate\Support\Facades\Storage;
 
 class ProductImageService
 {
@@ -27,6 +28,14 @@ class ProductImageService
                 ProductImage::create($data);
                 $imgcont++;
             }
+        }
+    }
+
+    public static function destroyAllImages(Product $product){
+        $images_path = ProductImage::where('product_id',$product->id)->get()->pluck('img_path');
+
+        foreach ($images_path as $path) {
+            Storage::disk('public')->delete($path);
         }
     }
 }

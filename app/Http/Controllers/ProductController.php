@@ -44,6 +44,7 @@ class ProductController extends Controller
         return redirect()->route('product.show', $product)->with('status', 'Product updated successfully');
     }
     public function destroy(Product $product) {
+        ProductImageService::destroyAllImages($product);
         $product->delete();
         return redirect()->route('product.index')->with('status', 'Product deleted successfully');
     }
