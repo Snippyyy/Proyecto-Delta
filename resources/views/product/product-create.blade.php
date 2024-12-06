@@ -46,11 +46,24 @@
         <x-input-error :messages="$errors->get('category_id')" class="mt-2"/>
     </div>
 
-    <div>
-        <x-input-label for="img_path" :value="__('Images')"/>
-        <input type="file" name="img_path[]" multiple>
+    <!-- Input Imagenes-->
+    <div class="mb-4">
+        <label for="img_path" class="block text-sm font-medium text-gray-700">
+            {{ __('Images') }}
+        </label>
+        <div class="mt-2">
+            <input
+                type="file"
+                name="img_path[]"
+                multiple
+                id="img_path"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+            >
+        </div>
+        <p class="mt-1 text-sm text-gray-500">You can upload multiple images.</p>
         <x-input-error :messages="$errors->get('img_path')" class="mt-2"/>
     </div>
+
 
     <x-primary-button>{{ __('Create Product') }}</x-primary-button>
 </form>
