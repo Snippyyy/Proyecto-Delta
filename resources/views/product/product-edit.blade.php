@@ -67,7 +67,7 @@
                 <div class="relative group">
                     <!-- Imagen -->
                     <img
-                        src="{{ asset('storage/' . $image->img_path) }}"
+                        src="{{Str::startsWith($image->img_path, 'http') ? $image->img_path : asset('storage/' . $image->img_path) }}"
                         alt="Image {{ $product->name}}"
                         class="w-32 h-32 rounded-lg border border-gray-300 shadow-sm m-12"
                     >
