@@ -39,10 +39,17 @@ class ProductController extends Controller
         return view('product.product-show', compact('product'));
     }
     public function edit(Product $product) {
+        if ($product->seller_id != Auth::id()){
+            return redirect()->route('product.show', $product)->with('status', 'No puedes editar un articulo que no es tuyo');
+        }
         $categories = Category::all();
         return view('product.product-edit', compact('product', 'categories'));
     }
     public function update(ProductUpdateRequest $request, Product $product) {
+
+        if ($product->seller_id != Auth::id()){
+            return redirect()->route('product.show', $product)->with('status', 'No puedes editar un articulo que no es tuyo');
+        }
 
         $validated = $request->validated();
 
@@ -59,11 +66,15 @@ class ProductController extends Controller
 
 
         $product->update($validated);
-        return redirect()->route('product.show', $product)->with('status', 'Product updated successfully');
+        return redirect()->route('product.show', $product)->with('status', 'Producto actualizado correctamente');
     }
     public function destroy(Product $product) {
+        if ($product->seller_id != Auth::id()){
+            return redirect()->route('product.show', $product)->with('status', 'No puedes eliminar un articulo que no es tuyo');
+        }
+
         ProductImageService::destroyAllImages($product);
         $product->delete();
-        return redirect()->route('product.index')->with('status', 'Product deleted successfully');
+        return redirect()->route('product.index')->with('status', 'El producto ha sido eliminado correctamente');
     }
 }

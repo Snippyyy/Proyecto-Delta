@@ -26,14 +26,18 @@
             <img src="{{Str::startsWith($img->img_path, 'http') ? $img->img_path : asset('storage/' . $img['img_path'])}}" alt="imagenprueba">
         @endforeach
     </div>
-    <a href="{{route('product.edit', $product)}}" class="hover:text-yellow-400">Editar</a>
+    @if(auth()->check() && auth()->user()->id === $product->seller_id)
+        <a href="{{route('product.edit', $product)}}" class="hover:text-yellow-400">Editar</a>
+    @endif
     <br>
     <br>
+    @if(auth()->check() && auth()->user()->id === $product->seller_id)
     <form action="{{route('product.delete', $product)}}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="mt-4 hover:text-red-600">Eliminar</button>
     </form>
+    @endif
     <br>
     <br>
     <h2><a href="{{route('product.index')}}">Volver</a></h2>
