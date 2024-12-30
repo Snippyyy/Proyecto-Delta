@@ -16,6 +16,11 @@
             {{ session('status') }}
         </div>
     @endif
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+            {{ session('error') }}
+        </div>
+    @endif
     @foreach($categories as $category)
         <div class="bg-gray-500 transition-colors mt-6 w-64 h-24">
             <a href="{{route('category.show', $category)}}"><h2 class="font-bold hover:text-green-500">{{$category->name}}</h2></a>

@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'postal_code' => '28001',
             'phone_number' => '123456789',
             'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
+            'role' => 'admin',
         ]);
 
         User::factory()->count(10)->create();
