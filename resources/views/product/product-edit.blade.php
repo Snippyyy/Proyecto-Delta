@@ -9,6 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
+<x-nav-delta/>
 <div class="mt-5">
 <form action="{{route('product.update', $product)}}" method="POST" enctype="multipart/form-data" class="ml-5">
     @csrf

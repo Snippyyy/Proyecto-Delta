@@ -3,20 +3,20 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/', WelcomePageController::class)->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Ruta Principal
-Route::get('index', function () {
-    return view('index');
-})->middleware(['auth', 'verified'])->name('index');
+
 
 //Ruta Productos
 Route::get('/products',[ProductController::class,'index'])->name('product.index');

@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::all();
-        return view('product.product-index' , compact('products'));
-    }
+
     public function create() {
         $categories = Category::all();
         return view('product.product-create', compact('categories'));
@@ -33,7 +30,7 @@ class ProductController extends Controller
             ProductImageService::store($files, $product);
         }
 
-        return redirect()->route('product.index')->with('status', 'Product created!');
+        return redirect()->route('product.show', $product)->with('status', 'Product created!');
     }
     public function show(Product $product) {
         return view('product.product-show', compact('product'));
@@ -75,6 +72,6 @@ class ProductController extends Controller
 
         ProductImageService::destroyAllImages($product);
         $product->delete();
-        return redirect()->route('product.index')->with('status', 'El producto ha sido eliminado correctamente');
+        return redirect()->route('index')->with('status', 'El producto ha sido eliminado correctamente');
     }
 }

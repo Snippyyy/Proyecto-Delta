@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(){
-        $categories = Category::all();
-        return view('category.index', compact('categories'));
-    }
 
     public function create(){
         if (auth()->user()->role !== 'admin') {
@@ -41,8 +37,9 @@ class CategoryController extends Controller
     }
 
     public function show(Category $category){
+        $categories = Category::all();
         $products = Product::with('category')->where('category_id', $category->id)->get();
-        return view('category.show', compact('category','products'));
+        return view('category.show', compact('category',['products','categories']));
     }
     public function destroy(Category $category){
         if (auth()->user()->role !== 'admin') {
