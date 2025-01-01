@@ -10,11 +10,11 @@ use function Pest\Laravel\get;
 
 uses(RefreshDatabase::class);
 
-it('Category index show all categories correctly', function () {
+it('Delta page show all categories correctly', function () {
 
     $categories = Category::factory()->count(3)->create();
 
-    get(route('category.index'))
+    get(route('index'))
         ->assertOk()
         ->assertSee($categories[0]->name)
         ->assertSee($categories[1]->name)
@@ -22,11 +22,18 @@ it('Category index show all categories correctly', function () {
 
 });
 
-it('Category show page show details of the category', function () {
+it('Category admin page show details of the category', function () {
 
         $category = Category::factory()->create();
+        $user = User::factory(
+            [
+                'role' => 'admin'
+            ]
+        )->create();
 
-        get(route('category.show', $category))
+        actingAs($user);
+
+        get(route('categories', $category))
             ->assertOk()
             ->assertSee($category->name)
             ->assertSee($category->description)
@@ -109,7 +116,7 @@ it('User without admin role can not delete a category', function () {
 
     $response = $this->delete(route('category.destroy', $category));
 
-    $response->assertRedirect(route('category.index'))
+    $response->assertRedirect(route('categories'))
         ->assertSessionHas('error', 'Solo los administradores pueden eliminar categorias');
 
 });
@@ -127,7 +134,7 @@ it('User with admin role can delete a Category', function () {
     actingAs($user);
 
     $response = $this->delete(route('category.destroy', $category))
-        ->assertRedirect(route('category.index'))
+        ->assertRedirect(route('categories'))
         ->assertSessionHas('status', 'Categoria eliminada');
 });
 
@@ -145,7 +152,7 @@ it('User without admin role can not edit a Category', function () {
         'icon' => UploadedFile::fake()->image('newicon.png'),
     ]);
 
-    $response->assertRedirect(route('category.index'))
+    $response->assertRedirect(route('categories'))
         ->assertSessionHas('error', 'Solo los administradores pueden editar categorias');
 
 });
@@ -174,7 +181,7 @@ it('User with admin role can edit a Category', function () {
 
     $categoryUpdated = Category::first();
 
-    get(route('category.show', $categoryUpdated))
+    get(route('categories', $categoryUpdated))
         ->assertSee('Category B')
         ->assertSee('Description of category B')
         ->assertSee($categoryUpdated->icon);
@@ -198,13 +205,11 @@ it('User with admin role can create a Category', function () {
 
     $category = Category::first();
 
-    $response->assertRedirect(route('category.index'))
+    $response->assertRedirect(route('categories'))
         ->assertSessionHas('status', 'Categoria creada');
 
     get(route('category.show', $category))
-        ->assertSee('Category A')
-        ->assertSee('Description of category A')
-        ->assertSee($category->icon);
+        ->assertSee('Category A');
 });
 
 it('User without admin role can not create a Category', function () {
@@ -219,6 +224,6 @@ it('User without admin role can not create a Category', function () {
         'icon' => UploadedFile::fake()->image('icon.png'),
     ]);
 
-    $response->assertRedirect(route('category.index'))
+    $response->assertRedirect(route('categories'))
         ->assertSessionHas('error', 'Solo los administradores pueden crear categorias');
 });

@@ -44,8 +44,8 @@ it('Auth user can access to Dashboard', function() {
     get(route('dashboard'))->assertOk();
 });
 
-it('Products page response', function () {
-    get(route('product.index'))->assertOk();
+it('Delta page response', function () {
+    get(route('index'))->assertOk();
 });
 
 it('Guest cannot access to product create route', function () {
@@ -66,8 +66,13 @@ it('Product show page response', function () {
     get(route('product.show', $product))->assertOk();
 });
 
-it('Category page response', function () {
-    get(route('category.index'))->assertOk();
+it('Category admin page response', function () {
+    actingAs(User::factory(
+        [
+            'role' => 'admin'
+        ]
+    )->create());
+    get(route('categories'))->assertOk();
 });
 
 it('Category show page response', function () {
@@ -103,7 +108,7 @@ it('User without admin role can not access to edit Category form page', function
     actingAs($user);
 
     get(route('category.edit', $category))
-        ->assertRedirect(route('category.index'))
+        ->assertRedirect(route('categories'))
         ->assertSessionHas('error', 'Solo los administradores pueden editar categorias');
 });
 
@@ -131,7 +136,7 @@ it('User without admin role cannot access to create form page', function () {
     actingAs($user);
 
     get(route('category.create'))
-        ->assertRedirect(route('category.index'))
+        ->assertRedirect(route('categories'))
         ->assertSessionHas('error', 'Solo los administradores pueden crear categorias');
 
 });

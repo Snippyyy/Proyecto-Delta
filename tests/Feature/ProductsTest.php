@@ -29,7 +29,7 @@ it('Auth user can use the Product create form', function () {
         ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect('/products')
+        ->assertRedirect(route('product.show', Product::first()))
         ->assertSessionHas('status', 'Product created!');
 });
 
@@ -56,7 +56,7 @@ it('Auth user can use the Product create form (with multiple images)', function 
         ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect('/products')
+        ->assertRedirect(route('product.show', Product::first()))
         ->assertSessionHas('status', 'Product created!');
 });
 
@@ -88,9 +88,10 @@ it('User can not access to the edit page from a product that doesnt own', functi
 
     actingAs($user);
 
+
     get(route('product.edit', $user2->products->first()))
         ->assertRedirect(route('product.show', $user2->products->first()))
-        ->assertSessionHas('status', 'No puedes editar un articulo que no es tuyo');
+        ->assertSessionHas('error', 'No puedes editar un articulo que no es tuyo');
 });
 
 it('User can not update a product that doesnt own', function () {
@@ -107,7 +108,7 @@ it('User can not update a product that doesnt own', function () {
             'img_path' => [UploadedFile::fake()->image('test_image.jpg')],
         ]);
     $response->assertRedirect('/products/' . $user2->products->first()->id)
-        ->assertSessionHas('status', 'No puedes editar un articulo que no es tuyo');
+        ->assertSessionHas('error', 'No puedes editar un articulo que no es tuyo');
 });
 
 it('User can update his own product', function () {
@@ -149,7 +150,7 @@ it('User can delete his own product', function () {
         ->delete('/products/' . $product->id);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect('/products')
+        ->assertRedirect(route('index'))
         ->assertSessionHas('status', 'El producto ha sido eliminado correctamente');
 });
 
