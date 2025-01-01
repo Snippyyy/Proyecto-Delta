@@ -28,7 +28,7 @@ Route::patch('/products/{product}',[ProductController::class,'update'])->name('p
 Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
 
 //Rutas Categorias
-Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth', 'verified']);
 Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create')->middleware(['auth', 'verified']);
 Route::post('/categories', [CategoryController::class, 'store'])->name('category.store')->middleware(['auth', 'verified']);;
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('category.destroy')->middleware(['auth', 'verified']);;

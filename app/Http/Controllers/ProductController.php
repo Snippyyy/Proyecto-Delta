@@ -37,7 +37,7 @@ class ProductController extends Controller
     }
     public function edit(Product $product) {
         if ($product->seller_id != Auth::id()){
-            return redirect()->route('product.show', $product)->with('status', 'No puedes editar un articulo que no es tuyo');
+            return redirect()->route('product.show', $product)->with('error', 'No puedes editar un articulo que no es tuyo');
         }
         $categories = Category::all();
         return view('product.product-edit', compact('product', 'categories'));
@@ -45,7 +45,7 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, Product $product) {
 
         if ($product->seller_id != Auth::id()){
-            return redirect()->route('product.show', $product)->with('status', 'No puedes editar un articulo que no es tuyo');
+            return redirect()->route('product.show', $product)->with('error', 'No puedes editar un articulo que no es tuyo');
         }
 
         $validated = $request->validated();

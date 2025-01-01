@@ -10,11 +10,17 @@
 </head>
 <body>
 <x-nav-delta/>
-{{--@if(session('status'))--}}
-{{--    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">--}}
-{{--        {{ session('status') }}--}}
-{{--    </div>--}}
-{{--@endif--}}
+@if (session('status'))
+    <div class="bg-green-500 text-white p-4 rounded mb-4">
+        {{ session('status') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="bg-red-500 text-white p-4 rounded mb-4">
+        {{ session('error') }}
+    </div>
+@endif
 {{--<div>--}}
 {{--    <h2 class="font-bold size-12">{{$product->name}}</h2>--}}
 {{--    <h4>{{$product->description}}</h4>--}}

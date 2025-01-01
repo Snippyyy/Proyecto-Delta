@@ -1,14 +1,10 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Creacion categorias</title>
-</head>
-<body>
-    <form action="{{route('category.store')}}" method="POST" enctype="multipart/form-data">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Crear categoria
+        </h2>
+    </x-slot>
+    <form action="{{route('category.store')}}" method="POST" enctype="multipart/form-data" class="ml-5 mt-5">
         @csrf
         <div>
             <x-input-label for="name" :value="__('Title')"/>
@@ -30,5 +26,4 @@
         <br>
         <x-primary-button>{{ __('Create') }}</x-primary-button>
     </form>
-</body>
-</html>
+</x-app-layout>
