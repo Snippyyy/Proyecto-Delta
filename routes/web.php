@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemsCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SellerCartController;
 use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,13 +21,19 @@ Route::get('/dashboard', function () {
 
 
 //Ruta Productos
-Route::get('/products',[ProductController::class,'index'])->name('product.index');
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
 Route::post('/products',[ProductController::class,'store'])->name('product.store')->middleware(['auth', 'verified']);
 Route::get('/products/{product}',[ProductController::class,'show'])->name('product.show');
 Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified']);
 Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified']);
 Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
+
+//Rutas Carrito
+Route::get('/cart', SellerCartController::class)->name('cart.index')->middleware(['auth', 'verified']);
+Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store')->middleware(['auth', 'verified']);
+Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show')->middleware(['auth', 'verified']);
+Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy')->middleware(['auth', 'verified']);
+
 
 //Rutas Categorias
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth', 'verified']);
