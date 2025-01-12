@@ -8,6 +8,8 @@ use App\Http\Controllers\SellerCartController;
 use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
+
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
@@ -29,11 +31,13 @@ Route::patch('/products/{product}',[ProductController::class,'update'])->name('p
 Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
 
 //Rutas Carrito
-Route::get('/cart', SellerCartController::class)->name('cart.index')->middleware(['auth', 'verified']);
-Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store')->middleware(['auth', 'verified']);
-Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show')->middleware(['auth', 'verified']);
-Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy')->middleware(['auth', 'verified']);
-
+Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
+    Route::get('/cart', [SellerCartController::class, 'index'])->name('cart.index');
+    Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store');
+    Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show');
+    Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy');
+});
+Route::get('/cart/{cart}/checkout', [SellerCartController::class, 'checkout'])->name('cart.checkout')->middleware(['auth', 'verified']);
 
 //Rutas Categorias
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth', 'verified']);

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
 
@@ -155,4 +156,33 @@ it('Guest cannot access to create Category form page', function () {
 
     get(route('category.create'))
         ->assertRedirect('login');
+});
+
+it('Guest can access to his Cart', function () {
+        get(route('cart.index'))
+            ->assertOk();
+});
+
+it('User can access to his Cart', function () {
+
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    get(route('cart.index'))
+        ->assertOk();
+});
+
+it('User can access to a seller cart', function () {
+    $user = User::factory()->create();
+
+    $user2 = User::factory()->has(Product::factory()->count(3))->create();
+
+    actingAs($user);
+
+    post(route('cart.store', $user2->products->first()));
+
+    get(route('cart.show', $user->sellerCart()->first()))
+        ->assertOk();
+
 });

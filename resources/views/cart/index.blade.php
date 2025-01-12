@@ -21,20 +21,13 @@
             {{ session('error') }}
         </div>
     @endif
+
     <h1 class="text-center mt-10 font-">CARRITOS</h1>
     @if($carts->isEmpty())
         <h2>No tienes ningun carrito!</h2>
     @endif
 
     @foreach($carts as $cart)
-{{--        <a href="{{route('cart.show', $cart)}}">--}}
-{{--        <div>--}}
-{{--            --}}
-{{--            <h5>{{$cart->seller->name}}</h5>--}}
-{{--            <h5>{{$cart->cart_items()->count()}} Articulos de este vendedor</h5>--}}
-{{--            <h6>{{$cart->total_price}} € En total en este carrito</h6>--}}
-{{--        </div>--}}
-{{--        </a>--}}
         <div class="flex mt-3 items-center justify-center">
 
             <div class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -49,12 +42,13 @@
                         <h4 class="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                             {{$cart->cart_items()->count()}} Articulos
                         </h4>
-                        <p class="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-                            Like so many organizations these days, Autodesk is a company in
-                            transition. It was until recently a traditional boxed software company
-                            selling licenses. Yet its own business model disruption is only part of
-                            the story
-                        </p>
+                            <ul>
+                                @foreach($cart->cart_items as $product)
+                                    <li class="mb-8 block text-base font-normal text-gray-700 antialiased w-max">
+                                        {{$product->product->name}}
+                                    </li>
+                                @endforeach
+                            </ul>
                         <a class="inline-block" href="#">
                             <button
                                 class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

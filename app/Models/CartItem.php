@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Cart_item extends Model
+class CartItem extends Model
 {
     protected $fillable = ['seller_cart_id', 'product_id'];
 

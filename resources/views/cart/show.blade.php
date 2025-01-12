@@ -66,9 +66,11 @@
                                                  alt="{{$product->product->name}}" />
                                         </div>
                                         <div class="ml-3">
-                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                {{$product->product->name}}
-                                            </p>
+                                            <a href="{{route('product.show', $product->product)}}">
+                                                <p class="text-gray-900 whitespace-no-wrap hover:bg-gray-300 rounded transition-colors p-2">
+                                                    {{$product->product->name}}
+                                                </p>
+                                            </a>
                                         </div>
                                     </div>
                                 </td>
@@ -76,13 +78,13 @@
                                     <p class="text-gray-900 whitespace-no-wrap">{{ \Illuminate\Support\Str::limit($product->product->description, 50)}}</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    @if($product->product->shipping)
+                                    @if($product->product->shipment)
 									<span
                                         class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden
                                               class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
 
-                                            <span class="relative">ok</span>
+                                            <span class="relative">Ok</span>
                                         @else
                                             <span
                                                 class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
@@ -113,17 +115,31 @@
                                 </td>
                             </tr>
                         @endforeach
-                        <tr>
-                        <tr>
-                            <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right font-semibold">
-                                <p class="text-gray-900 whitespace-no-wrap mr-12">{{$cart->total_price}}€</p>
-                            </td>
-                        </tr>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right font-semibold">
+                                    <p class="text-gray-900 whitespace-no-wrap mr-12">{{$cart->total_price}}€</p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     </div>
-                </div>
+                @if(auth()->check())
+                    <div>
+                        <label for="discount">¿Codigo de descuento? </label>
+                        <input type="text" name="discount">
+                        <label for="applydiscount"></label>
+                        <button type="button" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">Aplicar</button>
+                        <label for="buy"></label>
+                        <br>
+                        <button type="button" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                    </div>
+                @else
+                    <form action="{{route('login')}}" method="GET">
+                        @csrf
+                        <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Necesitas tener una cuenta para poder realizar la compra</button>
+                    </form>
+                @endif
+            </div>
             </div>
 </body>
 </html>

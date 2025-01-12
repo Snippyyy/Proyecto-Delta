@@ -10,7 +10,8 @@ return new class extends Migration {
         Schema::create('seller_carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('token')->unique()->nullable();
             $table->integer('quantity');
             $table->decimal('total_price', 10, 2)->default(0);
             $table->timestamps();

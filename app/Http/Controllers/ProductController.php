@@ -6,9 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Services\ProductImageService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
