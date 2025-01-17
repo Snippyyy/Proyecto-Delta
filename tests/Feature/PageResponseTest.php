@@ -182,7 +182,7 @@ it('User can access to a seller cart', function () {
 
     post(route('cart.store', $user2->products->first()));
 
-    get(route('cart.show', $user->sellerCart()->first()))
+    get(route('cart.show', $user->sellerCarts()->first()))
         ->assertOk();
 
 });

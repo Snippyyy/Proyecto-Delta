@@ -10,7 +10,7 @@ class CleanInactiveCartsCommand extends Command
 {
     protected $signature = 'cart:clean';
 
-    protected $description = 'Eliminar carritos inactivos';
+    protected $description = 'Eliminar carritos inactivos de los usuarios invitados';
 
     public function handle(): void
     {

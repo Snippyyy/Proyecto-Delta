@@ -48,8 +48,8 @@ class ItemsCartController extends Controller
             return redirect(route('product.show', $product))->with('error', 'No puedes añadir tus propios productos al carrito');
         }
 
-        if (!auth()->user()->sellerCart()->where('seller_id', $product->seller_id)->first()) {
-            auth()->user()->sellerCart()->create([
+        if (!auth()->user()->sellerCarts()->where('seller_id', $product->seller_id)->first()) {
+            auth()->user()->sellerCarts()->create([
                     'user_id' => auth()->id(),
                     'seller_id' => $product->seller_id,
                     'quantity' => 0,
@@ -57,7 +57,7 @@ class ItemsCartController extends Controller
             );
         }
 
-        $cart = auth()->user()->sellerCart()->where('seller_id', $product->seller_id)->first();
+        $cart = auth()->user()->sellerCarts()->where('seller_id', $product->seller_id)->first();
 
         if ($cart->cart_items()->where('product_id', $product->id)->first()) {
             return redirect(route('product.show', $product))->with('error', 'Este producto ya se encuentra en el carrito');

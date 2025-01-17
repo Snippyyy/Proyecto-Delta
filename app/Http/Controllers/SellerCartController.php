@@ -13,14 +13,14 @@ class SellerCartController extends Controller
     public function index (Request $request)
     {
         if (auth()->check()){
-            $carts = auth()->user()->sellerCart()->get();
+            $carts = auth()->user()->sellerCarts()->get();
 
             foreach ($carts as $cart) {
                 if ($cart->cart_items()->count() == 0) {
                     $cart->delete();
                 }
             }
-            $carts = auth()->user()->sellerCart;
+            $carts = auth()->user()->sellerCarts;
             return view('cart.index', compact('carts'));
         }else{
             $carts = SellerCart::where('token', $request->cookie('guest_cart_token'))->get();

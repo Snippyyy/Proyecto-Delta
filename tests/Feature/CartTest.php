@@ -3,6 +3,7 @@
 use App\Models\Product;
 use App\Models\SellerCart;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use function Pest\Laravel\actingAs;
@@ -31,8 +32,11 @@ it('User can add products to his cart', function () {
     post(route('cart.store', $user2->products()->first()))
         ->assertSessionHas('status', 'Producto añadido al carrito');
 
+    $this->assertDatabaseHas('seller_carts', ['user_id' => $user->id]);
+    $this->assertDatabaseHas('cart_items', ['seller_cart_id' => SellerCart::where('user_id', $user->id)->first()->id, 'product_id' => $user2->products()->first()->id]);
+
     get(route('cart.index'))->assertSee($user2->name);
-    get(route('cart.show', $user->sellerCart()->first()))->assertSee($user2->products()->first()->name);
+    get(route('cart.show', $user->sellerCarts()->first()))->assertSee($user2->products()->first()->name);
 });
 
 it('User sees a seller cart if he add a product', function () {
@@ -43,6 +47,8 @@ it('User sees a seller cart if he add a product', function () {
     actingAs($user);
 
     post(route('cart.store', $user2->products->first()));
+
+    $this->assertDatabaseHas('seller_carts', ['user_id' => $user->id, 'seller_id' => $user2->id]);
 
     get(route('cart.index'))
         ->assertSee($user2->name);
@@ -59,9 +65,10 @@ it('User see products in a seller cart', function () {
 
         foreach ($products as $product) {
             post(route('cart.store', $product));
+            $this->assertDatabaseHas('cart_items', ['product_id' => $product->id]);
         }
 
-        get(route('cart.show', $user->sellerCart()->first()))
+        get(route('cart.show', $user->sellerCarts()->first()))
             ->assertSee([$products[0]->name, $products[1]->name, $products[2]->name]);
 });
 
@@ -81,7 +88,7 @@ it('User can delete product from a seller cart', function () {
         post(route('cart.store', $product));
     }
 
-    $cart = $user->sellerCart()->first();
+    $cart = $user->sellerCarts()->first();
 
     $product = $products[0];
 
@@ -93,6 +100,7 @@ it('User can delete product from a seller cart', function () {
         ->assertDontSee($product->name)
         ->assertSessionHas('status', 'Producto eliminado del carrito');
 
+    $this->assertDatabaseMissing('cart_items', ['product_id' => $product->id]);
 });
 
 it('If user delete the last product of the cart the cart get automatically destroyed', function () {
@@ -107,9 +115,15 @@ it('If user delete the last product of the cart the cart get automatically destr
 
     post(route('cart.store', $product));
 
-    $cart = $user->sellerCart()->first();
+    $this->assertDatabaseHas('seller_carts', ['user_id' => $user->id]);
+    $this->assertDatabaseHas('cart_items', ['product_id' => $product->id]);
+
+    $cart = $user->sellerCarts()->first();
 
     delete(route('cart.destroy', [$cart, $product]));
+
+    $this->assertDatabaseMissing('cart_items', ['product_id' => $product->id]);
+    $this->assertDatabaseMissing('seller_carts', ['user_id' => $user->id]);
 
     get(route('cart.index'))
         ->assertSee('No tienes ningun carrito!');
@@ -191,7 +205,7 @@ it('Product info is in the seller cart show', function () {
     }
 
 
-    get(route('cart.show', $user->sellerCart()->first()))
+    get(route('cart.show', $user->sellerCarts()->first()))
         ->assertSee([$products[0]->name, $products[1]->name, $products[2]->name])
         ->assertSee([$products[0]->price, $products[1]->price, $products[2]->price])
         ->assertSee([Str::limit($products[0]->description, 50), Str::limit($products[1]->description, 50), Str::limit($products[2]->description, 50)])
@@ -216,7 +230,7 @@ it('User can see the total price of the cart', function () {
             ->assertSessionHas('status', 'Producto añadido al carrito');
     }
 
-    $cart = $user->sellerCart()->first();
+    $cart = $user->sellerCarts()->first();
 
     get(route('cart.show', $cart))
         ->assertSee($cart->total_price);
@@ -238,6 +252,9 @@ it('Cart get destroyed automatically if there is no products in it', function ()
     post(route('cart.store', $user->products->first()))
         ->assertSessionHas('status', 'Producto añadido al carrito');
 
+    $this->assertDatabaseHas('seller_carts', ['user_id' => $user2->id]);
+    $this->assertDatabaseHas('cart_items', ['seller_cart_id' => SellerCart::where('user_id', $user2->id)->first()->id, 'product_id' => $user->products->first()->id]);
+
     actingAs($user);
 
     delete(route('product.delete', $user->products->first()));
@@ -255,6 +272,8 @@ it('Guest can add products to his cart', function () {
     post(route('cart.store', $product))
         ->assertSessionHas('status', 'Producto añadido al carrito');
 
+    $this->assertDatabaseHas('seller_carts', ['token' => request()->cookie('guest_cart_token')]);
+    $this->assertDatabaseHas('cart_items', ['seller_cart_id' => SellerCart::where('token', request()->cookie('guest_cart_token'))->first()->id, 'product_id' => $product->id]);
     get(route('cart.index'))
         ->assertOk()
         ->assertSee($product->user->name)
@@ -309,5 +328,29 @@ it('Guest cannot access to checkout', function () {
 
     get(route('cart.checkout', SellerCart::where('user_id', null)->first()))
         ->assertRedirect('login');
+});
+
+it('Guest Cart gets automatically destroyed after 30 days with no update', function () {
+
+
+    $product = Product::factory()->create();
+
+    post(route('cart.store', $product))
+        ->assertSessionHas('status', 'Producto añadido al carrito');
+
+    $this->assertDatabaseHas('seller_carts'); //Comprueba que al menos haya 1 registro
+
+    $cart = SellerCart::where('user_id', null)->first();
+    $cart['updated_at'] = Carbon::now()->subDays(31);
+    $cart->save();
+
+
+
+
+    Artisan::call('cart:clean');
+
+    get(route('cart.index'))
+        ->assertSee('No tienes ningun carrito!');
+
 });
 
