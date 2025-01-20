@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        CartItem::factory([
-            'updated_at' => now()->subMonths(3),
-        ])->create();
-        // User::factory(10)->create();
-        Category::factory()->count(5)->create();
-        User::factory()->count(10)->create();
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductImageSeeder::class,
+        ]);
     }
 }

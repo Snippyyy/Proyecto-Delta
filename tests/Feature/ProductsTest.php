@@ -29,7 +29,7 @@ it('Auth user can use the Product create form', function () {
         ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect(route('product.show', Product::first()))
+        ->assertRedirect(route('product.show', $user->products->first()))
         ->assertSessionHas('status', 'Product created!');
 });
 
@@ -56,7 +56,7 @@ it('Auth user can use the Product create form (with multiple images)', function 
         ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect(route('product.show', Product::first()))
+        ->assertRedirect(route('product.show', $user->products->first()))
         ->assertSessionHas('status', 'Product created!');
 });
 

@@ -42,15 +42,18 @@ class ProductController extends Controller
     }
     public function update(ProductUpdateRequest $request, Product $product) {
 
+
         if ($product->seller_id != Auth::id()){
             return redirect()->route('product.show', $product)->with('error', 'No puedes editar un articulo que no es tuyo');
         }
 
         $validated = $request->validated();
 
-
         if($validated['image_delete_confirmation'] ?? false){
             if ($validated['images_to_delete'] ?? false){
+                if (count($validated['images_to_delete']) == $product->productImages->count()){
+                        return redirect()->route('product.edit', $product)->with('error', 'No puedes eliminar todas las imagenes del producto');
+                }
             ProductImageService::destroy($validated['images_to_delete']);
             }
         }

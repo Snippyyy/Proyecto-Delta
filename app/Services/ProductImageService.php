@@ -55,6 +55,8 @@ class ProductImageService
 
     public static function destroy($images_to_delete){
 
+
+
         foreach ($images_to_delete as $image) {
             $img_path = ProductImage::where('id', $image)->get()->value('img_path');
             ProductImage::destroy($image);

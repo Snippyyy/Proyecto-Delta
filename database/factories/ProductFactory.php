@@ -28,8 +28,7 @@ class ProductFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Product $product) {
-            ProductImage::factory()->count(rand(1, 5))->create(['product_id' => $product->id]);
-
+            ProductImage::factory()->count(1)->create(['product_id' => $product->id]);
         });
     }
 }
