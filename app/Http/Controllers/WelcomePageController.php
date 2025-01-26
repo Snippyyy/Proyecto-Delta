@@ -9,7 +9,7 @@ class WelcomePageController extends Controller
 {
     public function __invoke()
     {
-        $products = Product::with('productImages')->get();
+        $products = Product::where('status', 'published')->orderBy('created_at', 'desc')->get();
         $categories = Category::all();
         return view('delta', compact('products', 'categories'));
     }

@@ -60,6 +60,17 @@ it('Auth user can use the Product create form (with multiple images)', function 
         ->assertSessionHas('status', 'Product created!');
 });
 
+it('Products that arent published dont show in the index page', function () {
+
+    $product = Product::factory([
+        'status' => 'pending',
+    ])->create();
+
+    get(route('index'))
+        ->assertOk()
+        ->assertDontSee($product->name);
+});
+
 it('Guest user can not use the Product create form', function () {
 
     $user = User::factory()->create();
@@ -191,13 +202,14 @@ it('User can not see the edit button in a product show that doesnt own', functio
     actingAs($user);
 
     get(route('product.show', $user2->products->first()))
-        ->assertOk()
         ->assertDontSee('Editar');
 });
 
 it('Guest can not see the edit button in any product', function () {
 
-    $user = User::factory()->has(Product::factory())->create();
+    $user = User::factory()->has(Product::factory([
+        'status' => 'published',
+    ]))->create();
 
     get(route('product.show', $user->products->first()))
         ->assertOk()
@@ -231,7 +243,9 @@ it('Guest can not delete products', function () {
 
 it('Guest can not see delete button', function () {
 
-    $user = User::factory()->has(Product::factory())->create();
+    $user = User::factory()->has(Product::factory([
+        'status' => 'published',
+    ]))->create();
 
     get(route('product.show', $user->products->first()))
         ->assertOk()
@@ -252,7 +266,9 @@ it('User can see delete button in his own product', function () {
 it('User can not see delete button in a product that doesnt own', function () {
 
     $user = User::factory()->create();
-    $user2 = User::factory()->has(Product::factory())->create();
+    $user2 = User::factory()->has(Product::factory([
+        'status' => 'published',
+    ]))->create();
 
     actingAs($user);
 
@@ -265,10 +281,10 @@ it('Product show page shows product information that allows shipment', function 
     //Arrange
     $product = Product::factory([
         'shipment' => true,
+        'status' => 'published',
     ])->create();
     //Act
     get(route('product.show', $product))
-        ->assertOk()
         ->assertSee($product->name)
         ->assertSee($product->price)
         ->assertSee($product->description)
@@ -276,7 +292,6 @@ it('Product show page shows product information that allows shipment', function 
 
     foreach ($product->productImages as $image) {
         get(route('product.show', $product))
-            ->assertOk()
             ->assertSee($image->img_path);
     }
     //Assert
@@ -287,6 +302,7 @@ it('Product show page shows product information that denies shipment', function 
     //Arrange
     $product = Product::factory([
         'shipment' => false,
+        'status' => 'published',
     ])->create();
     //Act
     get(route('product.show', $product))

@@ -62,7 +62,9 @@ it('Auth user can access to product create route', function () {
 
 it('Product show page response', function () {
 
-    $product = Product::factory()->create();
+    $product = Product::factory([
+        'status' => 'published'
+    ])->create();
 
     get(route('product.show', $product))->assertOk();
 });
@@ -185,4 +187,14 @@ it('User can access to a seller cart', function () {
     get(route('cart.show', $user->sellerCarts()->first()))
         ->assertOk();
 
+});
+
+it('User can access to his panel product page', function () {
+
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    get(route('my-products'))
+        ->assertOk();
 });

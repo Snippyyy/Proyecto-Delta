@@ -14,6 +14,12 @@ class ProductRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'pending' => $this->boolean('pending'),
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -29,6 +35,7 @@ class ProductRequest extends FormRequest
             'shipment' => ['required', 'boolean'],
             'img_path' => ['required', 'array'],
             'img_path.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'pending' => ['required', 'boolean'],
         ];
     }
 }

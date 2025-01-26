@@ -20,10 +20,15 @@
                 @if(auth()->user()->role == 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')">
-                            Categorias
+                            {{  __('Categorias') }}
                         </x-nav-link>
                     </div>
                 @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('my-products')" :active="request()->routeIs('my-products')">
+                        {{  __('Mis productos') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

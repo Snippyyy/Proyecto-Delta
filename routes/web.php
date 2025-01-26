@@ -5,10 +5,14 @@ use App\Http\Controllers\ItemsCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerCartController;
+use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
+//Middleware
 use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
+use App\Http\Middleware\PendingProductMiddleware;
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -21,11 +25,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+//AreaPersonal
+Route::get('my-products', UserProductsController::class)->name('my-products')->middleware(['auth', 'verified']);
 
 //Ruta Productos
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
 Route::post('/products',[ProductController::class,'store'])->name('product.store')->middleware(['auth', 'verified']);
-Route::get('/products/{product}',[ProductController::class,'show'])->name('product.show');
+Route::get('/products/{product}',[ProductController::class,'show'])->name('product.show')->middleware(PendingProductMiddleware::class . ':product');
+Route::patch('/products/{product}/post',[ProductController::class,'post'])->name('product.post');
 Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified']);
 Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified']);
 Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
@@ -36,8 +43,9 @@ Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
     Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store');
     Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show');
     Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/cart/{cart}/checkout', [SellerCartController::class, 'checkout'])->name('cart.checkout')->middleware(['auth', 'verified']);
 });
-Route::get('/cart/{cart}/checkout', [SellerCartController::class, 'checkout'])->name('cart.checkout')->middleware(['auth', 'verified']);
+
 
 //Rutas Categorias
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth', 'verified']);

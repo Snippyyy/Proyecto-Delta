@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('price');
             $table->boolean('shipment')->default(false);
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'sold', 'published'])->default('pending');
             $table->timestamps();
         });
     }

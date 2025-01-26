@@ -321,13 +321,19 @@ it('Guest cannot see the purchase button in seller cart', function () {
 
 it('Guest cannot access to checkout', function () {
 
-    $user = User::factory()->has(Product::factory())->create();
+    $user = User::factory()->has(Product::factory([
+        'status' => 'published'
+    ]))->create();
     $product = $user->products->first();
     post(route('cart.store', $product))
         ->assertSessionHas('status', 'Producto añadido al carrito');
 
-    get(route('cart.checkout', SellerCart::where('user_id', null)->first()))
-        ->assertRedirect('login');
+    get(route('cart.show', SellerCart::where('user_id', null)->first()))
+        ->assertOk()
+        ->assertDontSee('Comprar');
+
+    post(route('cart.checkout', SellerCart::where('user_id', null)->first()))
+        ->assertRedirect('/login');
 });
 
 it('Guest Cart gets automatically destroyed after 30 days with no update', function () {

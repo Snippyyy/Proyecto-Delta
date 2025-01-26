@@ -69,6 +69,10 @@
         <x-input-error :messages="$errors->get('img_path')" class="mt-2"/>
     </div>
 
+    <div>
+        <label for="pending">¿Deseas guardar el producto en el borrador para publicarlo mas tarde?</label>
+        <input type="checkbox" name="pending" id="pending" value="1">
+    </div>
 
     <x-primary-button>{{ __('Create Product') }}</x-primary-button>
 </form>

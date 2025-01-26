@@ -131,7 +131,10 @@
                         <button type="button" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">Aplicar</button>
                         <label for="buy"></label>
                         <br>
-                        <button type="button" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                        <form action="{{route("cart.checkout", $cart)}}" method="POST">
+                            @csrf
+                            <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                        </form>
                     </div>
                 @else
                     <form action="{{route('login')}}" method="GET">

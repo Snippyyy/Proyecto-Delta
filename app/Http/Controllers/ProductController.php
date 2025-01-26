@@ -17,16 +17,21 @@ class ProductController extends Controller
         return view('product.product-create', compact('categories'));
     }
     public function store(ProductRequest $request) {
-
         $validated = $request->validated();
         $product = new Product($validated);
         $product->seller_id = Auth::id();
         $product->status = 'published';
+
+        if ($validated['pending'] == 1) {
+            $product->status = 'pending';
+        }
+
         $product->save();
         if($request->hasFile('img_path')){
             $files = $request['img_path'];
             ProductImageService::store($files, $product);
         }
+
 
         return redirect()->route('product.show', $product)->with('status', 'Product created!');
     }
@@ -41,7 +46,6 @@ class ProductController extends Controller
         return view('product.product-edit', compact('product', 'categories'));
     }
     public function update(ProductUpdateRequest $request, Product $product) {
-
 
         if ($product->seller_id != Auth::id()){
             return redirect()->route('product.show', $product)->with('error', 'No puedes editar un articulo que no es tuyo');
@@ -62,7 +66,6 @@ class ProductController extends Controller
             ProductImageService::update($product, $files);
         }
 
-
         $product->update($validated);
         return redirect()->route('product.show', $product)->with('status', 'Producto actualizado correctamente');
     }
@@ -74,5 +77,11 @@ class ProductController extends Controller
         ProductImageService::destroyAllImages($product);
         $product->delete();
         return redirect()->route('index')->with('status', 'El producto ha sido eliminado correctamente');
+    }
+
+    public function post(Product $product) {
+        $product->status = 'published';
+        $product->save();
+        return redirect()->route('product.show', $product)->with('status', 'Producto publicado correctamente');
     }
 }

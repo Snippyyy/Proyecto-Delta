@@ -109,7 +109,15 @@
                             </button>
                         </div>
                         @if(auth()->id() == $product->seller_id)
-                        <div class="flex">
+                            <div class="flex">
+                            @if($product->status == 'pending')
+                                    <form action="{{route('product.post', $product)}}" method="POST">
+                                        @method('PATCH')
+                                        @csrf
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-400 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition mt-12 mr-5">Publicar</button>
+                                    </form>
+                            @endif
+
                             <a href="{{ route('product.edit', $product) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition mt-12 mr-5">
                                 Editar
                             </a>
