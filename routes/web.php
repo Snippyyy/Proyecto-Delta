@@ -5,14 +5,18 @@ use App\Http\Controllers\ItemsCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerCartController;
+use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\UserProductsController;
+use App\Http\Controllers\UserOrderController;
+use App\Http\Controllers\UserSoldController;
 use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
 use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
 use App\Http\Middleware\PendingProductMiddleware;
-
+use App\Http\Middleware\CheckSoldItemsInCartMiddleware;
+use App\Http\Middleware\AuthUserOrderMiddleware;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -27,6 +31,11 @@ Route::get('/dashboard', function () {
 
 //AreaPersonal
 Route::get('my-products', UserProductsController::class)->name('my-products')->middleware(['auth', 'verified']);
+Route::get('orders', [UserOrderController::class, 'index'])->name('my-orders')->middleware(['auth', 'verified']);
+Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('my-orders.show')->middleware(AuthUserOrderMiddleware::class);
+Route::get('my-sold', [UserSoldController::class, 'index'])->name('my-sold');
+Route::get('my-sold/{order}', [UserSoldController::class, 'show'])->name('my-sold.show');
+
 
 //Ruta Productos
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
@@ -43,7 +52,10 @@ Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
     Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store');
     Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show');
     Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy');
-    Route::post('/cart/{cart}/checkout', [SellerCartController::class, 'checkout'])->name('cart.checkout')->middleware(['auth', 'verified']);
+    Route::post('/cart/{cart}/checkout', [StripeCheckoutController::class, 'session'])->name('cart.checkout')->middleware(['auth', 'verified'])->middleware(CheckSoldItemsInCartMiddleware::class);
+    Route::get('/cart/{cart}/success', [StripeCheckoutController::class, 'success'])->name('cart.checkout.success')->middleware(['auth', 'verified']);
+    Route::get('/cart/{cart}/cancel', [StripeCheckoutController::class, 'cancel'])->name('cart.checkout.cancel')->middleware(['auth', 'verified']);
+    Route::post('/webhook', [StripeCheckoutController::class, 'webhook'])->name('webhook');
 });
 
 

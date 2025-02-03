@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    /*
+ * Stripe API keys
+ */
+
+    'stripe' => [
+        'public' => env('STRIPE_PUBLIC_KEY'),
+        'private' => env('STRIPE_SECRET_KEY'),
+        'webhook' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
 ];

@@ -21,17 +21,28 @@ class Product extends Model
         'shipment',
     ];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'seller_id', 'id');
     }
-    public function category(): BelongsTo {
+
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
-    public function productImages(): HasMany {
+
+    public function productImages(): HasMany
+    {
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
-public function cart_items(): HasMany {
-    return $this->hasMany(CartItem::class, 'product_id', 'id');
-}
+    public function cart_items(): HasMany
+    {
+        return $this->hasMany(CartItem::class, 'product_id', 'id');
+    }
+
+    public function order_items(): HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'product_id', 'id');
+    }
 }

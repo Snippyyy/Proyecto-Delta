@@ -34,13 +34,4 @@ class SellerCartController extends Controller
             return view('cart.index', compact('carts'));
         }
     }
-
-    public function checkout(SellerCart $cart)
-    {
-        if (!auth()->check()) {
-            return redirect(route('cart.show', $cart))->with('error', 'Debes registrarte para realizar la compra');
-        }
-
-        return view('cart.checkout', compact('cart'));
-    }
 }

@@ -44,7 +44,7 @@ class CategoryController extends Controller
 
     public function show(Category $category){
         $categories = Category::all();
-        $products = Product::with('category')->where('category_id', $category->id)->get();
+        $products = Product::with('category')->where('category_id', $category->id)->where('status', 'published')->get();
         return view('category.show', compact('category',['products','categories']));
     }
     public function destroy(Category $category){

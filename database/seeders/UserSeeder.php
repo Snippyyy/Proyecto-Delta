@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,7 +27,7 @@ class UserSeeder extends Seeder
                 'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
                 'role' => 'admin',
             ]
-        )->create();
+        )->has(Product::factory()->count(3))->create();
 
         User::factory(
             [
@@ -39,7 +40,7 @@ class UserSeeder extends Seeder
                 'phone_number' => '123456789',
                 'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
             ]
-        )->create();
+        )->has(Product::factory()->count(3))->create();
 
         User::factory()->count(10)->create();
     }

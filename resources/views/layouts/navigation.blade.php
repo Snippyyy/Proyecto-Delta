@@ -29,6 +29,16 @@
                         {{  __('Mis productos') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('my-orders')" :active="request()->routeIs('my-orders')">
+                        {{  __('Mis pedidos') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('my-sold')" :active="request()->routeIs('my-sold')">
+                        {{  __('Mis Vendidos') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
