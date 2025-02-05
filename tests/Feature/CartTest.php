@@ -227,6 +227,7 @@ it('User can see the total price of the cart', function () {
 
     foreach ($products as $product) {
         post(route('cart.store', $product))
+            ->assertRedirect(route('product.show', $product))
             ->assertSessionHas('status', 'Producto añadido al carrito');
     }
 

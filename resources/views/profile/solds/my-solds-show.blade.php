@@ -39,10 +39,27 @@
                 <h2 class="text-2xl font-semibold mb-4">Estado: {{ __($order->status) }}</h2>
                 @if($order->shipment_number)
                     <h2 class="text-2xl font-semibold mb-4">Numero de seguimiento: {{$order->shipment_number}}</h2>
+                    <form action="{{ route('shipment', $order) }}" method="POST">
+                        @csrf
+                        <input type="text" id="shipment_number" name="shipment_number">
+                        @if ($errors->has('shipment_number'))
+                            <div class="text-red-500 mt-2">
+                                {{ $errors->first('shipment_number') }}
+                            </div>
+                        @endif
+                        <button type="submit" class="ml-5 border border-black p-2 hover:bg-black hover:text-white focus:scale-50 active:scale-110">Editar</button>
+
+                    </form>
                 @else
                     <h2 class="text-2xl font-semibold mb-4">Introducir numero de seguimiento:</h2>
-                    <form action="">
-                        <input type="text">
+                    <form action="{{ route('shipment', $order) }}" method="POST">
+                        @csrf
+                        <input type="text" id="shipment_number" name="shipment_number">
+                        @if ($errors->has('shipment_number'))
+                            <div class="text-red-500 mt-2">
+                                {{ $errors->first('shipment_number') }}
+                            </div>
+                        @endif
                         <button type="submit" class="ml-5 border border-black p-2 hover:bg-black hover:text-white focus:scale-50 active:scale-110">Establecer</button>
                     </form>
                 @endif

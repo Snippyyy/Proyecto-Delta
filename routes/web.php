@@ -10,6 +10,7 @@ use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSoldController;
 use App\Http\Controllers\WelcomePageController;
+use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
@@ -17,6 +18,7 @@ use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
 use App\Http\Middleware\PendingProductMiddleware;
 use App\Http\Middleware\CheckSoldItemsInCartMiddleware;
 use App\Http\Middleware\AuthUserOrderMiddleware;
+use App\Http\Middleware\AuthUserSoldMiddleware;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -33,8 +35,9 @@ Route::get('/dashboard', function () {
 Route::get('my-products', UserProductsController::class)->name('my-products')->middleware(['auth', 'verified']);
 Route::get('orders', [UserOrderController::class, 'index'])->name('my-orders')->middleware(['auth', 'verified']);
 Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('my-orders.show')->middleware(AuthUserOrderMiddleware::class);
-Route::get('my-sold', [UserSoldController::class, 'index'])->name('my-sold');
-Route::get('my-sold/{order}', [UserSoldController::class, 'show'])->name('my-sold.show');
+Route::get('my-sold', [UserSoldController::class, 'index'])->name('my-sold')->middleware(['auth', 'verified']);
+Route::get('my-sold/{order}', [UserSoldController::class, 'show'])->name('my-sold.show')->middleware((AuthUserSoldMiddleware::class));
+Route::post('my-sold/{order}/shipment', [UserSoldController::class, 'shipment'])->name('shipment')->middleware((AuthUserSoldMiddleware::class));
 
 
 //Ruta Productos
@@ -49,7 +52,7 @@ Route::delete('/products/{product}',[ProductController::class,'destroy'])->name(
 //Rutas Carrito
 Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
     Route::get('/cart', [SellerCartController::class, 'index'])->name('cart.index');
-    Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store');
+    Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store')->middleware(CantPurchaseSoldItemsMiddleware::class);
     Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show');
     Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/{cart}/checkout', [StripeCheckoutController::class, 'session'])->name('cart.checkout')->middleware(['auth', 'verified'])->middleware(CheckSoldItemsInCartMiddleware::class);

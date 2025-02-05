@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->decimal('total_price');
             $table->foreignId('buyer_id')->constrained('users');
             $table->foreignId('seller_id')->constrained('users');
-            $table->integer('shipment_number')->nullable();
+            $table->string('shipment_number')->nullable();
             $table->string('session_id');
             $table->timestamps();
         });
