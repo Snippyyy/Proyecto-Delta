@@ -15,7 +15,7 @@ class UserWithProductsSeeder extends Seeder
                 Product::factory([
                     'status' => 'published',
                 ])
-                    ->count(3)
+                    ->count(10)
             )->create();
     }
 }

@@ -227,8 +227,8 @@ it('User can see the total price of the cart', function () {
 
     foreach ($products as $product) {
         post(route('cart.store', $product))
-            ->assertRedirect(route('product.show', $product))
             ->assertSessionHas('status', 'Producto añadido al carrito');
+        $this->assertDatabaseHas('cart_items', ['product_id' => $product->id]);
     }
 
     $cart = $user->sellerCarts()->first();

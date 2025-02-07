@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'seller_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
             'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id,
             'shipment' => $this->faker->boolean(),
-            'status' => $this->faker->randomElement(['pending', 'published', 'sold']),
+            'status' => 'published',
         ];
     }
 

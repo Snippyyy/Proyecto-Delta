@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -197,4 +198,72 @@ it('User can access to his panel product page', function () {
 
     get(route('my-products'))
         ->assertOk();
+});
+
+it('User can access to his sold page', function () {
+
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    get(route('my-sold'))
+        ->assertOk();
+});
+
+it('User can access to his sold page show', function () {
+    $user = User::factory()->create();
+    $user2 = User::factory()->has(Product::factory()->count(2))->create();
+    $totalPrice = $user2->products->sum('price');
+
+    $order = Order::factory()->create([
+        'buyer_id' => $user->id,
+        'seller_id' => $user2->id,
+        'status' => 'paid',
+        'total_price' => $totalPrice,
+    ]);
+
+    $order->orderItems()->create([
+        'order_id' => $order->id,
+        'product_id' => $user2->products->first()->id,
+    ]);
+
+    actingAs($user2);
+    get(route('my-sold.show', $order))
+        ->assertOk();
+
+});
+
+
+it('User can access to his order page', function () {
+
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    get(route('my-orders'))
+        ->assertOk();
+});
+
+it('User can access to his order page show', function () {
+
+    $user = User::factory()->create();
+    $user2 = User::factory()->has(Product::factory()->count(2))->create();
+    $totalPrice = $user2->products->sum('price');
+
+    $order = Order::factory()->create([
+        'buyer_id' => $user->id,
+        'seller_id' => $user2->id,
+        'status' => 'paid',
+        'total_price' => $totalPrice,
+    ]);
+
+    $order->orderItems()->create([
+        'order_id' => $order->id,
+        'product_id' => $user2->products->first()->id,
+    ]);
+
+    actingAs($user);
+    get(route('my-orders.show', $order))
+        ->assertOk();
+
 });
