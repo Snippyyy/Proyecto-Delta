@@ -16,6 +16,6 @@ class CommentsController extends Controller
         $comment->buyer_id = auth()->user()->id;
         $comment->save();
 
-        return redirect()->back()->with('status', 'Commentario realizado correctamente');
+        return redirect()->back()->with('status', 'Comentario realizado correctamente');
     }
 }
