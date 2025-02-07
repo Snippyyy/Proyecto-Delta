@@ -100,6 +100,18 @@ class StripeCheckoutController extends Controller
                 $order->save();
             }
 
+            //LOGICA PARA cambiar estados de los productos y borrar el carrito comprado
+
+            $cart = SellerCart::where('seller_id', $order->seller_id)->where('user_id', auth()->id())->first();
+            $CartItems = CartItem::where('seller_cart_id', $cart->id)->get();
+            $products = Product::whereIn('id', $CartItems->pluck('product_id'))->get();
+
+            $cart->delete();
+            foreach ($products as $product) {
+                $product->status = 'sold';
+                $product->save();
+            }
+
             return view('cart.checkout.success');
         } catch (\Exception $e) {
             \Log::error('Error processing session: ' . $e->getMessage());

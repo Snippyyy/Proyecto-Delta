@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ItemsCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerCartController;
 use App\Http\Controllers\StripeCheckoutController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSoldController;
@@ -19,6 +21,7 @@ use App\Http\Middleware\PendingProductMiddleware;
 use App\Http\Middleware\CheckSoldItemsInCartMiddleware;
 use App\Http\Middleware\AuthUserOrderMiddleware;
 use App\Http\Middleware\AuthUserSoldMiddleware;
+use App\Http\Middleware\CommentsMiddleware;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -29,6 +32,13 @@ Route::get('/', WelcomePageController::class)->name('index');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+//Rutas de comentarios
+Route::post('users/{user:name}/comment', [CommentsController::class, 'store'])->name('comments.store')->middleware(CommentsMiddleware::class);
+
+//users
+Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::get('users/{user:name}', [UserController::class, 'show'])->name('users.show');
 
 
 //AreaPersonal

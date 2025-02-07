@@ -19,11 +19,16 @@
                             </li>
                         @endif
                     @endauth
+                        <li>
+                            <a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="{{route('users.index')}}">
+                                Usuarios
+                            </a>
+                        </li>
                 </ul>
             </nav>
         </div>
         <div class="order-1 md:order-2 flex justify-center w-full md:w-auto">
-            <a class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl" href="{{route('index')}}">
+            <a class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl hover:text-gray-600 transition-colors" href="{{route('index')}}">
                 <svg class="fill-current text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M5,22h14c1.103,0,2-0.897,2-2V9c0-0.553-0.447-1-1-1h-3V7c0-2.757-2.243-5-5-5S7,4.243,7,7v1H4C3.447,8,3,8.447,3,9v11 C3,21.103,3.897,22,5,22z M9,7c0-1.654,1.346-3,3-3s3,1.346,3,3v1H9V7z M5,10h2v2h2v-2h6v2h2v-2h2l0.002,10H5V10z" />
                 </svg>
@@ -41,6 +46,9 @@
                 <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden bg-white" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" style="z-index: 50;">
                     <div class="py-1" role="none">
                         @auth()
+                            <a href="{{route('users.show', auth()->user()->name)}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem" tabindex="-1" id="menu-item-0">
+                                Mi perfil
+                            </a>
                             <a href="{{route('profile.edit')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem" tabindex="-1" id="menu-item-0">
                                 Area Personal
                             </a>
