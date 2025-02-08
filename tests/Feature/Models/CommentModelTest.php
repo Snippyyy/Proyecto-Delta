@@ -1,11 +1,17 @@
 <?php
 
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('', function () {
-    $response = $this->get('/');
+it('user realitionship', function () {
+    $comment = Comment::factory()->create();
+    $this->assertInstanceOf(User::class, $comment->user);
+});
 
-    $response->assertStatus(200);
+it('buyer realitionship', function () {
+    $comment = Comment::factory()->create();
+    $this->assertInstanceOf(User::class, $comment->buyer);
 });

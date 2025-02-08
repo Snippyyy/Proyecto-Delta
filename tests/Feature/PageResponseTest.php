@@ -12,19 +12,13 @@ use function Pest\Laravel\post;
 uses(RefreshDatabase::class);
 
 it('First page response', function () {
-    //Arrange
 
-    //Act
     get(route('welcome'))->assertOk();
-    //Assert
 
 });
 
 it('Login page response', function () {
 
-    //Arrange
-
-    //Act & //Assert
     get(route('login'))->assertOk();
 
 });
@@ -266,4 +260,15 @@ it('User can access to his order page show', function () {
     get(route('my-orders.show', $order))
         ->assertOk();
 
+});
+
+it('users index route works', function () {
+    get(route('users.index'))
+        ->assertOk();
+});
+
+it('users show route works', function () {
+    $user = User::factory()->create();
+    get(route('users.show', $user))
+        ->assertOk();
 });

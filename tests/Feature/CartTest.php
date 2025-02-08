@@ -130,13 +130,6 @@ it('If user delete the last product of the cart the cart get automatically destr
 
 });
 
-it('User can buy the products from a seller cart', function () {
-
-});
-
-it('User will be advice if some article doesnt accept shipment', function () {
-
-});
 
 it('User cannot add products that owns', function () {
 
@@ -174,7 +167,7 @@ it('User cannot add products that are already in his cart', function () {
 
 it('User can use discount code and it aplies to the final price', function () {
 
-});
+})->todo();
 
 it('Product info is in the seller cart show', function () {
 
@@ -240,7 +233,7 @@ it('User can see the total price of the cart', function () {
 
 it('User can see the total price of the cart with discount', function () {
 
-});
+})->todo();
 
 it('Cart get destroyed automatically if there is no products in it', function () {
 

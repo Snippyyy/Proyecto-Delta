@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use App\Models\User;
 
 class CommentsController extends Controller
 {
@@ -16,6 +17,8 @@ class CommentsController extends Controller
         $comment->buyer_id = auth()->user()->id;
         $comment->save();
 
-        return redirect()->back()->with('status', 'Comentario realizado correctamente');
+        $name = User::find($id)->name;
+
+        return redirect()->route('users.show', $name)->with('status', 'Comentario realizado correctamente');
     }
 }

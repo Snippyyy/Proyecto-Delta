@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,21 +18,22 @@ class CommentsMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+
         $profileId = $request->route('user');
+        $profileName = User::find($profileId)->name;
+
+        if (!auth()->check()) {
+            return redirect()->route('users.show', $profileName)->with('error', 'Debes iniciar sesión para comentar y comprar un articulo del usuario para poder comentar');
+        }
 
         $orders = auth()->user()->orders()->where('seller_id', $profileId)->get();
 
-
-        if (!auth()->check()) {
-            return redirect()->back()->with('error', 'Debes iniciar sesión para comentar y comprar un articulo del usuario para poder comentar');
-        }
-
         if(auth()->user()->id == $profileId){
-            return redirect()->back()->with('error', 'No puedes comentar tu propio perfil');
+            return redirect()->route('users.show', $profileName)->with('error', 'No puedes comentar tu propio perfil');
         }
 
         if ($orders->isEmpty()) {
-            return redirect()->back()->with('error', 'Debes comprar un articulo del usuario para poder comentar');
+            return redirect()->route('users.show', $profileName)->with('error', 'Debes comprar un articulo del usuario para poder comentar');
         }
 
         return $next($request);
