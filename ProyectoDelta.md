@@ -26,5 +26,6 @@
     
     -Los usuarios registrados podrán realizar comentarios sobre otros usuariós si y solo si el mismo ha comprado un articulo del vendedor a valorar
     -Los usuarios no registrados UNICAMENTE podrán ver comentarios
+    -Si el usuario no ha comprado un articulo del vendedor a valorar, no podrá realizar comentarios
 
  
