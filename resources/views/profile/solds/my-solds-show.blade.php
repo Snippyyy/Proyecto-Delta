@@ -35,7 +35,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <h2 class="text-2xl font-semibold mb-4">Precio total: {{$order->total_price}} €</h2>
+                <h2 class="text-2xl font-semibold mb-4">Precio total: {{ number_format($order->total_price / 100, 2, ',', '.') }}€ €</h2>
                 <h2 class="text-2xl font-semibold mb-4">Estado: {{ __($order->status) }}</h2>
                 @if($order->shipment_number)
                     <h2 class="text-2xl font-semibold mb-4">Numero de seguimiento: {{$order->shipment_number}}</h2>

@@ -19,6 +19,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request) {
         $validated = $request->validated();
         $product = new Product($validated);
+        $product->price = $validated['price'] * 100;
         $product->seller_id = Auth::id();
         $product->status = 'published';
 

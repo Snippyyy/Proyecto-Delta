@@ -54,7 +54,7 @@
                                 class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                 type="button"
                             >
-                                {{$cart->total_price}} €
+                                {{ number_format($cart->total_price / 100, 2, ',', '.') }}€
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

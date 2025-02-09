@@ -59,7 +59,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center mb-6">
                     <h6
                         class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
-                        {{$product->price}}€
+                        {{ number_format($product->price / 100, 2, ',', '.') }}€
                     </h6>
                     <h6> {{$product->user->name}}</h6>
                 </div>

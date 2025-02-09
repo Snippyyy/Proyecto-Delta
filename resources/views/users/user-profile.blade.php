@@ -92,7 +92,7 @@
 
                                     <div class="pt-3 text-center">
                                         <p class="text-lg font-semibold text-gray-900">{{ $product->name }}</p>
-                                        <p class="pt-1 text-gray-700 font-medium">{{ $product->price }}€</p>
+                                        <p class="pt-1 text-gray-700 font-medium">{{ number_format($product->price / 100, 2, ',', '.') }}€</p>
                                     </div>
 
                                     <div class="flex justify-center mt-2">
@@ -131,9 +131,7 @@
                     </div>
 
                     @foreach($comments as $comment)
-                        <!-- Lista de Comentarios -->
-                        <div class="space-y-6">
-                            <!-- Ejemplo de Comentario 1 -->
+                        <div class="space-y-6 mb-3">
                             <div class="bg-gray-100 p-4 rounded-lg shadow-sm flex items-start space-x-4">
                                 <img class="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
                                      src="{{ Str::startsWith($comment->buyer->avatar, 'http') ? $comment->buyer->avatar : asset('storage/' . $comment->buyer->avatar) }}" alt="{{$comment->buyer->name}}">

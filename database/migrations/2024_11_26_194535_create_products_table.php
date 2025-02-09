@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
             $table->string('name');
             $table->string('description');
-            $table->decimal('price');
+            $table->integer('price');
             $table->boolean('shipment')->default(false);
             $table->enum('status', ['pending', 'sold', 'published'])->default('pending');
             $table->timestamps();

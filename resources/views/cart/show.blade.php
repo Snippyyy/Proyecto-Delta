@@ -112,7 +112,7 @@
 									</span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">{{$product->product->price}}€</p>
+                                    <p class="text-gray-900 whitespace-no-wrap">{{ number_format($product->product->price / 100, 2, ',', '.') }}€</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <form action="{{route('cart.destroy', [$cart, $product])}}" method="POST">
@@ -125,7 +125,7 @@
                         @endforeach
                             <tr>
                                 <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right font-semibold">
-                                    <p class="text-gray-900 whitespace-no-wrap mr-12">{{$cart->total_price}}€</p>
+                                    <p class="text-gray-900 whitespace-no-wrap mr-12">{{ number_format($cart->total_price / 100, 2, ',', '.') }}€</p>
                                 </td>
                             </tr>
                         </tbody>

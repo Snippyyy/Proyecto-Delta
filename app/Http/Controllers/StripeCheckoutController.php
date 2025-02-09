@@ -38,7 +38,7 @@ class StripeCheckoutController extends Controller
                         'name' => $product->name,
                         'images' => [$product->productImages->first()->img_path],
                     ],
-                    'unit_amount' => $product->price * 100,
+                    'unit_amount' => $product->price,
                 ],
                 'quantity' => 1,
             ];

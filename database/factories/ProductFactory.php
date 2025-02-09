@@ -17,7 +17,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'price' => $this->faker->randomFloat(2, 10, 1000),
+            'price' => $this->faker->numberBetween(1000, 100000),
             'seller_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
             'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id,
             'shipment' => $this->faker->boolean(),

@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('token')->unique()->nullable();
             $table->integer('quantity');
-            $table->decimal('total_price', 10, 2)->default(0);
+            $table->integer('total_price')->default(0);
             $table->timestamps();
         });
     }

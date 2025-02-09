@@ -25,7 +25,7 @@
                         <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg hover:bg-green-400 transition-shadow duration-300">
                             <h3 class="text-lg font-semibold mb-2">Pedido #{{ $order->id }}</h3>
                             <p class="text-gray-600 mb-2">Estado: {{ __($order->status) }}</p>
-                            <p class="text-gray-600 mb-2">Precio total: {{ $order->total_price }} €</p>
+                            <p class="text-gray-600 mb-2">Precio total: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</p>
                             <p class="text-gray-600 mb-2">Fecha de compra: {{ $order->created_at->format('d/m/Y') }}</p>
                         </div>
                     </a>

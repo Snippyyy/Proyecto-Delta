@@ -40,7 +40,7 @@
     <br>
     <div>
         <x-input-label for="price" :value="__('Price')"/>
-        <x-text-input name="price" value="{{$product->price}}"></x-text-input>
+        <x-text-input name="price" value="{{$product->price}}"></x-text-input>€
         <x-input-error :messages="$errors->get('price')" class="mt-2"/>
     </div>
     <br>
