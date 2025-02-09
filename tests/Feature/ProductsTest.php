@@ -286,7 +286,7 @@ it('Product show page shows product information that allows shipment', function 
     //Act
     get(route('product.show', $product))
         ->assertSee($product->name)
-        ->assertSee($product->price)
+        ->assertSee(number_format($product->price / 100, 2, ',', '.'))
         ->assertSee($product->description)
         ->assertSee('Acepta envios');
 
@@ -308,7 +308,7 @@ it('Product show page shows product information that denies shipment', function 
     get(route('product.show', $product))
         ->assertOk()
         ->assertSee($product->name)
-        ->assertSee($product->price)
+        ->assertSee(number_format($product->price / 100, 2, ',', '.'))
         ->assertSee($product->description)
         ->assertSee('No acepta envios');
 

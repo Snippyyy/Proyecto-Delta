@@ -29,6 +29,6 @@ it('User product is displayed in user show view', function () {
     foreach ($user->products as $product) {
         $response
             ->assertSee($product->name)
-            ->assertSee($product->price);
+            ->assertSee(number_format($product->price / 100, 2, ',', '.'));
     }
 });

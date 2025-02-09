@@ -200,7 +200,7 @@ it('Product info is in the seller cart show', function () {
 
     get(route('cart.show', $user->sellerCarts()->first()))
         ->assertSee([$products[0]->name, $products[1]->name, $products[2]->name])
-        ->assertSee([$products[0]->price, $products[1]->price, $products[2]->price])
+        ->assertSee([number_format($products[0]->price / 100, 2, ',', '.') . '€', number_format($products[1]->price / 100, 2, ',', '.') . '€', number_format($products[2]->price / 100, 2, ',', '.') . '€'])
         ->assertSee([Str::limit($products[0]->description, 50), Str::limit($products[1]->description, 50), Str::limit($products[2]->description, 50)])
         ->assertSee([$products[0]->shipment ? 'Ok' : 'No', $products[1]->shipment ? 'Ok' : 'No', $products[2]->shipment ? 'Ok' : 'No']);
 });

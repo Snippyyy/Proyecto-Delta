@@ -31,7 +31,7 @@ it('User can see his orders in my orders view', function () {
         ->assertOk()
         ->assertSee($order->id)
         ->assertSee($order->status)
-        ->assertSee($order->total_price)
+        ->assertSee(number_format($order->total_price / 100, 2, ',', '.'))
         ->assertSee($order->created_at->format('d/m/Y'));
 });
 
@@ -64,14 +64,14 @@ it('User can see his order in my orders show view with data products and links',
 
     $response->assertOk()
         ->assertSee($order->seller_user->name)
-        ->assertSee($order->total_price)
+        ->assertSee(number_format($order->total_price / 100, 2, ',', '.'))
         ->assertSee(__($order->status))
         ->assertSee($order->created_at->format('d/m/Y'))
         ->assertSee($order->buyer_user->name);
 
     foreach ($orderItems as $item) {
         $response->assertSee($item->product->name)
-            ->assertSee($item->product->price)
+            ->assertSee(number_format($item->product->price / 100, 2, ',', '.'))
             ->assertSeeHtml('<a href="' . route('product.show', $item->product->id));
     }
 
@@ -103,7 +103,7 @@ it('User can see his solds in my sold view with data and links', function () {
         ->assertOk()
         ->assertSee($order->id)
         ->assertSee($order->status)
-        ->assertSee($order->total_price)
+        ->assertSee(number_format($order->total_price / 100, 2, ',', '.'))
         ->assertSee($order->created_at->format('d/m/Y'));
 
 });
@@ -137,7 +137,7 @@ it('User can see his order in my sold show view with data products and links', f
 
     $response->assertOk()
         ->assertSee($order->seller_user->name)
-        ->assertSee($order->total_price)
+        ->assertSee(number_format($order->total_price / 100, 2, ',', '.'))
         ->assertSee(__($order->status))
         ->assertSee($order->created_at->format('d/m/Y'))
         ->assertSee($order->buyer_user->name);
