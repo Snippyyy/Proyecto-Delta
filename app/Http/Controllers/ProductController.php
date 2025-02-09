@@ -68,6 +68,9 @@ class ProductController extends Controller
         }
 
         $product->update($validated);
+        $product->price = $validated['price'] * 100;
+        $product->save();
+
         return redirect()->route('product.show', $product)->with('status', 'Producto actualizado correctamente');
     }
     public function destroy(Product $product) {

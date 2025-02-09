@@ -16,6 +16,7 @@ use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
+use App\Http\Middleware\AdminAccessMiddleware;
 use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
 use App\Http\Middleware\PendingProductMiddleware;
 use App\Http\Middleware\CheckSoldItemsInCartMiddleware;
@@ -73,13 +74,13 @@ Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
 
 
 //Rutas Categorias
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth', 'verified']);
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create')->middleware(['auth', 'verified']);
-Route::post('/categories', [CategoryController::class, 'store'])->name('category.store')->middleware(['auth', 'verified']);;
-Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('category.destroy')->middleware(['auth', 'verified']);;
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories')->middleware(AdminAccessMiddleware::class);
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create')->middleware(AdminAccessMiddleware::class);
+Route::post('/categories', [CategoryController::class, 'store'])->name('category.store')->middleware(AdminAccessMiddleware::class);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('category.destroy')->middleware(AdminAccessMiddleware::class);
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('category.show');
-Route::patch('/categories/{category}', [CategoryController::class, 'update'])->name('category.update')->middleware(['auth', 'verified']);;
-Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit')->middleware(['auth', 'verified']);
+Route::patch('/categories/{category}', [CategoryController::class, 'update'])->name('category.update')->middleware(AdminAccessMiddleware::class);
+Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit')->middleware(AdminAccessMiddleware::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

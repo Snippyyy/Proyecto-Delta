@@ -10,25 +10,14 @@ class CategoryController extends Controller
 {
 
     public function index(){
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('index')->with('error', 'Solo los administradores pueden ver categorias');
-        }
         $categories = Category::all();
         return view('category.index', compact('categories'));
     }
     public function create(){
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('categories')->with('error', 'Solo los administradores pueden crear categorias');
-        }
         return view('category.create');
     }
 
     public function store(CategoryRequest $request){
-
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('categories')->with('error', 'Solo los administradores pueden crear categorias');
-        }
-
         if ($request->hasFile('icon')) {
             $path = $request->file('icon')->store('icons', 'public');
             $validated = $request->validated();
@@ -41,32 +30,20 @@ class CategoryController extends Controller
         }
 
     }
-
     public function show(Category $category){
         $categories = Category::all();
         $products = Product::with('category')->where('category_id', $category->id)->where('status', 'published')->get();
         return view('category.show', compact('category',['products','categories']));
     }
     public function destroy(Category $category){
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('categories')->with('error', 'Solo los administradores pueden eliminar categorias');
-        }
         $category->delete();
         return redirect()->route('categories')->with('status', 'Categoria eliminada');
     }
 
     public function edit(Category $category){
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('categories')->with('error', 'Solo los administradores pueden editar categorias');
-        }
         return view('category.edit', compact('category'));
     }
     public function update(CategoryRequest $request, Category $category){
-
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('categories')->with('error', 'Solo los administradores pueden editar categorias');
-        }
-
         if ($request->hasFile('icon')) {
             $path = $request->file('icon')->store('icons', 'public');
             $validated = $request->validated();
