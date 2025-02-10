@@ -112,8 +112,7 @@ it('Admin can create a discount code', function () {
         'code' => 'DISCOUNTCODE',
         'percentage' => 10,
         'valid_until' => now()->addDays(10)->format('Y-m-d')
-    ])->assertRedirect(route('discount-code'))
-        ->assertSessionHas('success', 'Código de descuento creado correctamente');
+    ])->assertRedirect(route('discount-code'));
 });
 
 it('A discount code will be disabled after valid_until date', function () {

@@ -31,7 +31,7 @@
 			        </a>
 
                     @foreach($categories as $category)
-                        <a class="uppercase tracking-wide no-underline hover:underline font-bold text-gray-800 text-xs hover:under " href="{{ route('category.show', $category) }}">
+                        <a class="uppercase tracking-wide no-underline hover:underline font-bold text-gray-800 text-xs hover:under z-20" href="{{ route('category.show', $category) }}">
                             {{ $category->name }}
                         </a>
                     @endforeach
