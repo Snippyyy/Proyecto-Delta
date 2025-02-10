@@ -23,6 +23,11 @@
                             {{  __('Categorias') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('discount-code')" :active="request()->routeIs('discount-code')">
+                            {{  __('Codigos de descuento') }}
+                        </x-nav-link>
+                    </div>
                 @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('my-products')" :active="request()->routeIs('my-products')">

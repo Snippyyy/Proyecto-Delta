@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ItemsCartController;
@@ -34,7 +35,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Rutas de comentarios
+//Ruta de codigos de descuento
+Route::get('discount-code', [DiscountCodeController::class, 'index'])->name('discount-code')->middleware(AdminAccessMiddleware::class);
+Route::get('discount-code/create', [DiscountCodeController::class, 'create'])->name('discount-code.create')->middleware(AdminAccessMiddleware::class);
+Route::post('discount-code', [DiscountCodeController::class, 'store'])->name('discount-code.store')->middleware(AdminAccessMiddleware::class);
+
+//Ruta de comentarios
 Route::post('users/{user:name}/comment', [CommentsController::class, 'store'])->name('comments.store')->middleware(CommentsMiddleware::class);
 
 //users

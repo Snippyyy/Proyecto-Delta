@@ -21,5 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Schedule $schedule): void
     {
         $schedule->command('cart:clean')->daily();
+        $schedule->command('discounts:deactivate-expired')->daily();
     }
 }
