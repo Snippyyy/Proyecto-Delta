@@ -106,8 +106,8 @@ it('User without admin role can not access to edit Category form page', function
     actingAs($user);
 
     get(route('category.edit', $category))
-        ->assertRedirect(route('categories'))
-        ->assertSessionHas('error', 'Solo los administradores pueden editar categorias');
+        ->assertRedirect(route('index'))
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
 });
 
 it('User with admin role can access to create form page', function () {
@@ -134,8 +134,8 @@ it('User without admin role cannot access to create form page', function () {
     actingAs($user);
 
     get(route('category.create'))
-        ->assertRedirect(route('categories'))
-        ->assertSessionHas('error', 'Solo los administradores pueden crear categorias');
+        ->assertRedirect(route('index'))
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
 
 });
 
@@ -270,5 +270,28 @@ it('users index route works', function () {
 it('users show route works', function () {
     $user = User::factory()->create();
     get(route('users.show', $user))
+        ->assertOk();
+});
+
+it('Admin can access to Discount codes page', function () {
+    $user = User::factory()->create([
+        'role' => 'admin'
+    ]);
+
+    actingAs($user);
+
+    get(route('discount-code'))
+        ->assertOk();
+});
+
+it('Admin can access to Discount codes page form', function () {
+
+    $user = User::factory()->create([
+        'role' => 'admin'
+    ]);
+
+    actingAs($user);
+
+    get(route('discount-code.create'))
         ->assertOk();
 });

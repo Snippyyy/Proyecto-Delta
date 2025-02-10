@@ -116,8 +116,8 @@ it('User without admin role can not delete a category', function () {
 
     $response = $this->delete(route('category.destroy', $category));
 
-    $response->assertRedirect(route('categories'))
-        ->assertSessionHas('error', 'Solo los administradores pueden eliminar categorias');
+    $response->assertRedirect(route('index'))
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
 
 });
 
@@ -152,8 +152,8 @@ it('User without admin role can not edit a Category', function () {
         'icon' => UploadedFile::fake()->image('newicon.png'),
     ]);
 
-    $response->assertRedirect(route('categories'))
-        ->assertSessionHas('error', 'Solo los administradores pueden editar categorias');
+    $response->assertRedirect(route('index'))
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
 
 });
 
@@ -224,6 +224,6 @@ it('User without admin role can not create a Category', function () {
         'icon' => UploadedFile::fake()->image('icon.png'),
     ]);
 
-    $response->assertRedirect(route('categories'))
-        ->assertSessionHas('error', 'Solo los administradores pueden crear categorias');
+    $response->assertRedirect(route('index'))
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
 });
