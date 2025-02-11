@@ -125,25 +125,44 @@
                         @endforeach
                             <tr>
                                 <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right font-semibold">
-                                    <p class="text-gray-900 whitespace-no-wrap mr-12">{{ number_format($cart->total_price / 100, 2, ',', '.') }}€</p>
+                                    @if($cart->discount_code)
+                                        <p class="text-red-600 font-bold mr-9">{{ number_format($cart->discount_price / 100, 2, ',', '.') }}€</p>
+                                    @else
+                                        <p class="text-gray-900 whitespace-no-wrap mr-12">{{ number_format($cart->total_price / 100, 2, ',', '.') }}€</p>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     </div>
                 @if(auth()->check())
-                    <div>
-                        <label for="discount">¿Codigo de descuento? </label>
-                        <input type="text" name="discount">
-                        <label for="applydiscount"></label>
-                        <button type="button" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">Aplicar</button>
-                        <label for="buy"></label>
-                        <br>
-                        <form action="{{route("cart.checkout", $cart)}}" method="POST">
+                    @if($cart->discount_code)
+                        <div class="text-center mt-5">
+                            <p class="text-red-600">Descuento aplicado: {{$cart->discount_code->code}}</p>
+                            <p class="text-red-600">Descuento: {{$cart->discount_code->percentage}}%</p>
+                        </div>
+                        <form action="{{route('cart.remove-discount', $cart)}}" method="POST">
                             @csrf
-                            <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                            @method('PATCH')
+                            <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar descuento</button>
                         </form>
-                    </div>
+                    @else
+                        <div>
+                            <form action="{{route('cart.discountapply', $cart)}}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <label for="discount">¿Codigo de descuento? </label>
+                                <input type="text" name="discount">
+                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">Aplicar</button>
+                    @endif
+                            </form>
+                            <label for="buy"></label>
+                            <br>
+                            <form action="{{route("cart.checkout", $cart)}}" method="POST">
+                                @csrf
+                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                            </form>
+                        </div>
                 @else
                     <form action="{{route('login')}}" method="GET">
                         @csrf

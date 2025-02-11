@@ -27,4 +27,9 @@ class SellerCart extends Model
         return $this->belongsTo(User::class, 'seller_id');
     }
 
+    public function discount_code(): BelongsTo
+    {
+        return $this->belongsTo(DiscountCode::class);
+    }
+
 }

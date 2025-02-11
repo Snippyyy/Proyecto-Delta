@@ -49,6 +49,7 @@
                                     </li>
                                 @endforeach
                             </ul>
+                        @if(!$cart->discount_code)
                         <a class="inline-block" href="#">
                             <button
                                 class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -72,6 +73,31 @@
                                 </svg>
                             </button>
                         </a>
+                        @else
+                            <a class="inline-block" href="#">
+                                <button
+                                    class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans font-bold uppercase text-gree-500 transition-all hover:bg-green-500/10 active:bg-green-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    type="button"
+                                >
+                                    {{ number_format($cart->discount_price / 100, 2, ',', '.') }}€
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                        class="h-4 w-4"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </a>
+                        @endif
                     </div>
                 </a>
             </div>

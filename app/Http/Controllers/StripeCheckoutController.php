@@ -30,20 +30,35 @@ class StripeCheckoutController extends Controller
         $products = Product::whereIn('id', $productIds)->get();
 
 
-        foreach ($products as $product) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'eur',
-                    'product_data' => [
-                        'name' => $product->name,
-                        'images' => [$product->productImages->first()->img_path],
+        if ($cart->discount_code){
+            foreach ($products as $product) {
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $product->name,
+                            'images' => [$product->productImages->first()->img_path],
+                        ],
+                        'unit_amount' => $product->price * (1 - $cart->discount_code->percentage / 100),
                     ],
-                    'unit_amount' => $product->price,
-                ],
-                'quantity' => 1,
-            ];
+                    'quantity' => 1,
+                ];
+            }
+        }else{
+            foreach ($products as $product) {
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $product->name,
+                            'images' => [$product->productImages->first()->img_path],
+                        ],
+                        'unit_amount' => $product->price,
+                    ],
+                    'quantity' => 1,
+                ];
+            }
         }
-
         $session = Session::create([
             'line_items' => $lineItems,
             'mode' => 'payment',

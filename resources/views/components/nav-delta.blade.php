@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        
+
         <div class="flex items-center space-x-4">
             <div class="relative inline-block text-left">
                 <button class="p-2 border rounded-lg hover:bg-gray-200" id="menu-button" aria-expanded="false" aria-haspopup="true">

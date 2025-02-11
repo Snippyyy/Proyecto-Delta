@@ -13,7 +13,6 @@ use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSoldController;
 use App\Http\Controllers\WelcomePageController;
-use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
@@ -24,6 +23,8 @@ use App\Http\Middleware\CheckSoldItemsInCartMiddleware;
 use App\Http\Middleware\AuthUserOrderMiddleware;
 use App\Http\Middleware\AuthUserSoldMiddleware;
 use App\Http\Middleware\CommentsMiddleware;
+use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
+use App\Http\Middleware\EnsureDiscountCodeIsActiveMiddleware;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -70,9 +71,11 @@ Route::delete('/products/{product}',[ProductController::class,'destroy'])->name(
 Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
     Route::get('/cart', [SellerCartController::class, 'index'])->name('cart.index');
     Route::post('/products/{product}', [ItemsCartController::class, 'store'])->name('cart.store')->middleware(CantPurchaseSoldItemsMiddleware::class);
-    Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show');
+    Route::get('/cart/{cart}', [ItemsCartController::class, 'show'])->name('cart.show')->middleware(EnsureDiscountCodeIsActiveMiddleware::class);
+    Route::patch('/cart/{cart}/discountapply', [SellerCartController::class, 'discount_apply'])->name('cart.discountapply')->middleware(['auth', 'verified']);
+    Route::patch('cart/{cart}/remove-discount', [SellerCartController::class, 'remove_discount'])->name('cart.remove-discount')->middleware(['auth', 'verified']);
     Route::delete('/cart/{cart}/{product}', [ItemsCartController::class, 'destroy'])->name('cart.destroy');
-    Route::post('/cart/{cart}/checkout', [StripeCheckoutController::class, 'session'])->name('cart.checkout')->middleware(['auth', 'verified'])->middleware(CheckSoldItemsInCartMiddleware::class);
+    Route::post('/cart/{cart}/checkout', [StripeCheckoutController::class, 'session'])->name('cart.checkout')->middleware(['auth', 'verified'])->middleware(CheckSoldItemsInCartMiddleware::class)->middleware(EnsureDiscountCodeIsActiveMiddleware::class);
     Route::get('/cart/{cart}/success', [StripeCheckoutController::class, 'success'])->name('cart.checkout.success')->middleware(['auth', 'verified']);
     Route::get('/cart/{cart}/cancel', [StripeCheckoutController::class, 'cancel'])->name('cart.checkout.cancel')->middleware(['auth', 'verified']);
     Route::post('/webhook', [StripeCheckoutController::class, 'webhook'])->name('webhook');

@@ -72,6 +72,11 @@ class ItemsCartController extends Controller
         $cart->total_price = $cartItems->sum('product.price');
         $cart->save();
 
+        if ($cart->discount_code){
+            $cart->discount_price = $cart->total_price - ($cart->total_price * $cart->discount_code->percentage / 100);
+            $cart->save();
+        }
+
         return redirect(route('product.show', $product))->with('status', 'Producto añadido al carrito');
     }
 
