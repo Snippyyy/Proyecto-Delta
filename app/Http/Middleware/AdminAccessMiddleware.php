@@ -10,9 +10,9 @@ class AdminAccessMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Debes iniciar sesion para ver categorias');
+            return redirect()->route('login');
         }
-        if (auth()->user()->role !== 'admin') {
+        if (!auth()->user()->hasRole('admin')) {
             return redirect()->route('index')->with('error', 'Solo los administradores pueden ver y administrar categorias');
         }
         return $next($request);

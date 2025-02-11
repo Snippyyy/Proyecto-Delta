@@ -6,10 +6,15 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\artisan;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    roleSeeder();
+});
 
 it('First page response', function () {
 
@@ -66,10 +71,7 @@ it('Product show page response', function () {
 
 it('Category admin page response', function () {
     actingAs(User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create());
+    )->create()->assignRole('admin'));
     get(route('categories'))->assertOk();
 });
 
@@ -81,10 +83,7 @@ it('Category show page response', function () {
 it('User with admin role can access to edit Category form page', function () {
 
     $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    )->create()->assignRole('admin');
 
     $category = Category::factory()->create();
 
@@ -113,10 +112,7 @@ it('User without admin role can not access to edit Category form page', function
 it('User with admin role can access to create form page', function () {
 
     $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    )->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -274,9 +270,7 @@ it('users show route works', function () {
 });
 
 it('Admin can access to Discount codes page', function () {
-    $user = User::factory()->create([
-        'role' => 'admin'
-    ]);
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -285,10 +279,9 @@ it('Admin can access to Discount codes page', function () {
 });
 
 it('Admin can access to Discount codes page form', function () {
+    $user = User::factory()->create();
 
-    $user = User::factory()->create([
-        'role' => 'admin'
-    ]);
+    $user->assignRole('admin');
 
     actingAs($user);
 

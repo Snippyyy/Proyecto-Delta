@@ -8,10 +8,8 @@ use function Pest\Laravel\actingAs;
 uses(RefreshDatabase::class);
 
 function loguedAsAdminUser(): void{
-
-    $user = User::factory()->create([
-        'role' => 'admin',
-    ]);
+    roleSeeder();
+    $user = User::factory()->create()->assignRole('admin');
     actingAs($user);
 }
 

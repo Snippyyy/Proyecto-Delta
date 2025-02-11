@@ -19,7 +19,7 @@
                     </x-nav-link>
                 </div>
 
-                @if(auth()->user()->role == 'admin')
+                @role('admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')">
                             {{  __('Categorias') }}
@@ -30,7 +30,7 @@
                             {{  __('Codigos de descuento') }}
                         </x-nav-link>
                     </div>
-                @endif
+                @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('my-products')" :active="request()->routeIs('my-products')">
                         {{  __('Mis productos') }}

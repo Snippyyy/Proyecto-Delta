@@ -12,7 +12,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->role === 'admin';
+        return auth()->user()->hasRole('admin');
     }
 
     /**

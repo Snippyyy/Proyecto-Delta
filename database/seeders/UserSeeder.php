@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(
+        $user = User::factory(
             [
                 'name' => 'snippy',
                 'email' => $email ='snippy@mail.com',
@@ -25,9 +25,10 @@ class UserSeeder extends Seeder
                 'postal_code' => '28001',
                 'phone_number' => '123456789',
                 'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
-                'role' => 'admin',
             ]
         )->has(Product::factory()->count(3))->create();
+
+        $user->assignRole('admin');
 
         User::factory(
             [

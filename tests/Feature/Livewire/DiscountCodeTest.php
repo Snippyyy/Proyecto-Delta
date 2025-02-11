@@ -12,11 +12,14 @@ use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    roleSeeder();
+});
+
 it('Discount codes are displayed in general page', function (){
 
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
+
 
     actingAs($user);
 
@@ -33,9 +36,7 @@ it('Discount codes are displayed in general page', function (){
 
 it('Discount code can be disabled', function () {
 
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
 
     actingAs($user);
@@ -49,9 +50,7 @@ it('Discount code can be disabled', function () {
 
 it('Discount code can be enabled', function () {
 
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
 
     actingAs($user);
@@ -67,9 +66,7 @@ it('Discount code can be enabled', function () {
 
 it('Discount code can be deleted', function () {
 
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -81,9 +78,7 @@ it('Discount code can be deleted', function () {
 });
 
 it('Discount code is displayed in Livewire Component', function () {
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
 
     actingAs($user);
@@ -101,9 +96,7 @@ it('Discount code is displayed in Livewire Component', function () {
 
 it('Admin can create a discount code', function () {
 
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
 
     actingAs($user);

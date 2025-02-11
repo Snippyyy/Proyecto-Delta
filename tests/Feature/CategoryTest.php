@@ -10,6 +10,10 @@ use function Pest\Laravel\get;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    roleSeeder();
+});
+
 it('Delta page show all categories correctly', function () {
 
     $categories = Category::factory()->count(3)->create();
@@ -25,11 +29,7 @@ it('Delta page show all categories correctly', function () {
 it('Category admin page show details of the category', function () {
 
         $category = Category::factory()->create();
-        $user = User::factory(
-            [
-                'role' => 'admin'
-            ]
-        )->create();
+        $user = User::factory()->create()->assignRole('admin');
 
         actingAs($user);
 
@@ -71,11 +71,7 @@ it('Category show page shows products from his own category', function () {
 
 it('Category create page shows the form to create a new category', function () {
 
-    $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -89,11 +85,7 @@ it('Category create page shows the form to create a new category', function () {
 
 it('Category edit page shows the form to edit a existing category', function () {
 
-    $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    $user = User::factory()->create()->assignRole('admin');
     $category = Category::factory()->create();
 
     actingAs($user);
@@ -123,12 +115,7 @@ it('User without admin role can not delete a category', function () {
 
 it('User with admin role can delete a Category', function () {
 
-    $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
-
+    $user = User::factory()->create()->assignRole('admin');
     $category = Category::factory()->create();
 
     actingAs($user);
@@ -159,11 +146,7 @@ it('User without admin role can not edit a Category', function () {
 
 it('User with admin role can edit a Category', function () {
 
-    $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    $user = User::factory()->create()->assignRole('admin');
 
 
     $category = Category::factory()->create();
@@ -189,11 +172,7 @@ it('User with admin role can edit a Category', function () {
 
 it('User with admin role can create a Category', function () {
 
-    $user = User::factory(
-        [
-            'role' => 'admin'
-        ]
-    )->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 

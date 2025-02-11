@@ -10,9 +10,8 @@ uses(RefreshDatabase::class);
 
 function loguedAsAdminUserAndCategory(): void{
 
-    $user = User::factory()->create([
-        'role' => 'admin',
-    ]);
+    roleSeeder();
+    $user = User::factory()->create()->assignRole('admin');
     Category::factory()->create();
     actingAs($user);
 }

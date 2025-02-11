@@ -11,6 +11,7 @@
 |
 */
 
+use function Pest\Laravel\artisan;
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -40,6 +41,11 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
+
+
+function roleSeeder () {
+    artisan('db:seed --class=RoleSetterSeeder');
+};
 
 function something()
 {

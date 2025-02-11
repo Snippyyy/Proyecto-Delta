@@ -7,10 +7,12 @@ use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    roleSeeder();
+});
+
 it('Code field is required', function () {
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -23,9 +25,7 @@ it('Code field is required', function () {
 });
 
 it('Discount field is required', function () {
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -38,9 +38,7 @@ it('Discount field is required', function () {
 });
 
 it('Valid until field is required', function () {
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
@@ -53,9 +51,7 @@ it('Valid until field is required', function () {
 });
 
 it('Valid until must be after today date', function () {
-    $user = User::factory([
-        'role' => 'admin'
-    ])->create();
+    $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
 
