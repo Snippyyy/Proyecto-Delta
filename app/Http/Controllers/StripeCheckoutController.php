@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPaidEvent;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -24,6 +25,7 @@ class StripeCheckoutController extends Controller
 
         Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
+
         $lineItems = [];
         $cartItems = CartItem::where('seller_cart_id', $cart->id)->get();
         $productIds = $cartItems->pluck('product_id');
@@ -39,7 +41,7 @@ class StripeCheckoutController extends Controller
                             'name' => $product->name,
                             'images' => [$product->productImages->first()->img_path],
                         ],
-                        'unit_amount' => $product->price * (1 - $cart->discount_code->percentage / 100),
+                        'unit_amount' => floor($product->price / $cart->total_price * $cart->discount_price), //Ajustar precio en el futuro
                     ],
                     'quantity' => 1,
                 ];
@@ -73,7 +75,11 @@ class StripeCheckoutController extends Controller
         $order->session_id = $session->id;
         $order->buyer_id = auth()->id();
         $order->seller_id = $cart->seller_id;
-        $order->total_price = $cart->total_price;
+        if ($cart->discount_code){
+            $order->total_price = $cart->discount_price;
+        }else{
+            $order->total_price = $cart->total_price;
+        }
 
         $order->save();
 
@@ -114,18 +120,7 @@ class StripeCheckoutController extends Controller
                 $order->status = 'paid';
                 $order->save();
             }
-
-            //LOGICA PARA cambiar estados de los productos y borrar el carrito comprado
-
-            $cart = SellerCart::where('seller_id', $order->seller_id)->where('user_id', auth()->id())->first();
-            $CartItems = CartItem::where('seller_cart_id', $cart->id)->get();
-            $products = Product::whereIn('id', $CartItems->pluck('product_id'))->get();
-
-            $cart->delete();
-            foreach ($products as $product) {
-                $product->status = 'sold';
-                $product->save();
-            }
+            event(new OrderPaidEvent($order));
 
             return view('cart.checkout.success');
         } catch (\Exception $e) {

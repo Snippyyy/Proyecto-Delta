@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\ProvinceService;
@@ -53,6 +54,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        event(new RegisterUserEvent($user));
 
         Auth::login($user);
 
