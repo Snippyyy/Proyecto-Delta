@@ -13,8 +13,10 @@ use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSoldController;
 use App\Http\Controllers\WelcomePageController;
+use App\Mail\ProductIsSoldAdviceMail;
 use App\Mail\SuccessfulPurchaseMail;
 use App\Mail\WelcomeMail;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
@@ -39,9 +41,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/send-mail', function () {
-    $name = 'John Doe';
-    \Mail::to('example@example.com')->queue(new WelcomeMail($name));
-    return 'Correo enviado con éxito';
+$name = 'John Doe';
+$product = Product::get()->first();
+
+\Mail::to('example@example.com')->queue(new \App\Mail\ProductIsDeletedAdviceMail($product, $name));
+return 'Correo enviado con éxito';
 });
 
 //Ruta de codigos de descuento
