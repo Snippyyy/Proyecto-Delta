@@ -3,6 +3,7 @@
 use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\FavoriteItemsController;
 use App\Http\Controllers\ItemsCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -78,6 +79,9 @@ Route::patch('/products/{product}/post',[ProductController::class,'post'])->name
 Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified']);
 Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified']);
 Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
+
+//Ruta de favoritos
+Route::get('favorites', FavoriteItemsController::class)->name('favorites')->middleware(['auth', 'verified']);
 
 //Rutas Carrito
 Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {

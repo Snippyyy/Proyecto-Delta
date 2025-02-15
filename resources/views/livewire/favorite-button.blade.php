@@ -1,4 +1,5 @@
 <div>
+    @auth
     <button
         class="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300" wire:click="toggleFavorite">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none">
@@ -9,6 +10,7 @@
             @endif
         </svg>
     </button>
+    @endauth
     <div class="mt-4">
         @if($product->favoritedByUsers()->count() == 0)
             <p class="text-gray-500 italic">Nadie ha guardado este producto en favoritos</p>

@@ -15,9 +15,9 @@
             @auth
                 <a class="text-gray-700 hover:text-black" href="{{route('product.create')}}">Publicar producto</a>
             @endauth
-            <a class="text-gray-700 hover:text-black" href="{{route('users.index')}}">Usuarios</a>
+                <a class="text-gray-700 hover:text-black" href="{{route('users.index')}}">Usuarios</a>
+                <a class="text-gray-700 hover:text-black"href="{{route('favorites')}}" >Favoritos</a>
         </div>
-
         <!-- Menu de moviles -->
         <div class="relative inline-block text-left md:hidden">
             <button class="p-2 border rounded-lg hover:bg-gray-200" id="mobile-menu-button" aria-expanded="false" aria-haspopup="true">
