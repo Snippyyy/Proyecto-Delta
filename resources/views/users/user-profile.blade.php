@@ -29,7 +29,7 @@
                         <h1 class="text-xl font-bold">{{$profile->name}}</h1>
                         <p class="text-gray-700">Delta User</p>
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                            <a href="https://wa.me/{{$profile->phone_number}}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
                         </div>
                     </div>
                     <hr class="my-6 border-t border-gray-300">
