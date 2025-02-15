@@ -146,6 +146,8 @@ it('User without admin role can not edit a Category', function () {
 
 it('User with admin role can edit a Category', function () {
 
+    Storage::fake('public');
+
     $user = User::factory()->create()->assignRole('admin');
 
 
@@ -172,6 +174,8 @@ it('User with admin role can edit a Category', function () {
 
 it('User with admin role can create a Category', function () {
 
+    Storage::fake('public');
+
     $user = User::factory()->create()->assignRole('admin');
 
     actingAs($user);
@@ -192,6 +196,8 @@ it('User with admin role can create a Category', function () {
 });
 
 it('User without admin role can not create a Category', function () {
+
+    Storage::fake('public');
 
     $user = User::factory()->create();
 

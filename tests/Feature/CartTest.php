@@ -165,10 +165,6 @@ it('User cannot add products that are already in his cart', function () {
 });
 
 
-it('User can use discount code and it aplies to the final price', function () {
-
-})->todo();
-
 it('Product info is in the seller cart show', function () {
 
     $user = User::factory()->create();
@@ -230,10 +226,6 @@ it('User can see the total price of the cart', function () {
         ->assertSee($cart->total_price);
 
 });
-
-it('User can see the total price of the cart with discount', function () {
-
-})->todo();
 
 it('Cart get destroyed automatically if there is no products in it', function () {
 
@@ -343,8 +335,6 @@ it('Guest Cart gets automatically destroyed after 30 days with no update', funct
     $cart = SellerCart::where('user_id', null)->first();
     $cart['updated_at'] = Carbon::now()->subDays(31);
     $cart->save();
-
-
 
 
     Artisan::call('cart:clean');

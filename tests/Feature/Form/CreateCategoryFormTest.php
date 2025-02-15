@@ -14,6 +14,8 @@ function loguedAsAdminUser(): void{
 }
 
 it('name field is required', function () {
+
+
     loguedAsAdminUser();
     $response = $this->post('/categories', [
         'name' => '',

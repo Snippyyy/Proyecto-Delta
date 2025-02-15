@@ -11,6 +11,7 @@ use function Pest\Laravel\get;
 uses(RefreshDatabase::class);
 
 it('Auth user can use the Product create form', function () {
+    Storage::fake('public');
 
     $user = User::factory()->create();
     $category = Category::factory([
@@ -35,6 +36,7 @@ it('Auth user can use the Product create form', function () {
 
 it('Auth user can use the Product create form (with multiple images)', function () {
 
+    Storage::fake('public');
     $user = User::factory()->create();
     $category = Category::factory([
         'name' => 'Test',
@@ -73,7 +75,7 @@ it('Products that arent published dont show in the index page', function () {
 
 it('Guest user can not use the Product create form', function () {
 
-    $user = User::factory()->create();
+
     $category = Category::factory([
         'name' => 'Test',
     ])->create();
@@ -123,6 +125,7 @@ it('User can not update a product that doesnt own', function () {
 });
 
 it('User can update his own product', function () {
+    Storage::fake('public');
     $user = User::factory()->has(Product::factory())->create();
 
     $product = $user->products->first();

@@ -11,7 +11,7 @@ uses(RefreshDatabase::class);
 
 
 beforeEach(function () {
-    Artisan::call('migrate:fresh');
+    Artisan::call('migrate:fresh'); //CAMBIAR
 });
 
 function loguedUserWithProduct(): void
@@ -85,7 +85,6 @@ it('images to delete must exist', function () {
 
     $user = User::factory()->has(Product::factory()->has(ProductImage::factory()->count(3)))->create();
     $product = $user->products->first();
-    $existingImageId = $product->productImages->first()->id;
 
     actingAs($user);
 
@@ -144,6 +143,8 @@ it('User can not eliminate all images from a product, must be at least one', fun
 });
 
 it('can upload a image', function () {
+
+    Storage::fake('public');
 
     $user = User::factory()->has(Product::factory())->create();
     $product = $user->products->first();
