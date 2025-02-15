@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 #[ObservedBy(ProductModifiedObserver::class)]
@@ -65,4 +66,9 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class, 'product_id', 'id');
     }
+
+    public function favoritedByUsers(): BelongsToMany {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
+
 }

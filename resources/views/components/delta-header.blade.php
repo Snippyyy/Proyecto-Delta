@@ -10,6 +10,8 @@
     <!-- Tailwind -->
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    @livewireStyles
+    @livewireScripts
 
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
 
