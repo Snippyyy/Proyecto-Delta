@@ -25,6 +25,22 @@ class Product extends Model
         'shipment',
     ];
 
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopePublishedWithCategory($query, $categoryId)
+    {
+        return $query->where('status', 'published')
+            ->where('category_id', $categoryId);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'seller_id', 'id');

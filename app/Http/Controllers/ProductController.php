@@ -78,7 +78,6 @@ class ProductController extends Controller
             return redirect()->route('product.show', $product)->with('status', 'No puedes eliminar un articulo que no es tuyo');
         }
 
-        ProductImageService::destroyAllImages($product);
         $product->delete();
         return redirect()->route('index')->with('status', 'El producto ha sido eliminado correctamente');
     }

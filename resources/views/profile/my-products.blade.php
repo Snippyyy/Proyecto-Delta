@@ -30,7 +30,7 @@
                     <div class="p-4 border-b border-gray-200 hover:bg-gray-300 transition-colors rounded-lg">
                         <h2 class="text-lg font-medium">{{ $product->name }}</h2>
                         <p class="text-gray-600">{{ $product->description }}</p>
-                        <p class="text-gray-800 font-semibold">{{ $product->price}} €</p>
+                        <p class="text-gray-800 font-semibold">{{ number_format($product->price / 100, 2, ',', '.') }} €</p>
                     </div>
                 </a>
             @endforeach
@@ -44,7 +44,7 @@
                     <div class="p-4 border-b border-gray-200 hover:bg-gray-300 transition-colors rounded-lg">
                         <h2 class="text-lg font-medium">{{ $product->name }}</h2>
                         <p class="text-gray-600">{{ $product->description }}</p>
-                        <p class="text-gray-800 font-semibold">{{ $product->price }} €</p>
+                        <p class="text-gray-800 font-semibold">{{ number_format($product->price / 100, 2, ',', '.') }} €</p>
                     </div>
                 </a>
             @endforeach

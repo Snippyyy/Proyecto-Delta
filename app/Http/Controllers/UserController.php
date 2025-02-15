@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $profile = User::select('id','name', 'email', 'avatar', 'province', 'address', 'postal_code', 'phone_number')->where('id', $user->id)->get();
         $profile = $profile[0];
-        $products = $user->products()->where('status', 'published')->get();
+        $products = $user->products()->published()->get();
 
         $comments = $user->comments()->orderBy('created_at', 'desc')->get();
 
