@@ -24,6 +24,11 @@ class ProductModifiedObserver
 
     public function deleting(Product $product): void
     {
+        //Eliminacion de imagenes sin hacer uso del ImageService Creado en los comienzos del proyecto
+        foreach ($product->productImages as $image) {
+            \Storage::disk('public')->delete($image->img_path);
+        }
+
         $carts = SellerCart::whereHas('cart_items', function($query) use ($product) {
             $query->where('product_id', $product->id);
         })->get();
