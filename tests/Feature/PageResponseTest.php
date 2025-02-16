@@ -106,7 +106,7 @@ it('User without admin role can not access to edit Category form page', function
 
     get(route('category.edit', $category))
         ->assertRedirect(route('index'))
-        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar esta seccion');
 });
 
 it('User with admin role can access to create form page', function () {
@@ -131,7 +131,7 @@ it('User without admin role cannot access to create form page', function () {
 
     get(route('category.create'))
         ->assertRedirect(route('index'))
-        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar categorias');
+        ->assertSessionHas('error', 'Solo los administradores pueden ver y administrar esta seccion');
 
 });
 
