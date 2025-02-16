@@ -15,6 +15,6 @@ class RegisterUserListener
 
     public function handle(RegisterUserEvent $event): void
     {
-        \Mail::to($event->email)->queue(new WelcomeMail($event->name));
+        \Mail::to($event->email)->queue((new WelcomeMail($event->name))->onQueue('emails'));
     }
 }

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderPaidEvent;
+use App\Jobs\OrderCreationJob;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\SellerCart;
-use Dflydev\DotAccessData\Data;
 use Stripe\Checkout\Session;
 
 use Stripe\Customer;
@@ -16,7 +16,6 @@ use Stripe\Stripe;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use function Pest\Laravel\withHeader;
 
 class StripeCheckoutController extends Controller
 {
@@ -68,28 +67,8 @@ class StripeCheckoutController extends Controller
             'success_url' => route('cart.checkout.success', [$cart], true)."?session_id={CHECKOUT_SESSION_ID}",
             'cancel_url' =>route('cart.checkout.cancel', [$cart], true)."?session_id={CHECKOUT_SESSION_ID}",
         ]);
+        OrderCreationJob::dispatch($cart, $session->id);
 
-        $order = new Order();
-        $order->status = 'unpaid';
-        $order->total_price = $cart->total_price;
-        $order->session_id = $session->id;
-        $order->buyer_id = auth()->id();
-        $order->seller_id = $cart->seller_id;
-        if ($cart->discount_code){
-            $order->total_price = $cart->discount_price;
-        }else{
-            $order->total_price = $cart->total_price;
-        }
-
-        $order->save();
-
-        foreach ($products as $product) {
-
-            $orderItem = new OrderItem();
-            $orderItem->order_id = $order->id;
-            $orderItem->product_id = $product->id;
-            $orderItem->save();
-        }
 
         return redirect($session->url);
     }
@@ -155,9 +134,9 @@ class StripeCheckoutController extends Controller
         $event = null;
 
         try {
-            $event = Webhook::constructEvent(
-                $payload, $sig_header, $endpoint_secret
-            );
+            //$event = Webhook::constructEvent(
+            //    $payload, $sig_header, $endpoint_secret
+            //);
         } catch(\UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400);

@@ -8,8 +8,9 @@ Before execution
 brew install stripe/stripe-cli/stripe
 stripe listen --forward-to proyecto-delta.test/webhook  # Para hacer seguimiento de eventos de stripe, no es obligatorio
 
-
-php artisan queue:work #obligatorio para el correcto funcionamiento de los trabajos
+#obligatorio para el correcto funcionamiento de los trabajos
+php artisan queue:work 
+php artisan queue:work --queue=emails
 
 # Crontab para ejecutar tareas programadas
 crontab -e

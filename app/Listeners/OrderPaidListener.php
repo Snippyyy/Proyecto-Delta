@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\OrderPaidEvent;
+use App\Jobs\ChangeToSoldStatusProductJob;
+use App\Jobs\DeleteCartAfterPurchaseJob;
 use App\Mail\SuccessfulPurchaseMail;
 use App\Models\CartItem;
 use App\Models\Product;
@@ -19,18 +21,16 @@ class OrderPaidListener
     {
         $order = $event->order;
         if ($order->status === 'paid') {
-            Mail::to($order->buyer_user->email)->queue(new SuccessfulPurchaseMail($order));
+            Mail::to($order->buyer_user->email)->queue((new SuccessfulPurchaseMail($order))->onQueue('emails'));
 
-            //LOGICA PARA cambiar estados de los productos y borrar el carrito comprado
 
-            $cart = SellerCart::where('seller_id', $order->seller_id)->where('user_id', auth()->id())->first();
-            $CartItems = CartItem::where('seller_cart_id', $cart->id)->get();
-            $products = Product::whereIn('id', $CartItems->pluck('product_id'))->get();
+            $cart = SellerCart::where(['seller_id' => $order->seller_id, 'user_id' => auth()->id()])->first();
+            $products = Product::whereIn('id', CartItem::where('seller_cart_id', $cart->id)->pluck('product_id'))->get();
 
-            $cart->delete();
+            //Logica pasada a un job -> DeleteCartAfterPurchaseJob
+            DeleteCartAfterPurchaseJob::dispatch($cart);
             foreach ($products as $product) {
-                $product->status = 'sold';
-                $product->save();
+            ChangeToSoldStatusProductJob::dispatch($product);
             }
         }
     }

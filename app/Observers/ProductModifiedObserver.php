@@ -14,10 +14,10 @@ class ProductModifiedObserver
     {
         if ($product->status == 'sold'){
             $carts = SellerCart::whereHas('cart_items', function($query) use ($product) {
-                $query->where('product_id', $product->id); //implementar un scope???
+                $query->where('product_id', $product->id);
             })->get();
             foreach ($carts as $cart) {
-                    \Mail::to($cart->user->email)->queue(new ProductIsSoldAdviceMail($product, $cart->user->name));
+                    \Mail::to($cart->user->email)->queue((new ProductIsSoldAdviceMail($product, $cart->user->name))->onQueue('emails'));
             }
         }
     }
@@ -34,7 +34,7 @@ class ProductModifiedObserver
         })->get();
 
         foreach ($carts as $cart) {
-                \Mail::to($cart->user->email)->queue(new ProductIsDeletedAdviceMail($product->name, $cart->user->name, $product->user->name));
+                \Mail::to($cart->user->email)->queue((new ProductIsDeletedAdviceMail($product->name, $cart->user->name, $product->user->name))->onQueue('emails'));
         }
     }
 }

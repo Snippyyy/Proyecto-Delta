@@ -10,10 +10,8 @@ class OrderPaidEvent
 {
     use Dispatchable;
     public Order $order;
-    public $previousStatus;
     public function __construct(Order $order)
     {
         $this->order = $order;
-        $this->previousStatus = $order->getOriginal('status');
     }
 }
