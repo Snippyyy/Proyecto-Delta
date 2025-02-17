@@ -14,10 +14,6 @@ use App\Http\Controllers\UserProductsController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSoldController;
 use App\Http\Controllers\WelcomePageController;
-use App\Mail\ProductIsSoldAdviceMail;
-use App\Mail\SuccessfulPurchaseMail;
-use App\Mail\WelcomeMail;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 //Middleware
@@ -30,6 +26,7 @@ use App\Http\Middleware\AuthUserSoldMiddleware;
 use App\Http\Middleware\CommentsMiddleware;
 use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
 use App\Http\Middleware\EnsureDiscountCodeIsActiveMiddleware;
+use App\Http\Middleware\EnsureUserIsProductOwnerMiddleware;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -68,10 +65,10 @@ Route::post('my-sold/{order}/shipment', [UserSoldController::class, 'shipment'])
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
 Route::post('/products',[ProductController::class,'store'])->name('product.store')->middleware(['auth', 'verified']);
 Route::get('/products/{product}',[ProductController::class,'show'])->name('product.show')->middleware(PendingProductMiddleware::class . ':product');
-Route::patch('/products/{product}/post',[ProductController::class,'post'])->name('product.post');
-Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified']);
-Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified']);
-Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified']);
+Route::patch('/products/{product}/post',[ProductController::class,'post'])->name('product.post')->middleware([EnsureUserIsProductOwnerMiddleware::class, 'auth', 'verified']);
+Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
+Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
+Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
 
 //Ruta de favoritos
 Route::get('favorites', FavoriteItemsController::class)->name('favorites')->middleware(['auth', 'verified']);

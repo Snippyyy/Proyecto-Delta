@@ -104,7 +104,7 @@ it('User can not access to the edit page from a product that doesnt own', functi
 
     get(route('product.edit', $user2->products->first()))
         ->assertRedirect(route('product.show', $user2->products->first()))
-        ->assertSessionHas('error', 'No puedes editar un articulo que no es tuyo');
+        ->assertSessionHas('error', 'No puedes actuar sobre un articulo que no es tuyo');
 });
 
 it('User can not update a product that doesnt own', function () {
@@ -121,7 +121,7 @@ it('User can not update a product that doesnt own', function () {
             'img_path' => [UploadedFile::fake()->image('test_image.jpg')],
         ]);
     $response->assertRedirect('/products/' . $user2->products->first()->id)
-        ->assertSessionHas('error', 'No puedes editar un articulo que no es tuyo');
+        ->assertSessionHas('error', 'No puedes actuar sobre un articulo que no es tuyo');
 });
 
 it('User can update his own product', function () {
@@ -176,7 +176,7 @@ it('User can not delete a product that doesnt own', function () {
         ->delete('/products/' . $user2->products->first()->id);
 
     $response->assertRedirect('/products/' . $user2->products->first()->id)
-        ->assertSessionHas('status', 'No puedes eliminar un articulo que no es tuyo');
+        ->assertSessionHas('error', 'No puedes actuar sobre un articulo que no es tuyo');
 });
 
 it('Guest can not edit products', function () {
