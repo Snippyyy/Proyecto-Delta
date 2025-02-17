@@ -268,6 +268,7 @@ it('Guest can add products to his cart', function () {
 
 it('Guest can delete items from a seller cart', function () {
 
+
     $user = User::factory()->has(Product::factory()->count(2))->create();
     $products = $user->products;
 
@@ -286,10 +287,9 @@ it('Guest can delete items from a seller cart', function () {
 
     $product = $products[0];
 
-    delete(route('cart.destroy', [$cart, $product]), [], ['Authorization' => 'Bearer ' . $token])
+    delete(route('cart.destroy', [$cart, $product]))
         ->assertRedirect(route('cart.show', $cart))
         ->assertSessionHas('status', 'Producto eliminado del carrito');
-
 });
 
 it('Guest cannot see the purchase button in seller cart', function () {

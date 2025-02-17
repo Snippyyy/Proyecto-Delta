@@ -12,7 +12,7 @@ class DiscountCodeRequest extends FormRequest
             'code' => ['required', 'string', 'unique:discount_codes', 'max:40'],
             'percentage' => ['required', 'integer', 'min:1', 'max:100'],
             'valid_until' => ['required', 'date', 'after:today'],
-            'is_active' => ['boolean', 'default:true'],
+            'is_active' => ['boolean'],
         ];
     }
 

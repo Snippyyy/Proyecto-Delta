@@ -288,3 +288,13 @@ it('Admin can access to Discount codes page form', function () {
     get(route('discount-code.create'))
         ->assertOk();
 });
+
+it('Auth user can access to his fav list', function () {
+
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    get(route('favorites'))
+        ->assertOk();
+});
