@@ -35,6 +35,15 @@ class DiscountCodes extends Component
     public function deleteCode($id)
     {
             $code = DiscountCode::findOrFail($id);
+
+            $carts = $code->sellerCarts;
+
+            foreach ($carts as $cart) {
+                $cart->discount_code_id = null;
+                $cart->discount_price = 0;
+                $cart->save();
+            }
+
             $code->delete();
 
             $this->loadDiscountCodes();

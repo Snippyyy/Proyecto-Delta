@@ -41,13 +41,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/send-mail', function () {
-$name = 'John Doe';
-$product = Product::get()->first();
-
-\Mail::to('example@example.com')->queue(new \App\Mail\ProductIsDeletedAdviceMail($product, $name));
-return 'Correo enviado con éxito';
-});
 
 //Ruta de codigos de descuento
 Route::get('discount-code', [DiscountCodeController::class, 'index'])->name('discount-code')->middleware(AdminAccessMiddleware::class);

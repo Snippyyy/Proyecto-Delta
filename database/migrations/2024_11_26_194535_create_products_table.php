@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->integer('price');
             $table->boolean('shipment')->default(false);
             $table->enum('status', ['pending', 'sold', 'published'])->default('pending');
