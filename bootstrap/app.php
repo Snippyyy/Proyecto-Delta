@@ -4,6 +4,9 @@ use App\Http\Middleware\AlwaysAcceptJsonMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use \Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,5 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->prependToGroup('api', AlwaysAcceptJsonMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
+            if ($request->wantsJson()) {
+                return response()->json(['message' => 'Object Not Found'], 404);
+            }
+        });
     })->create();
