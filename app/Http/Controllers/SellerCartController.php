@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Session;
 
 class SellerCartController extends Controller
 {
-    public function index (Request $request)
+    public function index (Request $request) //Refactorizar controlador
     {
+
+        //Usuario autenticado
         if (auth()->check()){
             $carts = auth()->user()->sellerCarts()->get();
 
@@ -24,6 +26,7 @@ class SellerCartController extends Controller
             $carts = auth()->user()->sellerCarts;
             return view('cart.index', compact('carts'));
         }else{
+            //Usuario invitado
             $carts = SellerCart::where('token', $request->cookie('guest_cart_token'))->get();
 
             foreach ($carts as $cart) {

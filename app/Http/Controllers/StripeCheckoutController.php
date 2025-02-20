@@ -134,9 +134,9 @@ class StripeCheckoutController extends Controller
         $event = null;
 
         try {
-            //$event = Webhook::constructEvent(
-            //    $payload, $sig_header, $endpoint_secret
-            //);
+            $event = Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+            );
         } catch(\UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400);
@@ -153,6 +153,7 @@ class StripeCheckoutController extends Controller
             case 'payment_intent.succeeded':
                 $session = $event->data->object; // Contiene un \Stripe\PaymentIntent
                 $sessionId = $session->id;
+                \Log::info('Session ID: ' . $sessionId);
 
                 $order = Order::where('session_id', $sessionId)->first();
 
@@ -160,7 +161,6 @@ class StripeCheckoutController extends Controller
                     $order->status = 'paid';
                     $order->save();
                 }
-
                 //ENVIAR EMAIL
 
             default:

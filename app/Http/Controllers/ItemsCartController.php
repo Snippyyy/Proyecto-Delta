@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ItemsCartController extends Controller
 {
-    public function store(Product $product, Request $request)
+    public function store(Product $product, Request $request) //REORDENAR CONTROLADOR
     {
         //GUEST
         if (!auth()->check()) {

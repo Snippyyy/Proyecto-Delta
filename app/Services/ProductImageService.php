@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Storage;
 class ProductImageService
 {
     /**
-     * Devuelve una lista de provincias.
+     * Gestion de Imagenes de productos
      *
      * @return array
      */
     public static function store($files, Product $product)
     {
-        $imgcont = 1;
+        $imgcont = 1; //Quitar logica de conteo del cuenteo de imagenes
         foreach ($files as $file) {
             if ($file->isValid()) {
                 $path = $file->store('ProductImages', 'public');
