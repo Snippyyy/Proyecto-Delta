@@ -12,7 +12,7 @@ class CantPurchaseSoldItemsMiddleware
         $product = $request->route('product');
 
         if ($product->status == 'sold') {
-            return redirect()->route('product.show', $product)->with('error', 'Este producto ya ha sido vendido');
+            return redirect()->route('product.show', $product)->with('error', __('Este producto ya ha sido vendido'));
         }
         return $next($request);
     }

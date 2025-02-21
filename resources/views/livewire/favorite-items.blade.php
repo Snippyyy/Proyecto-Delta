@@ -4,13 +4,14 @@
         <span class="ml-4 font-bold text-lg">{{ $favorite->product->name }}</span>
     </a>
     @if(!$isDeleted)
-        <button wire:click="toggleInput" class="ml-4 p-2 bg-blue-500 text-white rounded-lg">Añadir nota</button>
+        <button wire:click="toggleInput" class="ml-4 p-2 bg-blue-500 text-white rounded-lg">{{__("Añadir nota")}}</button>
         @if($showInput)
             <input type="text" wire:model.defer="note" class="ml-4 p-2 border rounded-lg focus:border-blue-500 focus:outline-none">
-            <button wire:click="saveNote" class="ml-2 p-2 bg-green-500 text-white rounded-lg">Guardar</button>
+            <button wire:click="saveNote" class="ml-2 p-2 bg-green-500 text-white rounded-lg">{{__("Guardar")}}</button>
         @else
             <span class="ml-4">{{ $favorite->note }}</span>
         @endif
-        <button wire:click="removeFavorite({{ $favorite->id }})" class="ml-4 p-2 bg-red-500 text-white rounded-lg float-right self-end absolute right-4">Eliminar</button>
+        <button wire:click="removeFavorite({{ $favorite->id }})" class="ml-4 p-2 bg-red-500 text-white rounded-lg float-right self-end absolute right-4">
+            {{__("Eliminar")}}</button>
     @endif
 </li>

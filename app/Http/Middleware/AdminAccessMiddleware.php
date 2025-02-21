@@ -13,7 +13,7 @@ class AdminAccessMiddleware
             return redirect()->route('login');
         }
         if (!auth()->user()->hasRole('admin')) {
-            return redirect()->route('index')->with('error', 'Solo los administradores pueden ver y administrar esta seccion');
+            return redirect()->route('index')->with('error', __('Solo los administradores pueden ver y administrar esta seccion'));
         }
         return $next($request);
     }

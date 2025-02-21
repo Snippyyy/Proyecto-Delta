@@ -23,17 +23,17 @@ class CommentsMiddleware
         $profileName = User::find($profileId)->name;
 
         if (!auth()->check()) {
-            return redirect()->route('users.show', $profileName)->with('error', 'Debes iniciar sesión para comentar y comprar un articulo del usuario para poder comentar');
+            return redirect()->route('users.show', $profileName)->with('error', __('Debes iniciar sesión para comentar y comprar un articulo del usuario para poder comentar'));
         }
 
         $orders = auth()->user()->orders()->where('seller_id', $profileId)->get();
 
         if(auth()->user()->id == $profileId){
-            return redirect()->route('users.show', $profileName)->with('error', 'No puedes comentar tu propio perfil');
+            return redirect()->route('users.show', $profileName)->with('error', __('No puedes comentar tu propio perfil'));
         }
 
         if ($orders->isEmpty()) {
-            return redirect()->route('users.show', $profileName)->with('error', 'Debes comprar un articulo del usuario para poder comentar');
+            return redirect()->route('users.show', $profileName)->with('error', __('Debes comprar un articulo del usuario para poder comentar'));
         }
 
         return $next($request);

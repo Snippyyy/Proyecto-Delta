@@ -17,7 +17,7 @@ class PendingProductMiddleware
         }
 
         if ($product->status == 'pending') {
-            return redirect()->route('index')->with('error', 'Este producto está pendiente de aprobación');
+            return redirect()->route('index')->with('error', __('Este producto está pendiente de aprobación'));
         }
         return $next($request);
     }

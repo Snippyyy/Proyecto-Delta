@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-            Mis pedidos
+            {{__("Mis pedidos")}}
         </h2>
     </x-slot>
 
@@ -20,12 +20,12 @@
             @endif
 
             <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <h1 class="text-3xl font-bold mb-4">Vendedor:
+                <h1 class="text-3xl font-bold mb-4">{{__("Vendedor")}}:
                     <a href="{{route('users.show', $order->seller_user->name)}}" class="text-blue-500 hover:text-blue-700 transition duration-300">
                         {{$order->seller_user->name}}
                     </a>
                 </h1>
-                <h2 class="text-2xl font-semibold mb-4">Compra:</h2>
+                <h2 class="text-2xl font-semibold mb-4">{{__("Compra")}}:</h2>
                 <ul class="list-disc list-inside mb-4">
                     @foreach($orderItems as $item)
                         <li class="text-xl">
@@ -35,15 +35,15 @@
                         </li>
                     @endforeach
                 </ul>
-                <h2 class="text-2xl font-semibold mb-4">Precio total: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</h2>
-                <h2 class="text-2xl font-semibold mb-4">Estado: {{ __($order->status) }}</h2>
+                <h2 class="text-2xl font-semibold mb-4">{{__("Precio total")}}: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</h2>
+                <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __($order->status) }}</h2>
                 @if($order->shipment_number)
-                    <h2 class="text-2xl font-semibold mb-4">Numero de seguimiento: {{$order->shipment_number}}</h2>
+                    <h2 class="text-2xl font-semibold mb-4">{{__("Numero de seguimiento")}}: {{$order->shipment_number}}</h2>
                 @else
-                    <h2 class="text-2xl font-semibold mb-4">Numero de seguimiento no disponible</h2>
+                    <h2 class="text-2xl font-semibold mb-4">{{__("Numero de seguimiento no disponible")}}</h2>
                 @endif
-                <h2 class="text-2xl font-semibold mb-4">Fecha de compra: {{$order->created_at->format('d/m/Y')}}</h2>
-                <h1 class="text-3xl font-bold mb-4">Comprador:
+                <h2 class="text-2xl font-semibold mb-4">{{__("Fecha de compra")}}: {{$order->created_at->format('d/m/Y')}}</h2>
+                <h1 class="text-3xl font-bold mb-4">{{__("Comprador")}}:
                     <a href="{{route('users.show', $order->buyer_user->name)}}" class="text-blue-500 hover:text-blue-700 transition duration-300">
                         {{$order->buyer_user->name}}
                     </a>

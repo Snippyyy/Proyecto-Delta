@@ -131,18 +131,13 @@
 
 
 <script>
-    // Selecciona el checkbox "Eliminar imágenes"
     const toggleDelete = document.getElementById('toggle-delete');
-    // Selecciona únicamente los checkboxes relacionados con las imágenes
     const imageCheckboxes = document.querySelectorAll('#image-grid .relative input[type="checkbox"]');
-    // Selecciona únicamente las etiquetas de los checkboxes relacionados con las imágenes
     const imageLabels = document.querySelectorAll('#image-grid .relative label');
 
-    // Escucha el cambio del checkbox "Eliminar imágenes"
     toggleDelete.addEventListener('change', () => {
         const isChecked = toggleDelete.checked;
 
-        // Muestra u oculta los checkboxes según el estado del botón
         imageCheckboxes.forEach(checkbox => {
             checkbox.style.opacity = isChecked ? '1' : '0';
             checkbox.style.pointerEvents = isChecked ? 'auto' : 'none';

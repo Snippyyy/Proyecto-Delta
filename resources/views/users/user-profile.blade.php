@@ -29,19 +29,19 @@
                         <h1 class="text-xl font-bold">{{$profile->name}}</h1>
                         <p class="text-gray-700">Delta User</p>
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                            <a href="https://wa.me/{{$profile->phone_number}}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                            <a href="https://wa.me/{{$profile->phone_number}}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">{{__("Contacto")}}</a>
                         </div>
                     </div>
                     <hr class="my-6 border-t border-gray-300">
                     <div class="flex flex-col">
-                        <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Información</span>
+                        <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">{{__("Información")}}</span>
                         <ul class="space-y-2 text-gray-600">
                             <!-- Provincia (más importante) -->
                             <li class="flex items-center">
                                 <svg class="w-5 h-5 text-blue-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h2M3 10h2m-2 5h2m4 0h12m-12-5h12m-12-5h12M9 5v14m6-14v14" />
                                 </svg>
-                                Provincia: <span class="ml-1 font-medium">{{ $profile->province ?? 'No disponible' }}</span>
+                                {{__("Provincia")}}: <span class="ml-1 font-medium">{{ $profile->province ?? 'No disponible' }}</span>
                             </li>
 
                             <!-- Email (también importante) -->
@@ -57,7 +57,7 @@
                                 <svg class="w-5 h-5 text-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10s4-4 9-4 9 4 9 4-4 4-9 4-9-4-9-4z" />
                                 </svg>
-                                Dirección: <span class="ml-1">{{ $profile->address ?? 'No disponible' }}</span>
+                                {{__("Dirección")}}: <span class="ml-1">{{ $profile->address ?? 'No disponible' }}</span>
                             </li>
 
                             <!-- Código Postal -->
@@ -65,7 +65,7 @@
                                 <svg class="w-5 h-5 text-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15h6m4 0h6m-10 0v6m0-6v-6m0 6h-4m4 0h4" />
                                 </svg>
-                                Código Postal: <span class="ml-1">{{ $profile->postal_code ?? 'No disponible' }}</span>
+                                {{__("Código Postal")}}: <span class="ml-1">{{ $profile->postal_code ?? 'No disponible' }}</span>
                             </li>
 
                             <!-- Teléfono -->
@@ -73,7 +73,7 @@
                                 <svg class="w-5 h-5 text-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10s4-4 9-4 9 4 9 4-4 4-9 4-9-4-9-4z" />
                                 </svg>
-                                Teléfono: <span class="ml-1">{{ $profile->phone_number ?? 'No disponible' }}</span>
+                                {{__("Teléfono")}}: <span class="ml-1">{{ $profile->phone_number ?? 'No disponible' }}</span>
                             </li>
                         </ul>
                     </div>
@@ -102,19 +102,19 @@
                 </div>
                 <div class="bg-white shadow rounded-lg p-6 mt-8">
 
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Comentarios</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{__("Comentarios")}}</h2>
 
 
                     <div class="mb-6">
                         <form action="{{route('comments.store', $profile->id)}}" method="POST">
                             @csrf
                             <textarea class="w-full h-32 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                                      placeholder="Escribe un comentario..." name="comment"></textarea>
+                                      placeholder="{{ __('Escribe un comentario...') }}" name="comment"></textarea>
                             @error('comment')
                             <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                             @enderror
                             <button class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition duration-300" type="submit">
-                                Publicar Comentario
+                                {{__("Publicar Comentario")}}
                             </button>
                         </form>
                     </div>

@@ -14,7 +14,7 @@ class EnsureDiscountCodeIsActiveMiddleware
             $cart->discount_code_id = null;
             $cart->discount_price = null;
             $cart->save();
-            return redirect()->route('cart.show', $request->route('cart'))->with('error', 'El codigo de descuento se ha deshabilitado porque ya no esta disponible');
+            return redirect()->route('cart.show', $request->route('cart'))->with('error', __('El codigo de descuento se ha deshabilitado porque ya no esta disponible'));
         }
         return $next($request);
     }

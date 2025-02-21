@@ -27,7 +27,7 @@
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('discount-code')" :active="request()->routeIs('discount-code')">
-                            {{  __('Codigos de descuento') }}
+                            {{  __('Códigos de descuento') }}
                         </x-nav-link>
                     </div>
                 @endrole
@@ -43,7 +43,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('my-sold')" :active="request()->routeIs('my-sold')">
-                        {{  __('Mis Vendidos') }}
+                        {{  __('Mis vendidos') }}
                     </x-nav-link>
                 </div>
             </div>

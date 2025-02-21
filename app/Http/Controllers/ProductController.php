@@ -34,7 +34,7 @@ class ProductController extends Controller
         }
 
 
-        return redirect()->route('product.show', $product)->with('status', 'Product created!');
+        return redirect()->route('product.show', $product)->with('status', __('Producto creado!'));
     }
     public function show(Product $product) {
         return view('product.product-show', compact('product'));
@@ -50,7 +50,7 @@ class ProductController extends Controller
         if($validated['image_delete_confirmation'] ?? false){
             if ($validated['images_to_delete'] ?? false){
                 if (count($validated['images_to_delete']) == $product->productImages->count()){
-                        return redirect()->route('product.edit', $product)->with('error', 'No puedes eliminar todas las imagenes del producto');
+                        return redirect()->route('product.edit', $product)->with('error', __('No puedes eliminar todas las imagenes del producto'));
                 }
             ProductImageService::destroy($validated['images_to_delete']);
             }
@@ -64,17 +64,17 @@ class ProductController extends Controller
         $product->price = $validated['price'] * 100;
         $product->save();
 
-        return redirect()->route('product.show', $product)->with('status', 'Producto actualizado correctamente');
+        return redirect()->route('product.show', $product)->with('status', __('Producto actualizado correctamente'));
     }
     public function destroy(Product $product) {
 
         $product->delete();
-        return redirect()->route('index')->with('status', 'El producto ha sido eliminado correctamente');
+        return redirect()->route('index')->with('status', __('El producto ha sido eliminado correctamente'));
     }
 
     public function post(Product $product) {
         $product->status = 'published';
         $product->save();
-        return redirect()->route('product.show', $product)->with('status', 'Producto publicado correctamente');
+        return redirect()->route('product.show', $product)->with('status', __('Producto publicado correctamente'));
     }
 }

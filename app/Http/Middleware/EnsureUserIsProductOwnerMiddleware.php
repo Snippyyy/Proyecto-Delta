@@ -12,7 +12,7 @@ class EnsureUserIsProductOwnerMiddleware
     {
         $product = $request->route('product');
         if ($product->seller_id != Auth::id()){
-            return redirect()->route('product.show', $product)->with('error', 'No puedes actuar sobre un articulo que no es tuyo');
+            return redirect()->route('product.show', $product)->with('error', __('No puedes actuar sobre un articulo que no es tuyo'));
         }
         return $next($request);
     }

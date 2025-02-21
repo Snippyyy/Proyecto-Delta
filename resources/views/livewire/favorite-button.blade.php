@@ -13,9 +13,10 @@
     @endauth
     <div class="mt-4">
         @if($product->favoritedByUsers()->count() == 0)
-            <p class="text-gray-500 italic">Nadie ha guardado este producto en favoritos</p>
+            <p class="text-gray-500 italic">{{__("Nadie ha guardado este producto en favoritos")}}</p>
         @else
-            <p class="text-gray-700">Guardado en favoritos por: <span class="font-semibold">{{$product->favoritedByUsers()->count()}}</span> Usuarios</p>
+            <p class="text-gray-700">{{__("Guardado en favoritos por")}}: <span class="font-semibold">{{$product->favoritedByUsers()->count()}}</span>
+                {{__("Usuarios")}}</p>
         @endif
     </div>
 </div>

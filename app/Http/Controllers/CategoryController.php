@@ -23,10 +23,10 @@ class CategoryController extends Controller
             $validated = $request->validated();
             $validated['icon'] = $path;
             Category::create($validated);
-            return redirect()->route('categories')->with('status', 'Categoria creada');
+            return redirect()->route('categories')->with('status', __('Categoria creada'));
         }else{
             Category::create($request->validated());
-            return redirect()->route('categories')->with('status', 'Categoria creada');
+            return redirect()->route('categories')->with('status', __(('Categoria creada')));
         }
 
     }
@@ -37,7 +37,7 @@ class CategoryController extends Controller
     }
     public function destroy(Category $category){
         $category->delete();
-        return redirect()->route('categories')->with('status', 'Categoria eliminada');
+        return redirect()->route('categories')->with('status', __('Categoria eliminada'));
     }
 
     public function edit(Category $category){
@@ -49,10 +49,10 @@ class CategoryController extends Controller
             $validated = $request->validated();
             $validated['icon'] = $path;
             $category->update($validated);
-            return redirect()->route('category.show',$category)->with('status', 'Categoria Actualizada');
+            return redirect()->route('category.show',$category)->with('status', __('Categoria Actualizada'));
         }else{
         $category->update($request->validated());
-        return redirect()->route('category.show',$category)->with('status', 'Categoria Actualizada');
+        return redirect()->route('category.show',$category)->with('status', __('Categoria Actualizada'));
         }
     }
 }

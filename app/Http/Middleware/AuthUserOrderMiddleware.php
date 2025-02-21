@@ -10,10 +10,10 @@ class AuthUserOrderMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check()){
-            return redirect()->route('index')->with('error', 'No puedes ver este pedido');
+            return redirect()->route('index')->with('error', __('No puedes ver este pedido'));
         }
         if (auth()->user()->id !== $request->route('order')->buyer_id) {
-            return redirect()->route('index')->with('error', 'No puedes ver este pedido');
+            return redirect()->route('index')->with('error', __('No puedes ver este pedido'));
         }
         return $next($request);
     }

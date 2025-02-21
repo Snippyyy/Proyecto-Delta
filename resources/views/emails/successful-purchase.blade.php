@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Compra Exitosa</title>
+    <title>{{__("Compra Exitosa")}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,28 +26,25 @@
     </style>
 </head>
 <body>
-<h1>¡Gracias por tu compra!</h1>
-<p>Estimado/a {{ $order->buyer_user->name }},</p>
-<p>Nos complace informarte que tu compra ha sido exitosa. Aquí están los detalles de tu pedido:</p>
+<h1>{{__("¡Gracias por tu compra!")}}</h1>
+<p>{{__("Estimado/a")}} {{ $order->buyer_user->name }},</p>
+<p>{{__("Nos complace informarte que tu compra ha sido exitosa. Aquí están los detalles de tu pedido")}}:</p>
 <ul>
-    <li><strong>ID del Pedido:</strong> {{ $order->id }}</li>
-    <li><strong>Fecha del Pedido:</strong> {{ $order->created_at->format('d F, Y') }}</li>
-    <li><strong>Total:</strong> {{ number_format($order->total_price / 100, 2, ',', '.') }}€</li>
+    <li><strong>{{__("ID del Pedido")}}:</strong> {{ $order->id }}</li>
+    <li><strong>{{__("Fecha del Pedido")}}:</strong> {{ $order->created_at->format('d F, Y') }}</li>
+    <li><strong>{{__("Total")}}:</strong> {{ number_format($order->total_price / 100, 2, ',', '.') }}€</li>
 </ul>
-<h2>Detalles de los productos comprados:</h2>
+<h2>{{__("Detalles de los productos comprados")}}:</h2>
 <ul>
     @foreach ($order->orderItems as $orderItem)
         <li>
-            <strong>Producto:</strong> {{ $orderItem->product->name }}<br>
-            <strong>Precio:</strong> {{ number_format($orderItem->product->price / 100, 2, ',', '.') }} €
+            <strong>{{__("Producto")}}:</strong> {{ $orderItem->product->name }}<br>
+            <strong>{{__("Precio")}}:</strong> {{ number_format($orderItem->product->price / 100, 2, ',', '.') }} €
         </li>
     @endforeach
     </ul>
-<p>Si tienes alguna pregunta o necesitas más asistencia, no dudes en contactarnos.</p>
-<p>Saludos cordiales,</p>
-<p>El equipo de {{ config('app.name') }}</p>
 <div class="footer">
-    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Todos los derechos reservados.</p>
+    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. {{__("Todos los derechos reservados.")}}</p>
 </div>
 </body>
 </html>

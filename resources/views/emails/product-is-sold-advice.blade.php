@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producto No Disponible</title>
+    <title>{{__("Producto No Disponible")}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,17 +51,18 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>Producto No Disponible</h1>
+        <h1>{{__("Producto No Disponible")}}</h1>
     </div>
     <div class="content">
-        <p>Hola, <strong>{{$username}}</strong>,</p>
-        <p>Lamentamos informarte que el producto <strong>{{$product->name}}</strong> del usuario <strong>{{$product->user->name}}</strong> ya no está disponible puesto que otro usuario ha realizado la compra antes.</p>
-        <p>Si deseas ver mas productos de <strong>{{$product->user->name}}</strong>, te invitamos a explorar el catalogo.</p>
-        <a href="{{route('users.show', $product->user->name)}}" class="button">Ver Catálogo</a>
+        <p>{{__("Hola,")}} <strong>{{$username}}</strong>,</p>
+        <p>{{__("Lamentamos informarte que el producto")}} <strong>{{$product->name}}</strong> {{__("del usuario")}} <strong>{{$product->user->name}}</strong>
+            {{__("ya no está disponible puesto que otro usuario ha realizado la compra antes.")}}</p>
+        <p>{{__("Si deseas ver más productos de")}} <strong>{{$product->user->name}}</strong>, {{__("te invitamos a explorar el catalogo.")}}</p>
+        <a href="{{route('users.show', $product->user->name)}}" class="button">{{__("Ver Catálogo")}}</a>
     </div>
     <div class="footer">
-        <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
-        <p>&copy; 2025 - Delta. Todos los derechos reservados.</p>
+        <p>{{__("Si tienes alguna pregunta, no dudes en contactarnos.")}}</p>
+        <p>&copy; 2025 - Delta. {{__("Todos los derechos reservados.")}}</p>
     </div>
 </div>
 </body>

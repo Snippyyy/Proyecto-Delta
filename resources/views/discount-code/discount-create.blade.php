@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Crear un codigo de descuento
+            {{__("Crear un codigo de descuento")}}
         </h2>
     </x-slot>
     <form action="{{route('discount-code.store')}}" method="POST" enctype="multipart/form-data" class="ml-5 mt-5">

@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Compra Cancelada</title>
+    <title>{{__("Compra Cancelada")}}</title>
 </head>
 <body>
 <x-nav-delta/>
@@ -22,10 +22,11 @@
     </div>
 @endif
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4">Se ha cancelado la compra</h1>
-    <p class="text-gray-700 mb-6">En caso de que quieras comprar en otro momento, tus articulos se encuentran en tu carrito</p>
-    <h3 class="text-black text-2xl p2 bg-green-200 rounded-md">¡Sentimos las molestias!</h3>
-    <a href="{{ route('index') }}" class="text-blue-500 hover:underline">Volver a la página principal</a>
+    <h1 class="text-2xl font-bold mb-4">{{__("Se ha cancelado la compra")}}</h1>
+    <p class="text-gray-700 mb-6">{{__("En caso de que quieras comprar en otro momento, tus articulos se encuentran en tu
+        carrito")}}</p>
+    <h3 class="text-black text-2xl p2 bg-green-200 rounded-md">{{__("¡Sentimos las molestias!")}}</h3>
+    <a href="{{ route('index') }}" class="text-blue-500 hover:underline">{{__("Volver a la página principal")}}</a>
 </div>
 </body>
 </html>

@@ -27,7 +27,7 @@
                 <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
 
                     <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl " href="{{ route('index') }}">
-				        Productos
+				        {{__('Productos')}}
 			        </a>
 
                     @foreach($categories as $category)
@@ -51,11 +51,11 @@
         <div class="container py-8 px-6 mx-auto">
 
             <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl mb-8" href="#">
-                Sobre Nosotros - Delta: Tu Mercado de Segunda Mano
+                {{ __('Sobre Nosotros - Delta: Tu Mercado de Segunda Mano') }}
 		</a>
 
             <p class="mt-8 mb-8">
-                ¡Bienvenidos a Delta, tu mercado confiable para comprar y vender artículos de segunda mano! En Delta creemos en darles una segunda vida a los productos, promoviendo un consumo sostenible y creando una comunidad donde todos puedan encontrar valor en objetos que merecen una nueva oportunidad.
+                {{ __('¡Bienvenidos a Delta, tu mercado confiable para comprar y vender artículos de segunda mano! En Delta creemos en darles una segunda vida a los productos, promoviendo un consumo sostenible y creando una comunidad donde todos puedan encontrar valor en objetos que merecen una nueva oportunidad.') }}
             </p>
 
 
@@ -68,9 +68,9 @@
     <div class="w-full mx-auto flex flex-wrap">
       <div class="flex w-full lg:w-1/2 ">
         <div class="px-3 md:px-0">
-          <h3 class="font-bold text-gray-900">Sobre Nosotros - Delta: Tu Mercado de Segunda Mano</h3>
+          <h3 class="font-bold text-gray-900">{{ __('Sobre Nosotros - Delta: Tu Mercado de Segunda Mano') }}</h3>
           <p class="py-4">
-              ¡Bienvenidos a Delta, tu mercado confiable para comprar y vender artículos de segunda mano! En Delta creemos en darles una segunda vida a los productos, promoviendo un consumo sostenible y creando una comunidad donde todos puedan encontrar valor en objetos que merecen una nueva oportunidad.
+              {{ __('¡Bienvenidos a Delta, tu mercado confiable para comprar y vender artículos de segunda mano! En Delta creemos en darles una segunda vida a los productos, promoviendo un consumo sostenible y creando una comunidad donde todos puedan encontrar valor en objetos que merecen una nueva oportunidad.') }}
           </p>
         </div>
       </div>

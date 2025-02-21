@@ -6,17 +6,17 @@
                 <svg class="fill-current text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M5,22h14c1.103,0,2-0.897,2-2V9c0-0.553-0.447-1-1-1h-3V7c0-2.757-2.243-5-5-5S7,4.243,7,7v1H4C3.447,8,3,8.447,3,9v11 C3,21.103,3.897,22,5,22z M9,7c0-1.654,1.346-3,3-3s3,1.346,3,3v1H9V7z M5,10h2v2h2v-2h6v2h2v-2h2l0.002,10H5V10z" />
                 </svg>
-                DELTA
+                {{ __('DELTA') }}
             </a>
         </div>
 
         <!-- Menu de escritorio-->
         <div class="hidden md:flex space-x-6">
             @auth
-                <a class="text-gray-700 hover:text-black" href="{{route('product.create')}}">Publicar producto</a>
+                <a class="text-gray-700 hover:text-black" href="{{route('product.create')}}">{{ __('Publicar producto') }}</a>
             @endauth
-                <a class="text-gray-700 hover:text-black" href="{{route('users.index')}}">Usuarios</a>
-                <a class="text-gray-700 hover:text-black"href="{{route('favorites')}}" >Favoritos</a>
+            <a class="text-gray-700 hover:text-black" href="{{route('users.index')}}">{{ __('Usuarios') }}</a>
+            <a class="text-gray-700 hover:text-black" href="{{route('favorites')}}">{{ __('Favoritos') }}</a>
         </div>
         <!-- Menu de moviles -->
         <div class="relative inline-block text-left md:hidden">
@@ -28,13 +28,12 @@
             <div id="mobile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1" style="z-index: 50;">
                 <div class="py-1" role="none">
                     @auth
-                        <a href="{{route('product.create')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Publicar producto</a>
+                        <a href="{{route('product.create')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Publicar producto') }}</a>
                     @endauth
-                    <a href="{{route('users.index')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Usuarios</a>
+                    <a href="{{route('users.index')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Usuarios') }}</a>
                 </div>
             </div>
         </div>
-
 
         <div class="flex items-center space-x-4">
             <div class="relative inline-block text-left">
@@ -47,15 +46,15 @@
                 <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" style="z-index: 50;">
                     <div class="py-1" role="none">
                         @auth
-                            <a href="{{route('users.show', auth()->user()->name)}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Mi perfil</a>
-                            <a href="{{route('profile.edit')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Área Personal</a>
+                            <a href="{{route('users.show', auth()->user()->name)}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Mi perfil') }}</a>
+                            <a href="{{route('profile.edit')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Área Personal') }}</a>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
-                                <button type="submit" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Logout</button>
+                                <button type="submit" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Cerrar sesión') }}</button>
                             </form>
                         @else
-                            <a href="{{route('login')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Login</a>
-                            <a href="{{route('register')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">Register</a>
+                            <a href="{{route('login')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Iniciar Sesión') }}</a>
+                            <a href="{{route('register')}}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-400" role="menuitem">{{ __('Registrarse') }}</a>
                         @endauth
                     </div>
                 </div>

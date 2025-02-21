@@ -16,7 +16,7 @@ class CheckSoldItemsInCartMiddleware
 
         foreach ($products as $product) {
             if ($product->status === 'sold') {
-                return redirect()->route('cart.show', $cart)->with('error', 'Tienes articulos que ya han sido vendidos en tu carrito, eliminalos para continuar');
+                return redirect()->route('cart.show', $cart)->with('error', __('Tienes articulos que ya han sido vendidos en tu carrito, eliminalos para continuar'));
             }
         }
         return $next($request);

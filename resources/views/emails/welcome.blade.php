@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a Delta</title>
+    <title>{{__("Bienvenido a Delta")}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,17 +51,17 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>¡Bienvenido a Delta!</h1>
+        <h1>{{__("¡Bienvenido a Delta!")}}</h1>
     </div>
     <div class="content">
-        <p>Hola, <strong>{{$name}}</strong>,</p>
-        <p>Gracias por registrarte en nuestra plataforma. Estamos encantados de tenerte con nosotros.</p>
-        <p>Explora todas las funciones que hemos preparado para ti.</p>
-        <a href="{{route('users.show', $name)}}" class="button">Ir a mi cuenta</a>
+        <p>{{__("Hola,")}} <strong>{{$name}}</strong>,</p>
+        <p>{{__("Gracias por registrarte en nuestra plataforma. Estamos encantados de tenerte con nosotros.")}}</p>
+        <p>{{__("Explora todas las funciones que hemos preparado para ti.")}}</p>
+        <a href="{{route('users.show', $name)}}" class="button">{{__("Ir a mi cuenta")}}</a>
     </div>
     <div class="footer">
-        <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
-        <p>&copy; 2025 - Nuestra Empresa. Todos los derechos reservados.</p>
+        <p>{{__("Si tienes alguna pregunta, no dudes en contactarnos.")}}</p>
+        <p>&copy; 2025 - Delta. {{__("Todos los derechos reservados.")}}</p>
     </div>
 </div>
 </body>

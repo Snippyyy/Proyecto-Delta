@@ -51,17 +51,18 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>Producto Eliminado</h1>
+        <h1>{{__("Producto Eliminado")}}</h1>
     </div>
     <div class="content">
-        <p>Hola, <strong>{{$username}}</strong>,</p>
-        <p>Queremos informarte que el producto <strong>{{$product_name}}</strong> del usuario <strong>{{$product_user_name}}</strong> ha sido eliminado por su propietario y ya no está disponible en nuestro catálogo.</p>
-        <p>Si deseas ver más productos de <strong>{{$product_user_name}}</strong>, te invitamos a explorar su catálogo.</p>
-        <a href="{{route('users.show', $product_user_name)}}" class="button">Ver Catálogo</a>
+        <p>{{__("Hola,")}} <strong>{{$username}}</strong>,</p>
+        <p>{{__("Queremos informarte que el producto")}} <strong>{{$product_name}}</strong> {{__("del usuario")}} <strong>{{$product_user_name}}</strong>
+            {{__("ha sido eliminado por su propietario y ya no está disponible en nuestro catálogo.")}}</p>
+        <p>{{__("Si deseas ver más productos de")}} <strong>{{$product_user_name}}</strong>, {{__("te invitamos a explorar su catálogo.")}}</p>
+        <a href="{{route('users.show', $product_user_name)}}" class="button">{{__("Ver Catálogo")}}</a>
     </div>
     <div class="footer">
-        <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
-        <p>&copy; 2025 - Delta. Todos los derechos reservados.</p>
+        <p>{{__("Si tienes alguna pregunta, no dudes en contactarnos.")}}</p>
+        <p>&copy; 2025 - Delta. {{__("Todos los derechos reservados.")}}</p>
     </div>
 </div>
 </body>

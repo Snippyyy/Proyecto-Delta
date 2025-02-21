@@ -21,7 +21,7 @@
             {{ session('error') }}
         </div>
     @endif
-    <h1 class="text-center mt-10 font-">CARRITO DE {{$cart->seller->name}}</h1>
+    <h1 class="text-center mt-10 font-bold text-3xl mb-10">{{__("CARRITO DE")}} {{$cart->seller->name}}</h1>
 
         <div class="overflow-x-auto">
             <div class="overflow-x-auto">
@@ -31,23 +31,23 @@
                         <tr>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Producto
+                                {{__("Producto")}}
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Descripción
+                                {{__("Descripción")}}
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                ¿Envio?
+                                {{__("¿Envio?")}}
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Status
+                                {{__("Estado")}}
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Precio
+                                {{__("Precio")}}
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -118,7 +118,7 @@
                                     <form action="{{route('cart.destroy', [$cart, $product])}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
+                                        <button type="submit" class="text-red-600 hover:text-red-900">{{__("Eliminar")}}</button>
                                     </form>
                                 </td>
                             </tr>
@@ -151,22 +151,25 @@
                             <form action="{{route('cart.discountapply', $cart)}}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <label for="discount">¿Codigo de descuento? </label>
+                                <label for="discount">{{__("¿Codigo de descuento?")}}</label>
                                 <input type="text" name="discount">
-                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">Aplicar</button>
+                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900">
+                                    {{__("Aplicar")}}</button>
                     @endif
                             </form>
                             <label for="buy"></label>
                             <br>
                             <form action="{{route("cart.checkout", $cart)}}" method="POST">
                                 @csrf
-                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Comprar</button>
+                                <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                                    {{__("Comprar")}}</button>
                             </form>
                         </div>
                 @else
                     <form action="{{route('login')}}" method="GET">
                         @csrf
-                        <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Necesitas tener una cuenta para poder realizar la compra</button>
+                        <button type="submit" class=" ml-3 mt-3 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                            {{__("Necesitas tener una cuenta para poder realizar la compra")}}</button>
                     </form>
                 @endif
             </div>
