@@ -11,10 +11,6 @@ use App\Http\Middleware\Api\V1\EnsureUserIsProductOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 Route::post('/login', LoginUserController::class)->name('api.login');
 
 //Productos
