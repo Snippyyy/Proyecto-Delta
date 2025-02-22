@@ -29,8 +29,7 @@ class ProductFactory extends Factory
     {
 
         return $this->afterCreating(function (Product $product) {
-            $randomInt = rand(1, 10);
-            ProductImage::factory()->count($randomInt)->create(['product_id' => $product->id]);
+            ProductImage::factory()->create(['product_id' => $product->id]);
         });
     }
 }

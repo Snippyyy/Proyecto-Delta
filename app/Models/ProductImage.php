@@ -14,7 +14,6 @@ class ProductImage extends Model
     protected $fillable = [
         'product_id',
         'img_path',
-        'order',
     ];
 
     public function product(): BelongsTo {
