@@ -8,6 +8,8 @@ class UserController extends Controller
 {
     public function index()
     {
+        $users = User::select('name', 'avatar', 'province', 'address', 'postal_code')->get();
+
         return view('users.user-index', compact('users'));
     }
 

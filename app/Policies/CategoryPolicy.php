@@ -12,12 +12,7 @@ class CategoryPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
-    }
-
-    public function view(User $user, Category $category): bool
-    {
-        return true;
+        return $user->hasRole('admin');
     }
 
     public function create(User $user): bool

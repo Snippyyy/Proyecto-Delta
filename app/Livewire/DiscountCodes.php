@@ -2,11 +2,14 @@
 
 namespace App\Livewire;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use App\Models\DiscountCode;
 
 class DiscountCodes extends Component
 {
+    use AuthorizesRequests;
+
     public $discountCodes;
 
     protected $listeners = ['refreshDiscountCodes' => 'loadDiscountCodes'];
@@ -23,6 +26,8 @@ class DiscountCodes extends Component
 
     public function toggleStatus($id)
     {
+        $this->authorize('toggle', DiscountCode::class);
+
         $code = DiscountCode::findOrFail($id);
         $code->is_active = !$code->is_active;
         $code->save();
@@ -34,21 +39,22 @@ class DiscountCodes extends Component
 
     public function deleteCode($id)
     {
-            $code = DiscountCode::findOrFail($id);
+        $this->authorize('delete', DiscountCode::class);
+        $code = DiscountCode::findOrFail($id);
 
-            $carts = $code->sellerCarts;
+        $carts = $code->sellerCarts;
 
-            foreach ($carts as $cart) {
-                $cart->discount_code_id = null;
-                $cart->discount_price = 0;
-                $cart->save();
-            }
+        foreach ($carts as $cart) {
+            $cart->discount_code_id = null;
+            $cart->discount_price = 0;
+            $cart->save();
+        }
 
-            $code->delete();
+        $code->delete();
 
-            $this->loadDiscountCodes();
+        $this->loadDiscountCodes();
 
-            $this->dispatch('refreshDiscountCodes');
+        $this->dispatch('refreshDiscountCodes');
     }
     public function render()
     {

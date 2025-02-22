@@ -12,12 +12,7 @@ class DiscountCodePolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
-    }
-
-    public function view(User $user, DiscountCode $discountCode): bool
-    {
-        return true;
+        return $user->hasRole('admin');
     }
 
     public function create(User $user): bool
@@ -25,22 +20,12 @@ class DiscountCodePolicy
         return $user->hasRole('admin');
     }
 
-    public function update(User $user, DiscountCode $discountCode): bool
+    public function delete(User $user): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function delete(User $user, DiscountCode $discountCode): bool
-    {
-        return $user->hasRole('admin');
-    }
-
-    public function restore(User $user, DiscountCode $discountCode): bool
-    {
-        return $user->hasRole('admin');
-    }
-
-    public function forceDelete(User $user, DiscountCode $discountCode): bool
+    public function toggle(User $user): bool
     {
         return $user->hasRole('admin');
     }

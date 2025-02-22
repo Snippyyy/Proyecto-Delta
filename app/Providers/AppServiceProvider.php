@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Schedule $schedule): void
     {
-        Gate::policy(Category::class, CategoryPolicy::class);
-        Gate::policy(Product::class, ProductPolicy::class);
-        Gate::policy(DiscountCode::class, DiscountCodePolicy::class);
 
         $schedule->command('cart:clean')->daily();
         $schedule->command('discounts:deactivate-expired')->daily();
