@@ -187,5 +187,10 @@
     "Área Personal": "Personal Area",
     "Borrar Cuenta": "Delete Account",
     "Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Antes de eliminar tu cuenta, por favor descarga cualquier dato o información que desees conservar.": "Once your account is deleted, all its resources and data will be permanently deleted. Before deleting your account, please download any data or information you want to keep.",
-    "Eliminar imágenes": "Delete images"
+    "Eliminar imágenes": "Delete images",
+    "Datos del Cliente": "Customer Data",
+    "Gracias por su compra. Si tiene preguntas sobre esta factura, contáctenos.": "Thank you for your purchase. If you have questions about this invoice, please contact us.",
+    "Factura": "Invoice",
+    "Número": "Number",
+    "Fecha": "Date"
 }

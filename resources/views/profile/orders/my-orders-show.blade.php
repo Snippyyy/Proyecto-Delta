@@ -33,28 +33,8 @@
                 @endif
                 @if($order->shipment_number)
                     <h2 class="text-2xl font-semibold mb-4">{{ __("Numero de seguimiento") }}: {{ $order->shipment_number }}</h2>
-                    <form action="{{ route('shipment', $order) }}" method="POST">
-                        @csrf
-                        <input type="text" id="shipment_number" name="shipment_number">
-                        @if ($errors->has('shipment_number'))
-                            <div class="text-red-500 mt-2">
-                                {{ $errors->first('shipment_number') }}
-                            </div>
-                        @endif
-                        <button type="submit" class="ml-5 border border-black p-2 hover:bg-black hover:text-white focus:scale-50 active:scale-110">{{ __("Editar") }}</button>
-                    </form>
                 @else
-                    <h2 class="text-2xl font-semibold mb-4">{{ __("Introducir numero de seguimiento") }}:</h2>
-                    <form action="{{ route('shipment', $order) }}" method="POST">
-                        @csrf
-                        <input type="text" id="shipment_number" name="shipment_number">
-                        @if ($errors->has('shipment_number'))
-                            <div class="text-red-500 mt-2">
-                                {{ $errors->first('shipment_number') }}
-                            </div>
-                        @endif
-                        <button type="submit" class="ml-5 border border-black p-2 hover:bg-black hover:text-white focus:scale-50 active:scale-110">{{ __("Establecer") }}</button>
-                    </form>
+                    <h2 class="text-2xl font-semibold mb-4">{{ __("Numero de seguimiento") }}: {{ __("No disponible") }}</h2>
                 @endif
                 <h2 class="text-2xl font-semibold mb-4">{{ __("Fecha de compra") }}: {{ $order->created_at->format('d/m/Y') }}</h2>
                 <h1 class="text-3xl font-bold mb-4">{{ __("Comprador") }}:
@@ -63,7 +43,10 @@
                     </a>
                 </h1>
             </div>
-            <a href="{{ route('my-orders') }}" class="text-blue-500 hover:text-blue-700 transition duration-300">{{ __("Volver") }}</a>
+            <div class="w-full flex justify-between">
+                <a href="{{ route('my-orders') }}" class="text-blue-500 hover:text-blue-700 transition duration-300">{{ __("Volver") }}</a>
+                <a href="{{ route('my-orders.download', $order) }}" class="text-blue-500 hover:text-blue-700 transition duration-300">{{ __("Descargar Factura") }}</a>
+            </div>
         </div>
     </div>
 </x-app-layout>

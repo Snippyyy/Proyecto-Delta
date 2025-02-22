@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteItemsController;
 use App\Http\Controllers\ItemsCartController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerCartController;
@@ -52,6 +53,7 @@ Route::get('users/{user:name}', [UserController::class, 'show'])->name('users.sh
 Route::get('my-products', UserProductsController::class)->name('my-products')->middleware(['auth', 'verified']);
 Route::get('orders', [UserOrderController::class, 'index'])->name('my-orders')->middleware(['auth', 'verified']);
 Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('my-orders.show')->middleware(AuthUserOrderMiddleware::class);
+Route::get('orders/{order}/download', PdfController::class)->name('my-orders.download')->middleware(AuthUserOrderMiddleware::class);
 Route::get('my-sold', [UserSoldController::class, 'index'])->name('my-sold')->middleware(['auth', 'verified']);
 Route::get('my-sold/{order}', [UserSoldController::class, 'show'])->name('my-sold.show')->middleware((AuthUserSoldMiddleware::class));
 Route::post('my-sold/{order}/shipment', [UserSoldController::class, 'shipment'])->name('shipment')->middleware((AuthUserSoldMiddleware::class));
