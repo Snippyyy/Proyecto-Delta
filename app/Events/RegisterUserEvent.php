@@ -9,12 +9,10 @@ class RegisterUserEvent
 {
     use Dispatchable;
 
-    public $name;
-    public $email;
+    public User $user;
 
     public function __construct(User $user)
     {
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $this->user = $user;
     }
 }

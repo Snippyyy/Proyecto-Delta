@@ -30,7 +30,8 @@ class OrderPaidListener
             //Logica pasada a un job -> DeleteCartAfterPurchaseJob
             DeleteCartAfterPurchaseJob::dispatch($cart);
             foreach ($products as $product) {
-            ChangeToSoldStatusProductJob::dispatch($product);
+                $product->status = 'sold';
+                $product->save();
             }
         }
     }
