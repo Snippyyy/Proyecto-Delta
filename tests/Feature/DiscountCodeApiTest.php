@@ -45,7 +45,7 @@ it('creates a discount code', function () {
         'is_active' => '1'
     ]);
 
-    $response->assertStatus(200)
+    $response->assertStatus(201)
         ->assertJson(['message' => 'Código de descuento creado']);
 
     $this->assertDatabaseHas('discount_codes', [

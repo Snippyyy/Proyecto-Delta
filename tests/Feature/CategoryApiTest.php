@@ -48,8 +48,8 @@ it('creates a category', function () {
         'icon' => UploadedFile::fake()->image('icon.jpg')
     ]);
 
-    $response->assertStatus(200)
-        ->assertJson(['message' => 'Categoria creada']);
+    $response->assertStatus(201)
+        ->assertJson(['message' => 'Categoría creada']);
 
     $this->assertDatabaseHas('categories', [
         'name' => 'Test Category',
@@ -87,7 +87,7 @@ it('updates a category', function () {
     ]);
 
     $response->assertStatus(200)
-        ->assertJson(['message' => 'Categoria Actualizada']);
+        ->assertJson(['message' => 'Categoría actualizada']);
 
     $this->assertDatabaseHas('categories', [
         'id' => $category->id,
@@ -102,7 +102,7 @@ it('deletes a category', function () {
     $response = delete(route('api.categories.delete', $category));
 
     $response->assertStatus(200)
-        ->assertJson(['message' => 'Categoria eliminada']);
+        ->assertJson(['message' => 'Categoría eliminada']);
 
     $this->assertDatabaseMissing('categories', ['id' => $category->id]);
 });

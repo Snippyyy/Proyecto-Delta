@@ -15,12 +15,12 @@ class RegisterUserListener
 
     public function __construct()
     {
-        $this->cart = SellerCart::where(['token' => request()->cookie('guest_cart_token')])->first();
+        $this->cart = SellerCart::where(['token' => request()->cookie('guest_cart_token')])->first() ?? new SellerCart();
     }
 
     public function handle(RegisterUserEvent $event): void
     {
-        if ($this->cart) {
+        if ($this->cart->cart_items()->count() != 0) {
             $this->cart->token = null;
             $this->cart->user_id = $event->user->id;
             $this->cart->save();
