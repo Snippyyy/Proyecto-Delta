@@ -17,7 +17,9 @@ class ProductModifiedObserver
                 $query->where('product_id', $product->id);
             })->get();
             foreach ($carts as $cart) {
+                if ($cart->user) {
                     \Mail::to($cart->user->email)->queue((new ProductIsSoldAdviceMail($product, $cart->user->name))->onQueue('emails'));
+                }
             }
         }
     }
@@ -34,7 +36,9 @@ class ProductModifiedObserver
         })->get();
 
         foreach ($carts as $cart) {
+            if ($cart->user) {
                 \Mail::to($cart->user->email)->queue((new ProductIsDeletedAdviceMail($product->name, $cart->user->name, $product->user->name))->onQueue('emails'));
+            }
         }
     }
 }

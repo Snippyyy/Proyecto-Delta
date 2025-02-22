@@ -33,7 +33,7 @@ class CategoryController extends Controller
     public function show(Category $category){
         $categories = Category::all();
         $products = Product::publishedWithCategory($category->id)->get();
-        return view('category.show', compact('category',['products','categories']));
+        return view('category.show', compact('category','products', 'categories'));
     }
     public function destroy(Category $category){
         $category->delete();

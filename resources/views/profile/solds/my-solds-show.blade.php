@@ -7,17 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            @if (session('status'))
-                <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="bg-red-500 text-white p-4 rounded mb-4 text-center">
-                    {{ session('error') }}
-                </div>
-            @endif
+            @include('components.delta-session')
 
             <div class="bg-white shadow-md rounded-lg p-6 text-center">
                 <h1 class="text-3xl font-bold mb-4">{{ __("Vendedor") }}:
@@ -36,7 +26,11 @@
                     @endforeach
                 </ul>
                 <h2 class="text-2xl font-semibold mb-4">{{ __("Precio total") }}: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</h2>
-                <h2 class="text-2xl font-semibold mb-4">{{ __("Estado") }}: {{ __($order->status) }}</h2>
+                @if($order->status === "paid")
+                    <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __("Pagado") }}</h2>
+                @elseif($order->status === "unpaid")
+                    <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __("Pendiente de pago") }}</h2>
+                @endif
                 @if($order->shipment_number)
                     <h2 class="text-2xl font-semibold mb-4">{{ __("Numero de seguimiento") }}: {{ $order->shipment_number }}</h2>
                     <form action="{{ route('shipment', $order) }}" method="POST">

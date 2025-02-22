@@ -1,60 +1,41 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$product->name}}</title>
-    @livewireStyles
-    @livewireScripts
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-<x-nav-delta/>
-@if (session('status'))
-    <div class="bg-green-500 text-white p-4 rounded mb-4">
-        {{ session('status') }}
-    </div>
-@endif
+@extends('layouts.delta')
 
-@if (session('error'))
-    <div class="bg-red-500 text-white p-4 rounded mb-4">
-        {{ session('error') }}
-    </div>
-@endif
-<section class="py-10 lg:py-24 relative ">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-            <div class="pro-detail w-full flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
-                <p class="font-medium text-lg text-indigo-600 mb-4">{{$product->category->name ?? 'Sin categoria'}}</p>
-                <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">{{$product->name}}
-                </h2>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-6">
-                    <h6
-                        class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
-                        {{ number_format($product->price / 100, 2, ',', '.') }}€
-                    </h6>
-                   <h6><a href="{{route('users.show', $product->user->name)}}" class="transition-colors duration-300 hover:text-indigo-600">{{$product->user->name}}</a></h6>
-                </div>
-                <p class="text-gray-500 text-base font-normal mb-8 ">
-                    {{$product->description}}
-                </p>
-                <div class="block w-full">
-                    @if($product->shipment)
-                        <p class="font-medium text-lg leading-8 text-green-700 mb-4">{{__("Acepta envios")}}</p>
-                    @else
-                        <p class="font-medium text-lg leading-8 text-gray-900 mb-4">{{__("No acepta envios")}}</p>
-                    @endif
-                    <div class="text">
-                        <div class="block w-full mb-6">
-                            @if($product->status == "sold")
-                                <p class="font-medium text-lg leading-8 text-red-700 mb-4">{{__("Vendido")}}</p>
-                            @elseif($product->status == "published")
-                                <p class="font-medium text-lg leading-8 text-green-700 mb-4">{{__("Disponible")}}</p>
-                            @endif
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+@section('title', $product->name)
+
+@section('content')
+
+    <section class="py-10 lg:py-24 relative ">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                <div class="pro-detail w-full flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                    <p class="font-medium text-lg text-indigo-600 mb-4">{{$product->category->name ?? 'Sin categoria'}}</p>
+                    <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">{{$product->name}}
+                    </h2>
+                    <div class="flex flex-col sm:flex-row sm:items-center mb-6">
+                        <h6
+                            class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
+                            {{ number_format($product->price / 100, 2, ',', '.') }}€
+                        </h6>
+                        <h6><a href="{{route('users.show', $product->user->name)}}" class="transition-colors duration-300 hover:text-indigo-600">{{$product->user->name}}</a></h6>
+                    </div>
+                    <p class="text-gray-500 text-base font-normal mb-8 ">
+                        {{$product->description}}
+                    </p>
+                    <div class="block w-full">
+                        @if($product->shipment)
+                            <p class="font-medium text-lg leading-8 text-green-700 mb-4">{{__("Acepta envios")}}</p>
+                        @else
+                            <p class="font-medium text-lg leading-8 text-gray-900 mb-4">{{__("No acepta envios")}}</p>
+                        @endif
+                        <div class="text">
+                            <div class="block w-full mb-6">
+                                @if($product->status == "sold")
+                                    <p class="font-medium text-lg leading-8 text-red-700 mb-4">{{__("Vendido")}}</p>
+                                @elseif($product->status == "published")
+                                    <p class="font-medium text-lg leading-8 text-green-700 mb-4">{{__("Disponible")}}</p>
+                                @endif
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
 
                                 <form action="{{route('cart.store', $product)}}" method="POST">
                                     @csrf
@@ -70,55 +51,55 @@
                                     </button>
                                 </form>
 
-                        </div>
-                        <div class="flex items-center gap-3">
-                            @auth
-                                <livewire:favorite-button :product="$product"/>
-                            @endauth
-                        </div>
-                        @if(auth()->id() == $product->seller_id)
-                            <div class="flex">
-                            @if($product->status == 'pending')
-                                    <form action="{{route('product.post', $product)}}" method="POST">
-                                        @method('PATCH')
+                            </div>
+                            <div class="flex items-center gap-3">
+                                @auth
+                                    <livewire:favorite-button :product="$product"/>
+                                @endauth
+                            </div>
+                            @if(auth()->id() == $product->seller_id)
+                                <div class="flex">
+                                    @if($product->status == 'pending')
+                                        <form action="{{route('product.post', $product)}}" method="POST">
+                                            @method('PATCH')
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-400 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition mt-12 mr-5">
+                                                {{__("Publicar")}}</button>
+                                        </form>
+                                    @endif
+
+                                    <a href="{{ route('product.edit', $product) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition mt-12 mr-5">
+                                        {{__("Editar")}}
+                                    </a>
+                                    <form action="{{route('product.delete', $product)}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-400 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition mt-12 mr-5">
-                                            {{__("Publicar")}}</button>
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-400 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition mt-12">
+                                            {{__("Eliminar")}}</button>
                                     </form>
+                                </div>
                             @endif
-
-                            <a href="{{ route('product.edit', $product) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition mt-12 mr-5">
-                                {{__("Editar")}}
-                            </a>
-                            <form action="{{route('product.delete', $product)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-400 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition mt-12">
-                                    {{__("Eliminar")}}</button>
-                            </form>
                         </div>
-                        @endif
                     </div>
-                </div>
 
-            </div>
-            <div class="swiper">
-                <div class="swiper-wrapper">
-                    @foreach($product->productImages as $img)
-                        <div class="swiper-slide">
-                            <img src="{{Str::startsWith($img->img_path, 'http') ? $img->img_path : asset('storage/' . $img['img_path'])}}"
-                                 alt="{{$product->name}}"
-                                 class="h-96 w-96 ml-28">
-                        </div>
-                    @endforeach
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($product->productImages as $img)
+                            <div class="swiper-slide">
+                                <img src="{{Str::startsWith($img->img_path, 'http') ? $img->img_path : asset('storage/' . $img['img_path'])}}"
+                                     alt="{{$product->name}}"
+                                     class="h-96 w-96 ml-28">
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-</body>
-</html>
+@endsection
+

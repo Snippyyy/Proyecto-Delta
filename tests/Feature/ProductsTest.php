@@ -31,7 +31,7 @@ it('Auth user can use the Product create form', function () {
 
     $response->assertSessionHasNoErrors()
         ->assertRedirect(route('product.show', $user->products->first()))
-        ->assertSessionHas('status', 'Product created!');
+        ->assertSessionHas('status', 'Producto creado!');
 });
 
 it('Auth user can use the Product create form (with multiple images)', function () {
@@ -59,7 +59,7 @@ it('Auth user can use the Product create form (with multiple images)', function 
 
     $response->assertSessionHasNoErrors()
         ->assertRedirect(route('product.show', $user->products->first()))
-        ->assertSessionHas('status', 'Product created!');
+        ->assertSessionHas('status', 'Producto creado!');
 });
 
 it('Products that arent published dont show in the index page', function () {

@@ -7,17 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            @if (session('status'))
-                <div class="bg-green-500 text-white p-4 rounded mb-4">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="bg-red-500 text-white p-4 rounded mb-4">
-                    {{ session('error') }}
-                </div>
-            @endif
+            @include('components.delta-session')
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($orders as $order)

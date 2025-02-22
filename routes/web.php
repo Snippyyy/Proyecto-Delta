@@ -28,10 +28,6 @@ use App\Http\Middleware\CantPurchaseSoldItemsMiddleware;
 use App\Http\Middleware\EnsureDiscountCodeIsActiveMiddleware;
 use App\Http\Middleware\EnsureUserIsProductOwnerMiddleware;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-})->name('welcome');
-
 Route::get('/', WelcomePageController::class)->name('index');
 
 Route::get('/dashboard', function () {

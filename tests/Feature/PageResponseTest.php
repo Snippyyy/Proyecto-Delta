@@ -16,12 +16,6 @@ beforeEach(function () {
     roleSeeder();
 });
 
-it('First page response', function () {
-
-    get(route('welcome'))->assertOk();
-
-});
-
 it('Login page response', function () {
 
     get(route('login'))->assertOk();
