@@ -29,6 +29,6 @@ class UserSoldController extends Controller
 
         $order->shipment_number = $request->shipment_number;
         $order->save();
-        return redirect()->route('my-sold.show', $order)->with('status', 'Número de seguimiento guardado');
+        return redirect()->route('my-sold.show', $order)->with('status', __("Número de seguimiento guardado"));
     }
 }

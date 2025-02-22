@@ -33,21 +33,14 @@ class ProductImageService
 
     public static function update(Product $product, $files){
 
-        $lastOrder = ProductImage::where('product_id', $product->id)
-            ->max('order');
-
-        $currentOrder = $lastOrder ? $lastOrder + 1 : 1;
-
         foreach ($files as $file) {
             if ($file->isValid()) {
                 $path = $file->store('ProductImages', 'public');
                 $data = [
                     'product_id' => $product->id,
                     'img_path' => $path,
-                    'order' => $currentOrder,
                 ];
                 ProductImage::create($data);
-                $currentOrder++;
             }
         }
     }

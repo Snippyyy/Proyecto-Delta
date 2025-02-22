@@ -157,10 +157,6 @@ class StripeCheckoutController extends Controller
 
                 $order = Order::where('session_id', $sessionId)->first();
 
-                if ($order && $order->status === 'unpaid') {
-                    $order->status = 'paid';
-                    $order->save();
-                }
                 //ENVIAR EMAIL
 
             default:
