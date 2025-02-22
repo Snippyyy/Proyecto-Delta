@@ -96,7 +96,7 @@
                             <form action="{{route('comments.store', $profile->id)}}" method="POST">
                                 @csrf
                                 <textarea class="w-full h-32 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                                          placeholder="{{ __('Escribe un comentario...') }}" name="comment"></textarea>
+                                          placeholder="{{ __('Escribe un comentario...') }}" name="comment" id="editor"></textarea>
                                 @error('comment')
                                 <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                                 @enderror
@@ -115,7 +115,7 @@
                                         <h3 class="text-gray-900 font-semibold">{{$comment->buyer->name}}</h3>
                                         <span class="text-gray-500 text-sm">Publicado el {{ $comment->created_at->format('d \d\e F, Y \a \l\a\s H:i') }}</span>
                                         <p class="mt-2 text-gray-700">
-                                            {{$comment->comment}}
+                                            {!! $comment->comment !!}
                                         </p>
                                     </div>
                                 </div>
@@ -127,5 +127,8 @@
         </div>
     </div>
 
+@endsection
+@section('scripts')
+    <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 @endsection
 
