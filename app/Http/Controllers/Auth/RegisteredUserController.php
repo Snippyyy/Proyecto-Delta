@@ -51,6 +51,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
             'postal_code' => $request->postal_code,
             'phone_number' => $request->phone_number,
+            'avatar' => asset('DefaultUser.png')
         ]);
 
         event(new Registered($user));
