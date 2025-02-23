@@ -102,7 +102,7 @@ it('User can see his solds in my sold view with data and links', function () {
     get(route('my-sold'))
         ->assertOk()
         ->assertSee($order->id)
-        ->assertSee($order->status)
+        ->assertSee("Pagado")
         ->assertSee(number_format($order->total_price / 100, 2, ',', '.'))
         ->assertSee($order->created_at->format('d/m/Y'));
 

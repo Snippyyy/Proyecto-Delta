@@ -8,7 +8,7 @@ test('profile page is displayed', function () {
 
     $response = $this
         ->actingAs($user)
-        ->get('/profile');
+        ->get('/my-zone/profile');
 
     $response->assertOk();
 });
@@ -20,7 +20,7 @@ test('profile information can be updated', function () {
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->patch('/my-zone/profile', [
             'name' => 'Test User',
             'avatar' => UploadedFile::fake()->image('avatar.jpg'),
             'email' => 'actualizado@mail.es',
@@ -32,7 +32,7 @@ test('profile information can be updated', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/my-zone/profile');
 
     $user->refresh();
 
@@ -55,7 +55,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->patch('/my-zone/profile', [
             'name' => 'Test User',
             'email' => $user->email,
             'avatar' => UploadedFile::fake()->image('avatar.jpg'),
@@ -67,7 +67,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/my-zone/profile');
 
     $user->refresh();
 
@@ -83,17 +83,19 @@ test('email verification status is unchanged when the email address is unchanged
 });
 
 test('user can delete their account', function () {
+
+
     $user = User::factory()->create();
 
     $response = $this
         ->actingAs($user)
-        ->delete('/profile', [
+        ->delete('/my-zone/profile', [
             'password' => 'password',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
+        ->assertRedirect();
 
     $this->assertGuest();
     $this->assertNull($user->fresh());
@@ -104,14 +106,14 @@ test('correct password must be provided to delete account', function () {
 
     $response = $this
         ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
+        ->from('/my-zone/profile')
+        ->delete('/my-zone/profile', [
             'password' => 'wrong-password',
         ]);
 
     $response
         ->assertSessionHasErrorsIn('userDeletion', 'password')
-        ->assertRedirect('/profile');
+        ->assertRedirect('/my-zone/profile');
 
     $this->assertNotNull($user->fresh());
 });

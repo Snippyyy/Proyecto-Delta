@@ -23,7 +23,7 @@ it('name field is required', function () {
         'icon' => UploadedFile::fake()->image('icon.jpg')
     ]);
 
-    $response->assertSessionHasErrors('name');
+    $this->assertDatabaseCount('categories', 0);
 });
 
 

@@ -22,7 +22,7 @@ it('name field is required', function () {
 
     $category = Category::first();
 
-    $response = $this->patch('/categories/' . $category->id, [
+    $response = $this->patch('/admin/categories/'.$category->id, [
         'name' => '',
         'description' => 'Category Description',
         'icon' => UploadedFile::fake()->image('icon.jpg')
