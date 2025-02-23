@@ -13,7 +13,13 @@
                     <a href="{{route('my-sold.show', $order)}}" class="block transform transition-transform duration-300 hover:scale-105">
                         <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg hover:bg-green-400 transition-shadow duration-300">
                             <h3 class="text-lg font-semibold mb-2">{{__("Pedido")}} #{{ $order->id }}</h3>
-                            <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __($order->status) }}</p>
+                            @if($order->status === "paid")
+                                <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Pagado") }}</p>
+                            @elseif($order->status === "unpaid")
+                                <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Pendiente de pago") }}</p>
+                            @elseif($order->status === "refunded")
+                                <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Reembolsado") }}</p>
+                            @endif
                             <p class="text-gray-600 mb-2">{{__("Precio total")}}: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</p>
                             <p class="text-gray-600 mb-2">{{__("Fecha de compra")}}: {{ $order->created_at->format('d/m/Y') }}</p>
                         </div>

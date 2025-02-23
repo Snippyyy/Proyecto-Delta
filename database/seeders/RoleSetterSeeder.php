@@ -14,8 +14,8 @@ class RoleSetterSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         //  Permisos
-        Permission::create(['name' => 'discount codes administration']);
-        Permission::create(['name' => 'categories administration']);
+        Permission::firstOrCreate(['name' => 'discount codes administration']);
+        Permission::firstOrCreate(['name' => 'categories administration']);
 
         // Crear roles y asignar permisos
         $adminRole = Role::firstOrCreate(['name' => 'admin']);

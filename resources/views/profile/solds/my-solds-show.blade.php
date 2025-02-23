@@ -30,6 +30,8 @@
                     <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __("Pagado") }}</h2>
                 @elseif($order->status === "unpaid")
                     <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __("Pendiente de pago") }}</h2>
+                @elseif($order->status === "refunded")
+                    <h2 class="text-2xl font-semibold mb-4">{{__("Estado")}}: {{ __("Reembolsado") }}</h2>
                 @endif
                 @if($order->shipment_number)
                     <h2 class="text-2xl font-semibold mb-4">{{ __("Numero de seguimiento") }}: {{ $order->shipment_number }}</h2>

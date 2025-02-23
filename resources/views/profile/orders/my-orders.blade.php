@@ -18,6 +18,8 @@
                                 <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Pagado") }}</p>
                             @elseif($order->status === "unpaid")
                                 <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Pendiente de pago") }}</p>
+                            @elseif($order->status === "refunded")
+                                <p class="text-gray-600 mb-2">{{__("Estado")}}: {{ __("Reembolsado") }}</p>
                             @endif
                             <p class="text-gray-600 mb-2">{{__("Precio total")}}: {{ number_format($order->total_price / 100, 2, ',', '.') }} €</p>
                             <p class="text-gray-600 mb-2">{{__("Fecha de compra")}}: {{ $order->created_at->format('d/m/Y') }}</p>

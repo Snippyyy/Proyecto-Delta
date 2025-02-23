@@ -138,11 +138,10 @@ class StripeCheckoutController extends Controller
                 $payload, $sig_header, $endpoint_secret
             );
         } catch(\UnexpectedValueException $e) {
-            // Invalid payload
             http_response_code(400);
             exit();
         } catch(\Stripe\Exception\SignatureVerificationException $e) {
-            // Invalid signature
+
             http_response_code(400);
             exit();
         }
@@ -153,11 +152,21 @@ class StripeCheckoutController extends Controller
             case 'payment_intent.succeeded':
                 $session = $event->data->object; // Contiene un \Stripe\PaymentIntent
                 $sessionId = $session->id;
-                \Log::info('Session ID: ' . $sessionId);
+                \Log::info('Pago realizado correctamente');
+
+                break;
+
+            case 'charge.refunded':
+                $session = $event->data->object;
+                $sessionId = $session->id;
+                \Log::info('Orden Reembolsada con ID: ' . $sessionId);
 
                 $order = Order::where('session_id', $sessionId)->first();
-
-                //ENVIAR EMAIL
+                if ($order) {
+                    $order->status = 'refunded';
+                    $order->save();
+                }
+                break;
 
             default:
                 // Evento desconocido
