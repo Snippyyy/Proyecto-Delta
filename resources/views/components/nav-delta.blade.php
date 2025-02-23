@@ -36,7 +36,9 @@
         </div>
 
         <div class="flex items-center space-x-4">
+            @include('components.language-switcher')
             <div class="relative inline-block text-left">
+
                 <button class="p-2 border rounded-lg hover:bg-gray-200" id="menu-button" aria-expanded="false" aria-haspopup="true">
                     <svg class="fill-current text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <circle fill="none" cx="12" cy="7" r="3" />

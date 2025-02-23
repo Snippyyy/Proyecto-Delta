@@ -4,7 +4,7 @@
 
 @section('content')
    @if($carts->isEmpty())
-       <h2 class="text-center">No tienes ningun carrito!</h2>
+       <h2 class="text-center">{{__("No tienes ningun carrito!")}}</h2>
    @endif
     @foreach($carts as $cart)
         <div class="flex mt-3 items-center justify-center p-10">

@@ -193,5 +193,7 @@
     "Factura": "Invoice",
     "Número": "Number",
     "Fecha": "Date",
-    "Número de seguimiento guardado": "Tracking number saved"
+    "Número de seguimiento guardado": "Tracking number saved",
+    "Idioma cambiado correctamente": "Language changed correctly",
+    "No tienes ningun carrito!": "You don't have any cart!"
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteItemsController;
 use App\Http\Controllers\ItemsCartController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +59,8 @@ Route::get('my-sold', [UserSoldController::class, 'index'])->name('my-sold')->mi
 Route::get('my-sold/{order}', [UserSoldController::class, 'show'])->name('my-sold.show')->middleware((AuthUserSoldMiddleware::class));
 Route::post('my-sold/{order}/shipment', [UserSoldController::class, 'shipment'])->name('shipment')->middleware((AuthUserSoldMiddleware::class));
 
+//Ruta de lenguaje
+Route::post('/switch-language', LanguageController::class)->name('switch.language');
 
 //Ruta Productos
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
