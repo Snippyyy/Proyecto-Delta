@@ -19,18 +19,20 @@
                     </x-nav-link>
                 </div>
 
-                @role('admin')
+                @can('categories administration')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')">
                             {{  __('Categorias') }}
                         </x-nav-link>
                     </div>
+                @endcan
+                @can('discount codes administration')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('discount-code')" :active="request()->routeIs('discount-code')">
                             {{  __('Códigos de descuento') }}
                         </x-nav-link>
                     </div>
-                @endrole
+                @endcan
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('my-products')" :active="request()->routeIs('my-products')">
                         {{  __('Mis productos') }}

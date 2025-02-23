@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
 
 class AdminCreationCommand extends Command
 {

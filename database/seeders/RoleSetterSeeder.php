@@ -16,6 +16,7 @@ class RoleSetterSeeder extends Seeder
         //  Permisos
         Permission::firstOrCreate(['name' => 'discount codes administration']);
         Permission::firstOrCreate(['name' => 'categories administration']);
+        Permission::firstOrCreate(['name' => 'user administration']);
 
         // Crear roles y asignar permisos
         $adminRole = Role::firstOrCreate(['name' => 'admin']);

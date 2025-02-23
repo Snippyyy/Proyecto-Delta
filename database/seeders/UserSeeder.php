@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\User;
+use Database\Factories\CommentFactory;
+use App\Models\Comment;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,8 +19,8 @@ class UserSeeder extends Seeder
     {
         $user = User::factory(
             [
-                'name' => 'snippy',
-                'email' => $email ='snippy@mail.com',
+                'name' => 'admin',
+                'email' => $email ='superadmin@mail.com',
                 'password' => bcrypt('1234'),
                 'province' => 'Madrid',
                 'address' => 'Calle Ejemplo, 123',
@@ -30,10 +32,10 @@ class UserSeeder extends Seeder
 
         $user->assignRole('admin');
 
-        User::factory(
+        $user2 = User::factory(
             [
-                'name' => 'snippy2',
-                'email' => $email ='snippy2@mail.com',
+                'name' => 'usuario1',
+                'email' => $email ='admin@mail.com',
                 'password' => bcrypt('1234'),
                 'province' => 'Madrid',
                 'address' => 'Calle Ejemplo, 123',
@@ -45,8 +47,8 @@ class UserSeeder extends Seeder
 
         User::factory(
             [
-                'name' => 'snippy3',
-                'email' => $email ='snippy3@mail.com',
+                'name' => 'usuario2',
+                'email' => $email ='usuario@mail.com',
                 'password' => bcrypt('1234'),
                 'province' => 'Madrid',
                 'address' => 'Calle Ejemplo, 123',
@@ -55,7 +57,5 @@ class UserSeeder extends Seeder
                 'avatar' => 'https://api.dicebear.com/5.x/avataaars/svg?seed=' . md5($email),
             ]
         )->has(Product::factory()->count(3))->create();
-
-        User::factory()->count(10)->create();
     }
 }

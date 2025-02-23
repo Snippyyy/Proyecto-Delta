@@ -70,6 +70,9 @@
                 <div class="col-span-4 sm:col-span-9">
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            @if($profile->products->isEmpty())
+                                    <p class="text-center text-gray-700">{{__("Este usuario no ha publicado nada...")}}</p>
+                            @endif
                             @foreach($products as $product)
                                 <div class="bg-gray-100 p-4 rounded-lg hover:shadow-lg transition duration-300">
                                     <a href="{{ route('product.show', $product) }}" class="block">

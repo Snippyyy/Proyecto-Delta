@@ -13,6 +13,11 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(10)->create();
+        Category::factory()->state(['name' => 'Consolas'])->create();
+        Category::factory()->state(['name' => 'Televisiones'])->create();
+        Category::factory()->state(['name' => 'Peliculas'])->create();
+        Category::factory()->state(['name' => 'Varios'])->create();
+        Category::factory()->state(['name' => 'Juegos'])->create();
+        Category::factory()->state(['name' => 'Accesorios'])->create();
     }
 }

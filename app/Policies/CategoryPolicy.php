@@ -20,22 +20,22 @@ class CategoryPolicy
         return $user->hasRole('admin');
     }
 
-    public function update(User $user, Category $category): bool
+    public function update(User $user): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function restore(User $user, Category $category): bool
+    public function restore(User $user): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole('admin');
     }

@@ -15,8 +15,8 @@ class CommentFactory extends Factory
     {
         return [
             'comment' => $this->faker->sentence,
-            'user_id' => User::factory(),
-            'buyer_id' => User::factory(),
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
+            'buyer_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

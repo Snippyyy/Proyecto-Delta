@@ -65,28 +65,6 @@ class CategoryController extends Controller
     /**
      * @group Categorías
      *
-     * Obtener una categoría
-     *
-     * Este endpoint recupera una categoría específica por ID.
-     *
-     * @response 200 {
-     *  "data": {
-     *    "id": 1,
-     *    "name": "Categoría 1",
-     *    "icon": "path/to/icon.png",
-     *    "created_at": "2023-01-01T00:00:00.000000Z",
-     *    "updated_at": "2023-01-01T00:00:00.000000Z"
-     *  }
-     * }
-     */
-    public function show(Category $category){
-        $products = Product::publishedWithCategory($category->id)->get();
-        return CategoryProductsResource::collection($products, $category->name);
-    }
-
-    /**
-     * @group Categorías
-     *
      * Eliminar una categoría
      *
      * Este endpoint permite eliminar una categoría existente.

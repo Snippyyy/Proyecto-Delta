@@ -24,6 +24,6 @@
             <x-input-error :messages="$errors->get('valid_until')" class="mt-2"/>
         </div>
         <br>
-        <x-primary-button>{{ __('Create') }}</x-primary-button>
+        <x-primary-button>{{ __('Crear') }}</x-primary-button>
     </form>
 </x-app-layout>

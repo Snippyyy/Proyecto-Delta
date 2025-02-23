@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\CategoryShowController;
 use App\Http\Controllers\Api\V1\DiscountCodeController;
 use App\Http\Controllers\Api\V1\LoginUserController;
 use App\Http\Controllers\Api\V1\ProductController;
@@ -18,7 +19,7 @@ Route::get('/products', WelcomePageController::class)->name('api.welcome');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('api.product.show');
 
 //Categorias
-Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('api.category.show');
+Route::get('/categories/{category}', CategoryShowController::class)->name('api.category.show');
 
 //Users
 Route::get('/users', [UserController::class, 'index'])->name('api.users.index');

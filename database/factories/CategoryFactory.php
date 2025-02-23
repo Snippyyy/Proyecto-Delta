@@ -18,9 +18,8 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = ['Consolas','Televisiones','Peliculas','Varios'];
         return [
-            'name' => $name = $categories[array_rand($categories)],
+            'name' => $name = $this->faker->name(),
             'description' => $this->faker->text(),
             'icon' => 'https://api.dicebear.com/6.x/icons/svg?seed='. md5($name),
         ];

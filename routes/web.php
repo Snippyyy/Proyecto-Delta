@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryShowController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteItemsController;
@@ -12,7 +11,6 @@ use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 
 // Middleware
 use App\Http\Middleware\EnsureGuestHasCartTokenMiddleware;
