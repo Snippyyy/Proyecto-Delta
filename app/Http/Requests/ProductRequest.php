@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required',],
+            'name' => ['required', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'price' => ['required', 'numeric', 'min:1'],
             'description' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],

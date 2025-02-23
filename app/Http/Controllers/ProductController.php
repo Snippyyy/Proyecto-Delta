@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Services\ProductImageService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
         $product->price = $validated['price'] * 100;
         $product->seller_id = Auth::id();
         $product->status = 'published';
-
+        $product->slug = $this->generateUniqueSlug($validated['name']);
         if ($validated['pending'] == 1) {
             $product->status = 'pending';
         }
@@ -84,5 +85,14 @@ class ProductController extends Controller
         $product->status = 'published';
         $product->save();
         return redirect()->route('product.show', $product)->with('status', __('Producto publicado correctamente'));
+    }
+
+    private function generateUniqueSlug(string $name): string {
+        $slug = Str::slug($name);
+        $count = Product::where('slug', 'like', "{$slug}%")->count();
+        if ($count > 0) {
+            $slug .= '-' . ($count + 1);
+        }
+        return $slug;
     }
 }

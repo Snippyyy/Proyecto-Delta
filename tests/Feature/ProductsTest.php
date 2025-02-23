@@ -112,7 +112,7 @@ it('User can not update a product that doesnt own', function () {
     $user2 = User::factory()->has(Product::factory())->create();
 
     $response = $this->actingAs($user)
-        ->patch('/products/' . $user2->products->first()->id, [
+        ->patch('/products/' . $user2->products->first()->slug, [
             'name' => 'Test Product',
             'price' => 10,
             'description' => 'Test Description',
@@ -120,7 +120,7 @@ it('User can not update a product that doesnt own', function () {
             'shipment' => true,
             'img_path' => [UploadedFile::fake()->image('test_image.jpg')],
         ]);
-    $response->assertRedirect('/products/' . $user2->products->first()->id)
+    $response->assertRedirect('/products/' . $user2->products->first()->slug)
         ->assertSessionHas('error', 'No puedes actuar sobre un articulo que no es tuyo');
 });
 
@@ -131,7 +131,7 @@ it('User can update his own product', function () {
     $product = $user->products->first();
 
     $response = $this->actingAs($user)
-        ->patch('/products/' . $product->id, [
+        ->patch('/products/' . $product->slug, [
             'name' => 'Test Product',
             'price' => 10,
             'description' => 'Test Description',
@@ -142,7 +142,7 @@ it('User can update his own product', function () {
         ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect('/products/' . $product->id)
+        ->assertRedirect('/products/' . $product->slug)
         ->assertSessionHas('status', 'Producto actualizado correctamente');
 });
 
@@ -161,7 +161,7 @@ it('User can delete his own product', function () {
     $product = $user->products->first();
 
     $response = $this->actingAs($user)
-        ->delete('/products/' . $product->id);
+        ->delete('/products/' . $product->slug);
 
     $response->assertSessionHasNoErrors()
         ->assertRedirect(route('index'))
@@ -173,9 +173,9 @@ it('User can not delete a product that doesnt own', function () {
     $user2 = User::factory()->has(Product::factory())->create();
 
     $response = $this->actingAs($user)
-        ->delete('/products/' . $user2->products->first()->id);
+        ->delete('/products/' . $user2->products->first()->slug);
 
-    $response->assertRedirect('/products/' . $user2->products->first()->id)
+    $response->assertRedirect(route('product.show', $user2->products->first()->slug))
         ->assertSessionHas('error', 'No puedes actuar sobre un articulo que no es tuyo');
 });
 

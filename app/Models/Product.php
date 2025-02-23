@@ -24,6 +24,7 @@ class Product extends Model
         'price',
         'category_id',
         'shipment',
+        'slug'
     ];
 
     public function scopePublished($query)

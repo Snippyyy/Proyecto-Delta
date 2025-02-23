@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\DiscountCode;
 use App\Models\SellerCart;
 use App\Models\User;
@@ -11,32 +10,15 @@ use Illuminate\Support\Facades\Session;
 
 class SellerCartController extends Controller
 {
-    public function index (Request $request) //Refactorizar controlador
+    public function index(Request $request)
     {
-
-        //Usuario autenticado
-        if (auth()->check()){
-            $carts = auth()->user()->sellerCarts()->get();
-
-            foreach ($carts as $cart) {
-                if ($cart->cart_items()->count() == 0) {
-                    $cart->delete();
-                }
-            }
-            $carts = auth()->user()->sellerCarts;
-            return view('cart.index', compact('carts'));
-        }else{
-            //Usuario invitado
-            $carts = SellerCart::where('token', $request->cookie('guest_cart_token'))->get();
-
-            foreach ($carts as $cart) {
-                if ($cart->cart_items()->count() == 0) {
-                    $cart->delete();
-                }
-            }
-            $carts = SellerCart::where('token', $request->cookie('guest_cart_token'))->get();
-            return view('cart.index', compact('carts'));
+        if (auth()->check()) {
+            $carts = $this->getAuthenticatedUserCarts();
+        } else {
+            $carts = $this->getGuestUserCarts($request);
         }
+
+        return view('cart.index', compact('carts'));
     }
 
     public function discount_apply(SellerCart $cart, Request $request)
@@ -59,5 +41,31 @@ class SellerCartController extends Controller
         $cart->discount_price = null;
         $cart->save();
         return redirect()->route('cart.show', $cart)->with('success', 'Codigo de descuento removido');
+    }
+
+    private function getAuthenticatedUserCarts()
+    {
+        $carts = auth()->user()->sellerCarts()->get();
+
+        foreach ($carts as $cart) {
+            if ($cart->cart_items()->count() == 0) {
+                $cart->delete();
+            }
+        }
+
+        return auth()->user()->sellerCarts;
+    }
+
+    private function getGuestUserCarts(Request $request)
+    {
+        $carts = SellerCart::where('token', $request->cookie('guest_cart_token'))->get();
+
+        foreach ($carts as $cart) {
+            if ($cart->cart_items()->count() == 0) {
+                $cart->delete();
+            }
+        }
+
+        return SellerCart::where('token', $request->cookie('guest_cart_token'))->get();
     }
 }

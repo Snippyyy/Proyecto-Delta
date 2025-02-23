@@ -18,7 +18,7 @@ class OrderFactory extends Factory
             'total_price' => 500,
             'buyer_id' => User::factory(),
             'seller_id' => User::factory(),
-            'shipment_number' => $this->faker->randomNumber(),
+            'shipment_number' => "12345abc",
             'session_id' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

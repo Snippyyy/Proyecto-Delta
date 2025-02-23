@@ -65,11 +65,11 @@ Route::post('/switch-language', LanguageController::class)->name('switch.languag
 //Ruta Productos
 Route::get('/products/create',[ProductController::class,'create'])->name('product.create')->middleware(['auth', 'verified']);
 Route::post('/products',[ProductController::class,'store'])->name('product.store')->middleware(['auth', 'verified']);
-Route::get('/products/{product}',[ProductController::class,'show'])->name('product.show')->middleware(PendingProductMiddleware::class . ':product');
-Route::patch('/products/{product}/post',[ProductController::class,'post'])->name('product.post')->middleware([EnsureUserIsProductOwnerMiddleware::class, 'auth', 'verified']);
-Route::get('/products/{product}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
-Route::patch('/products/{product}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
-Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
+Route::get('/products/{product:slug}',[ProductController::class,'show'])->name('product.show')->middleware(PendingProductMiddleware::class . ':product');
+Route::patch('/products/{product:slug}/post',[ProductController::class,'post'])->name('product.post')->middleware([EnsureUserIsProductOwnerMiddleware::class, 'auth', 'verified']);
+Route::get('/products/{product:slug}/edit',[ProductController::class,'edit'])->name('product.edit')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
+Route::patch('/products/{product:slug}',[ProductController::class,'update'])->name('product.update')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
+Route::delete('/products/{product:slug}',[ProductController::class,'destroy'])->name('product.delete')->middleware(['auth', 'verified', EnsureUserIsProductOwnerMiddleware::class]);
 
 //Ruta de favoritos
 Route::get('favorites', FavoriteItemsController::class)->name('favorites')->middleware(['auth', 'verified']);
