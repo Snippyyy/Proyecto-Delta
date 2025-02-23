@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         $user2 = User::factory(
             [
                 'name' => 'usuario1',
-                'email' => $email ='admin@mail.com',
+                'email' => $email ='usuario@mail.com',
                 'password' => bcrypt('1234'),
                 'province' => 'Madrid',
                 'address' => 'Calle Ejemplo, 123',
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
         User::factory(
             [
                 'name' => 'usuario2',
-                'email' => $email ='usuario@mail.com',
+                'email' => $email ='usuario2@mail.com',
                 'password' => bcrypt('1234'),
                 'province' => 'Madrid',
                 'address' => 'Calle Ejemplo, 123',

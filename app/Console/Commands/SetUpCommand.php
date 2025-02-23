@@ -9,7 +9,7 @@ class SetUpCommand extends Command
 {
     protected $signature = 'set:up';
 
-    protected $description = 'Command description';
+    protected $description = 'Este comando ejecuta las migraciones con los seeders y crea un admin personalizado';
 
     public function handle(): void
     {
