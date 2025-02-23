@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryShowController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteItemsController;
 use App\Http\Controllers\ItemsCartController;
@@ -67,7 +68,7 @@ Route::middleware(EnsureGuestHasCartTokenMiddleware::class)->group(function () {
 });
 
 Route::prefix('categories')->group(function () {
-    Route::get('{category}', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('{category}', CategoryShowController::class)->name('category.show');
 });
 
 
